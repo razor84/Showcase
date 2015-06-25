@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Showcase</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="free">Free Layers</string>
+    <string name="paid">Paid Layers</string>
+    <string name="nonps">Third Party Layers</string>
+    <string name="details">Details</string>
+    <string name="showcasetitle">Showcase</string>
+
+    <!-- MAIN SCREEN CARD TEXT -->
+    <string name="layersthemestitle">Layers Themes</string>
+    <string name="freecard1header">Free Themes</string>
+    <string name="freecard1">Click to list all free themes</string>
+    <string name="paidcard2header">Paid Themes</string>
+    <string name="donatecard2">Click to list all paid themes</string>
+    <string name="noneplaystorecard3header">Third Party Themes</string>
+    <string name="noneplaystorecard3">Click to list all third party Themes</string>
+
+
+
+</resources>
