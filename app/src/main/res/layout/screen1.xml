@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:minHeight="?android:attr/actionBarSize"
         android:background="?android:attr/colorPrimary"
-        android:gravity="bottom"
+        android:gravity="center"
         tools:context="com.lovejoy777.showcase.Screen1Free"
         android:elevation="4dp"
         android:theme="@style/Base.Theme.Test">
