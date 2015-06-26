@@ -92,9 +92,9 @@ public class Details extends AppCompatActivity {
 
         }
 
-        new ImageLoadTask(screenshot_1, ScreenshotimageView[0]).execute();
-        new ImageLoadTask(screenshot_2, ScreenshotimageView[1]).execute();
-        new ImageLoadTask(screenshot_3, ScreenshotimageView[2]).execute();
+        new ImageLoadTask(this, screenshot_1, ScreenshotimageView[0]).execute();
+        new ImageLoadTask(this, screenshot_2, ScreenshotimageView[1]).execute();
+        new ImageLoadTask(this, screenshot_3, ScreenshotimageView[2]).execute();
 
 
 
