@@ -7,11 +7,15 @@ import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.lovejoy777.showcase.adapters.CardViewAdapter;
+import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -31,10 +35,11 @@ import java.util.Random;
  * Created by lovejoy777 on 24/06/15.
  */
 public class Screen1Paid extends AppCompatActivity {
-
+    //private final TextView ThemeName;
+    //private final TextView ThemeDeveloper;
+    private RecyclerView mRecyclerView;
     ArrayList<Themes> themesList;
-
-    Screen1Adapter adapter;
+    private CardViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,46 +53,49 @@ public class Screen1Paid extends AppCompatActivity {
 
         themesList = new ArrayList<Themes>();
         new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
-        ListView listview = (ListView)findViewById(R.id.list);
-        adapter = new Screen1Adapter(getApplicationContext(), R.layout.row, themesList);
 
-        listview.setAdapter(adapter);
+        mRecyclerView = (RecyclerView)findViewById(R.id.cardList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout, this);
+        mRecyclerView.setAdapter(mAdapter);
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-                                    long id) {
-                // TODO Auto-generated method stub
-                String title = themesList.get(position).gettitle();
-                String link = themesList.get(position).getlink();
-                String googleplus = themesList.get(position).getgoogleplus();
-                String promo = themesList.get(position).getpromo();
-                String developer = themesList.get(position).getauthor();
-                String screenshot_1 = themesList.get(position).getscreenshot_1();
-                String screenshot_2 = themesList.get(position).getscreenshot_2();
-                String screenshot_3 = themesList.get(position).getscreenshot_3();
-                String description = themesList.get(position).getdescription();
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(Screen1Paid.this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        String title = themesList.get(position).gettitle();
+                        String link = themesList.get(position).getlink();
+                        String googleplus = themesList.get(position).getgoogleplus();
+                        String promo = themesList.get(position).getpromo();
+                        String developer = themesList.get(position).getauthor();
+                        String screenshot_1 = themesList.get(position).getscreenshot_1();
+                        String screenshot_2 = themesList.get(position).getscreenshot_2();
+                        String screenshot_3 = themesList.get(position).getscreenshot_3();
+                        String description = themesList.get(position).getdescription();
 
 
-                Intent Infoactivity = new Intent(Screen1Paid.this, Details.class);
+                        Intent Infoactivity = new Intent(Screen1Paid.this, Details.class);
 
-                Infoactivity.putExtra("keytitle", title);
-                Infoactivity.putExtra("keylink", link);
-                Infoactivity.putExtra("keygoogleplus", googleplus);
-                Infoactivity.putExtra("keypromo", promo);
-                Infoactivity.putExtra("keyscreenshot_1", screenshot_1);
-                Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
-                Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
-                Infoactivity.putExtra("keydescription", description);
-                Infoactivity.putExtra("keydeveloper", developer);
+                        Infoactivity.putExtra("keytitle", title);
+                        Infoactivity.putExtra("keylink", link);
+                        Infoactivity.putExtra("keygoogleplus", googleplus);
+                        Infoactivity.putExtra("keypromo", promo);
+                        Infoactivity.putExtra("keyscreenshot_1", screenshot_1);
+                        Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
+                        Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
+                        Infoactivity.putExtra("keydescription", description);
+                        Infoactivity.putExtra("keydeveloper", developer);
 
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(Infoactivity, bndlanimation);
-            }
-        });
+                        Bundle bndlanimation =
+                                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                        startActivity(Infoactivity, bndlanimation);
+                    }
+                })
+        );
     }
+
 
 
     class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
@@ -166,9 +174,11 @@ public class Screen1Paid extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
             dialog.cancel();
-            adapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
+            //ca.notifyDataSetChanged();
             if(result == false)
                 Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
+            System.out.println(themesList.size());
 
         }
     }

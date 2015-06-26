@@ -48,12 +48,12 @@ public class Screen1Free extends AppCompatActivity {
 
         themesList = new ArrayList<Themes>();
         new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
-        ListView listview = (ListView)findViewById(R.id.list);
+        //ListView listview = (ListView)findViewById(R.id.list);
         adapter = new Screen1Adapter(getApplicationContext(), R.layout.row, themesList);
 
-        listview.setAdapter(adapter);
+        //listview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
@@ -86,7 +86,7 @@ public class Screen1Free extends AppCompatActivity {
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(Infoactivity, bndlanimation);
             }
-        });
+        }); */
     }
 
 
