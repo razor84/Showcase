@@ -27,7 +27,7 @@
                 android:id="@+id/tvtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Layers Theme"
+                android:text="@string/layerstheme"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/textColorPrimary"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -37,14 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColorPrimary"
-                android:text="Author" />
+                android:text="@string/author" />
 
             <TextView
                 android:id="@+id/tvversion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColorPrimary"
-                android:text="Version" />
+                android:text="@string/version" />
 
         </LinearLayout>
 

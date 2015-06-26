@@ -5,6 +5,8 @@
     <color name="primary_dark">#ff303F9F</color>
     <color name="accent">#ffFF5252</color>
 
+    <color name="buttonText">#ffFFFFFF</color>
+
 
     <!-- Text colors -->
     <color name="about_text">@color/textColorPrimary</color>

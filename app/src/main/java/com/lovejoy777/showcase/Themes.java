@@ -38,35 +38,35 @@ public class Themes {
         }
 
 
-        public String gettitle() {
+    public String gettitle() {
             return title;
         }
 
-        public void settitle(String title) {
+    public void settitle(String title) {
             this.title = title;
         }
 
-        public String getdescription() {
+    public String getdescription() {
             return description;
         }
 
-        public void setdescription(String description) {
+    public void setdescription(String description) {
             this.description = description;
         }
 
-        public String getauthor() {
+    public String getauthor() {
             return author;
         }
 
-        public void setauthor(String author) {
+    public void setauthor(String author) {
             this.author = author;
         }
 
-        public String getlink() {
+    public String getlink() {
             return link;
         }
 
-        public void setlink(String link) {
+    public void setlink(String link) {
             this.link = link;
         }
 
@@ -77,8 +77,6 @@ public class Themes {
     public void setgoogleplus(String googleplus) {
         this.googleplus = googleplus;
     }
-
-
 
     public String getversion() {
         return version;
@@ -104,11 +102,11 @@ public class Themes {
         this.promo = promo;
     }
 
-        public String getscreenshot_1() {
+    public String getscreenshot_1() {
             return screenshot_1;
         }
 
-        public void setscreenshot_1(String screenshot_1) {
+    public void setscreenshot_1(String screenshot_1) {
             this.screenshot_1 = screenshot_1;
         }
 

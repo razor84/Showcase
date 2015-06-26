@@ -54,18 +54,14 @@ public class Details extends AppCompatActivity {
         String developer = extras.getStringExtra("keydeveloper");
 
         // ASIGN VIEWS
-        //TextView txt1 = (TextView) findViewById(R.id.tvtitle);
 
         ImageView promoimg= (ImageView) findViewById(R.id.promo);
-        //ImageView img2= (ImageView) findViewById(R.id.screenshot_2);
-        //ImageView img3= (ImageView) findViewById(R.id.screenshot_3);
         TextView txt2 = (TextView) findViewById(R.id.tvdescription);
         TextView developertv = (TextView) findViewById(R.id.tvDeveloper);
 
         // SET TEXT/IMAGE VIEWS
         collapsingToolbar.setTitle(title);
         new ImageLoadTaskPromo(promo, promoimg).execute();
-        //new ImageLoadTask(screenshot_3, img3).execute();
         txt2.setText(description);
         developertv.setText(developer);
 
@@ -110,7 +106,6 @@ public class Details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(Details.this, promo, Toast.LENGTH_LONG).show();
                          Intent installtheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 
                          Bundle bndlanimation =
@@ -128,7 +123,6 @@ public class Details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Toast.makeText(Details.this, "https://" + link, Toast.LENGTH_LONG).show();
                 Intent googleplustheme = new Intent(Intent.ACTION_VIEW, Uri.parse(googleplus));
 
                 Bundle bndlanimation =
