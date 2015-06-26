@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ public class Screen1Paid extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     ArrayList<Themes> themesList;
     private CardViewAdapter mAdapter;
+    private SwipeRefreshLayout mSwipeRefresh = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class Screen1Paid extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
         setSupportActionBar(toolbar);
-
+        mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         themesList = new ArrayList<Themes>();
         new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
 
@@ -94,22 +96,37 @@ public class Screen1Paid extends AppCompatActivity {
                     }
                 })
         );
+
+        //initialize swipetorefresh
+
+        mSwipeRefresh.setColorSchemeResources(R.color.accent,R.color.primary);
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                themesList.clear();
+                new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
+                onItemsLoadComplete();
+            }
+            void onItemsLoadComplete(){
+            }
+        });
+
     }
 
 
 
     class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
 
-        ProgressDialog dialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(Screen1Paid.this);
-            dialog.setMessage("Loading, please wait");
-            dialog.setTitle("Connecting to server");
-            dialog.show();
-            dialog.setCancelable(false);
+            mSwipeRefresh.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefresh.setRefreshing(true);
+                }
+            });
         }
 
         @Override
@@ -173,12 +190,15 @@ public class Screen1Paid extends AppCompatActivity {
         }
 
         protected void onPostExecute(Boolean result) {
-            dialog.cancel();
             mAdapter.notifyDataSetChanged();
-            //ca.notifyDataSetChanged();
             if(result == false)
                 Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
-            System.out.println(themesList.size());
+            mSwipeRefresh.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefresh.setRefreshing(false);
+                }
+            });
 
         }
     }
