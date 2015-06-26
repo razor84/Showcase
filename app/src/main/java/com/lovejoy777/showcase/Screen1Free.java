@@ -46,8 +46,9 @@ public class Screen1Free extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         themesList = new ArrayList<Themes>();
-        new JSONAsyncTask().execute("https://goo.gl/RM0M1A");
-
+        new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
+       // https://github.com/LayersManager/layers_showcase_json/blob/master/showcase.json
+        // https://goo.gl/RM0M1A
         ListView listview = (ListView)findViewById(R.id.list);
         adapter = new Screen1Adapter(getApplicationContext(), R.layout.row, themesList);
 
@@ -125,6 +126,7 @@ public class Screen1Free extends AppCompatActivity {
 
                         theme.settitle(object.getString("title"));
                         theme.setauthor(object.getString("author"));
+                        theme.setversion(object.getString("version"));
                         theme.setlink(object.getString("link"));
                         theme.seticon(object.getString("icon"));
                         theme.setscreenshot_1(object.getString("screenshot_1"));

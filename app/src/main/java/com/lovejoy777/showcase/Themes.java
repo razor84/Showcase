@@ -12,6 +12,7 @@ public class Themes {
     private String screenshot_2;
     private String screenshot_3;
     private String google_plus;
+    private String version;
     private String icon;
 
         public Themes() {
@@ -28,6 +29,7 @@ public class Themes {
             this.screenshot_2 = screenshot_2;
             this.screenshot_3 = screenshot_3;
             this.google_plus = google_plus;
+            this.version = version;
             this.icon = icon;
         }
 
@@ -71,6 +73,14 @@ public class Themes {
 
     public void setgoogle_plus(String google_plus) {
         this.google_plus = google_plus;
+    }
+
+    public String getversion() {
+        return version;
+    }
+
+    public void setversion(String version) {
+        this.version = version;
     }
 
     public String geticon() {

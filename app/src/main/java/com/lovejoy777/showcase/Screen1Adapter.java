@@ -43,6 +43,7 @@ public class Screen1Adapter extends ArrayAdapter<Themes> {
             holder.iconview = (ImageView) v.findViewById(R.id.ivicon);
             holder.tvtitle = (TextView) v.findViewById(R.id.tvtitle);
             holder.tvauthor = (TextView) v.findViewById(R.id.tvauthor);
+            holder.tvversion = (TextView) v.findViewById(R.id.tvversion);
             v.setTag(holder);
         } else {
             holder = (ViewHolder) v.getTag();
@@ -51,6 +52,7 @@ public class Screen1Adapter extends ArrayAdapter<Themes> {
         new DownloadImageTask(holder.iconview).execute(themeList.get(position).geticon());
         holder.tvtitle.setText(themeList.get(position).gettitle());
         holder.tvauthor.setText("Author: " + themeList.get(position).getauthor());
+        holder.tvversion.setText("version: " + themeList.get(position).getversion());
         return v;
 
     }
@@ -59,6 +61,7 @@ public class Screen1Adapter extends ArrayAdapter<Themes> {
         public ImageView iconview;
         public TextView tvtitle;
         public TextView tvauthor;
+        public TextView tvversion;
 
     }
 
