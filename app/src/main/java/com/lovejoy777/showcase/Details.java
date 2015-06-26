@@ -44,7 +44,9 @@ public class Details extends AppCompatActivity {
 
         // GET STRINGS
         String title = extras.getStringExtra("keytitle");
-       final String link = extras.getStringExtra("keylink");
+        final String link = extras.getStringExtra("keylink");
+        final String googleplus = extras.getStringExtra("keygoogleplus");
+        final String promo = extras.getStringExtra("keypromo");
         String screenshot_1 = extras.getStringExtra("keyscreenshot_1");
         String screenshot_2 = extras.getStringExtra("keyscreenshot_2");
         String screenshot_3 = extras.getStringExtra("keyscreenshot_3");
@@ -53,7 +55,8 @@ public class Details extends AppCompatActivity {
 
         // ASIGN VIEWS
         //TextView txt1 = (TextView) findViewById(R.id.tvtitle);
-        ImageView img1= (ImageView) findViewById(R.id.backdrop);
+
+        ImageView promoimg= (ImageView) findViewById(R.id.promo);
         //ImageView img2= (ImageView) findViewById(R.id.screenshot_2);
         //ImageView img3= (ImageView) findViewById(R.id.screenshot_3);
         TextView txt2 = (TextView) findViewById(R.id.tvdescription);
@@ -61,7 +64,7 @@ public class Details extends AppCompatActivity {
 
         // SET TEXT/IMAGE VIEWS
         collapsingToolbar.setTitle(title);
-        //new ImageLoadTask(screenshot_2, img2).execute();
+        new ImageLoadTaskPromo(promo, promoimg).execute();
         //new ImageLoadTask(screenshot_3, img3).execute();
         txt2.setText(description);
         developertv.setText(developer);
@@ -107,7 +110,7 @@ public class Details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               // Toast.makeText(Details.this, "https://" + link, Toast.LENGTH_LONG).show();
+                Toast.makeText(Details.this, promo, Toast.LENGTH_LONG).show();
                          Intent installtheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 
                          Bundle bndlanimation =
@@ -116,6 +119,24 @@ public class Details extends AppCompatActivity {
 
             }
         }); // end INSTALLBUTTON
+
+        // GOOGLEPLUS BUTTON
+        Button googleplusbutton;
+        googleplusbutton = (Button) findViewById(R.id.button2);
+
+        googleplusbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Toast.makeText(Details.this, "https://" + link, Toast.LENGTH_LONG).show();
+                Intent googleplustheme = new Intent(Intent.ACTION_VIEW, Uri.parse(googleplus));
+
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                startActivity(googleplustheme, bndlanimation);
+
+            }
+        }); // end GOOGLEPLUSBUTTON
 
     }
 

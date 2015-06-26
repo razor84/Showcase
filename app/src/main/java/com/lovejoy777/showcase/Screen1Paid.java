@@ -46,8 +46,7 @@ public class Screen1Paid extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         themesList = new ArrayList<Themes>();
-        new JSONAsyncTask().execute("https://goo.gl/RM0M1A");
-
+        new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
         ListView listview = (ListView)findViewById(R.id.list);
         adapter = new Screen1Adapter(getApplicationContext(), R.layout.row, themesList);
 
@@ -59,24 +58,28 @@ public class Screen1Paid extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long id) {
                 // TODO Auto-generated method stub
-                //Toast.makeText(getApplicationContext(), themesList.get(position).getlink(), Toast.LENGTH_LONG).show();
                 String title = themesList.get(position).gettitle();
                 String link = themesList.get(position).getlink();
+                String googleplus = themesList.get(position).getgoogleplus();
+                String promo = themesList.get(position).getpromo();
+                String developer = themesList.get(position).getauthor();
                 String screenshot_1 = themesList.get(position).getscreenshot_1();
                 String screenshot_2 = themesList.get(position).getscreenshot_2();
                 String screenshot_3 = themesList.get(position).getscreenshot_3();
                 String description = themesList.get(position).getdescription();
 
 
-
                 Intent Infoactivity = new Intent(Screen1Paid.this, Details.class);
 
                 Infoactivity.putExtra("keytitle", title);
                 Infoactivity.putExtra("keylink", link);
+                Infoactivity.putExtra("keygoogleplus", googleplus);
+                Infoactivity.putExtra("keypromo", promo);
                 Infoactivity.putExtra("keyscreenshot_1", screenshot_1);
                 Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
                 Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
                 Infoactivity.putExtra("keydescription", description);
+                Infoactivity.putExtra("keydeveloper", developer);
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -127,8 +130,11 @@ public class Screen1Paid extends AppCompatActivity {
 
                         theme.settitle(object.getString("title"));
                         theme.setauthor(object.getString("author"));
+                        theme.setversion(object.getString("version"));
                         theme.setlink(object.getString("link"));
+                        theme.setgoogleplus(object.getString("googleplus"));
                         theme.seticon(object.getString("icon"));
+                        theme.setpromo(object.getString("promo"));
                         theme.setscreenshot_1(object.getString("screenshot_1"));
                         theme.setscreenshot_2(object.getString("screenshot_2"));
                         theme.setscreenshot_3(object.getString("screenshot_3"));

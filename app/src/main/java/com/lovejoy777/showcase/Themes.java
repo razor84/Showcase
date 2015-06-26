@@ -8,10 +8,12 @@ public class Themes {
     private String description;
     private String author;
     private String link;
+    private String googleplus;
+    private String promo;
     private String screenshot_1;
     private String screenshot_2;
     private String screenshot_3;
-    private String google_plus;
+
     private String version;
     private String icon;
 
@@ -19,16 +21,18 @@ public class Themes {
             // TODO Auto-generated constructor stub
         }
 
-        public Themes(String title, String description, String author, String link, String screenshot_1, String screenshot_2, String screenshot_3, String google_plus, String icon) {
+        public Themes(String title, String description, String author, String link, String googleplus, String promo, String screenshot_1, String screenshot_2, String screenshot_3, String version, String icon) {
             super();
             this.title = title;
             this.description = description;
             this.author = author;
             this.link = link;
+            this.googleplus = googleplus;
+            this.promo = promo;
             this.screenshot_1 = screenshot_1;
             this.screenshot_2 = screenshot_2;
             this.screenshot_3 = screenshot_3;
-            this.google_plus = google_plus;
+
             this.version = version;
             this.icon = icon;
         }
@@ -66,14 +70,15 @@ public class Themes {
             this.link = link;
         }
 
-
-    public void getgoogle_plus(String google_plus) {
-        this.google_plus = google_plus;
+    public String getgoogleplus() {
+        return googleplus;
     }
 
-    public void setgoogle_plus(String google_plus) {
-        this.google_plus = google_plus;
+    public void setgoogleplus(String googleplus) {
+        this.googleplus = googleplus;
     }
+
+
 
     public String getversion() {
         return version;
@@ -89,6 +94,14 @@ public class Themes {
 
     public void seticon(String icon) {
         this.icon = icon;
+    }
+
+    public String getpromo() {
+        return promo;
+    }
+
+    public void setpromo(String promo) {
+        this.promo = promo;
     }
 
         public String getscreenshot_1() {

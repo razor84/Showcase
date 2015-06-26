@@ -10,14 +10,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by lovejoy777 on 25/06/15.
+ * Created by lovejoy777 on 26/06/15.
  */
-public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+public class ImageLoadTaskPromo extends AsyncTask<Void, Void, Bitmap> {
 
     private String url;
     private ImageView imageView;
 
-    public ImageLoadTask(String url, ImageView imageView) {
+    public ImageLoadTaskPromo(String url, ImageView imageView) {
         this.url = url;
         this.imageView = imageView;
     }
@@ -42,10 +42,8 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
-        if (result.getHeight() <2000){
             imageView.setImageBitmap(result);
-            imageView.setImageBitmap(Bitmap.createScaledBitmap(result, (int) (result.getWidth() * 0.4), (int) (result.getHeight() * 0.4), true));
-        }
+
 
     }
 }

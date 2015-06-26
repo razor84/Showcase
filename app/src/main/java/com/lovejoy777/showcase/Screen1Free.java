@@ -47,8 +47,6 @@ public class Screen1Free extends AppCompatActivity {
 
         themesList = new ArrayList<Themes>();
         new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
-       // https://github.com/LayersManager/layers_showcase_json/blob/master/showcase.json
-        // https://goo.gl/RM0M1A
         ListView listview = (ListView)findViewById(R.id.list);
         adapter = new Screen1Adapter(getApplicationContext(), R.layout.row, themesList);
 
@@ -62,6 +60,8 @@ public class Screen1Free extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 String title = themesList.get(position).gettitle();
                 String link = themesList.get(position).getlink();
+                String googleplus = themesList.get(position).getgoogleplus();
+                String promo = themesList.get(position).getpromo();
                 String developer = themesList.get(position).getauthor();
                 String screenshot_1 = themesList.get(position).getscreenshot_1();
                 String screenshot_2 = themesList.get(position).getscreenshot_2();
@@ -73,6 +73,8 @@ public class Screen1Free extends AppCompatActivity {
 
                 Infoactivity.putExtra("keytitle", title);
                 Infoactivity.putExtra("keylink", link);
+                Infoactivity.putExtra("keygoogleplus", googleplus);
+                Infoactivity.putExtra("keypromo", promo);
                 Infoactivity.putExtra("keyscreenshot_1", screenshot_1);
                 Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
                 Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
@@ -130,7 +132,9 @@ public class Screen1Free extends AppCompatActivity {
                         theme.setauthor(object.getString("author"));
                         theme.setversion(object.getString("version"));
                         theme.setlink(object.getString("link"));
+                        theme.setgoogleplus(object.getString("googleplus"));
                         theme.seticon(object.getString("icon"));
+                        theme.setpromo(object.getString("promo"));
                         theme.setscreenshot_1(object.getString("screenshot_1"));
                         theme.setscreenshot_2(object.getString("screenshot_2"));
                         theme.setscreenshot_3(object.getString("screenshot_3"));
