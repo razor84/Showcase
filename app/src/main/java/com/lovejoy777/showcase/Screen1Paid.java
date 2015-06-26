@@ -61,15 +61,18 @@ public class Screen1Paid extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 //Toast.makeText(getApplicationContext(), themesList.get(position).getlink(), Toast.LENGTH_LONG).show();
                 String title = themesList.get(position).gettitle();
+                String link = themesList.get(position).getlink();
                 String screenshot_1 = themesList.get(position).getscreenshot_1();
                 String screenshot_2 = themesList.get(position).getscreenshot_2();
                 String screenshot_3 = themesList.get(position).getscreenshot_3();
                 String description = themesList.get(position).getdescription();
 
 
+
                 Intent Infoactivity = new Intent(Screen1Paid.this, Details.class);
 
                 Infoactivity.putExtra("keytitle", title);
+                Infoactivity.putExtra("keylink", link);
                 Infoactivity.putExtra("keyscreenshot_1", screenshot_1);
                 Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
                 Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
@@ -124,6 +127,7 @@ public class Screen1Paid extends AppCompatActivity {
 
                         theme.settitle(object.getString("title"));
                         theme.setauthor(object.getString("author"));
+                        theme.setlink(object.getString("link"));
                         theme.seticon(object.getString("icon"));
                         theme.setscreenshot_1(object.getString("screenshot_1"));
                         theme.setscreenshot_2(object.getString("screenshot_2"));

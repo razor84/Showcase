@@ -83,6 +83,14 @@
             android:text="Description"
             android:id="@+id/tvdescription" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Link to install"
+            android:id="@+id/installbutton"
+            android:layout_gravity="right" />
+
 
     </LinearLayout>
     </ScrollView>

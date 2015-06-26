@@ -55,36 +55,12 @@
             </intent-filter>
         </activity>
 
-
-
         <activity
             android:name=".Details"
             android:label="@string/details"
             android:theme="@style/Toolbar2" >
             <intent-filter>
                 <action android:name="android.intent.action.INFOFREE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".InfoPaid"
-            android:label="@string/details"
-            android:theme="@style/Toolbar2" >
-            <intent-filter>
-                <action android:name="android.intent.action.INFOPAID" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".InfoNonPS"
-            android:label="@string/details"
-            android:theme="@style/Toolbar2" >
-            <intent-filter>
-                <action android:name="android.intent.action.INFONONPS" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

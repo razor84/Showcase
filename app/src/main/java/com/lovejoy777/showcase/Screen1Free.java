@@ -60,6 +60,7 @@ public class Screen1Free extends AppCompatActivity {
                                     long id) {
                 // TODO Auto-generated method stub
                 String title = themesList.get(position).gettitle();
+                String link = themesList.get(position).getlink();
                 String screenshot_1 = themesList.get(position).getscreenshot_1();
                 String screenshot_2 = themesList.get(position).getscreenshot_2();
                 String screenshot_3 = themesList.get(position).getscreenshot_3();
@@ -69,6 +70,7 @@ public class Screen1Free extends AppCompatActivity {
                 Intent Infoactivity = new Intent(Screen1Free.this, Details.class);
 
                 Infoactivity.putExtra("keytitle", title);
+                Infoactivity.putExtra("keylink", link);
                 Infoactivity.putExtra("keyscreenshot_1", screenshot_1);
                 Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
                 Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
