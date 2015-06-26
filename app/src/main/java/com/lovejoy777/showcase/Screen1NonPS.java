@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by lovejoy777 on 24/06/15.
@@ -123,8 +124,15 @@ public class Screen1NonPS extends AppCompatActivity {
                     JSONObject jsono = new JSONObject(data);
                     JSONArray jarray = jsono.getJSONArray("NonPS");
 
-                    for (int i = 0; i < jarray.length(); i++) {
-                        JSONObject object = jarray.getJSONObject(i);
+                    Random rnd = new Random();
+                    for (int i = jarray.length() - 1; i >= 0; i--)
+                    {
+                        int j = rnd.nextInt(i + 1);
+                        
+                        // Simple swap
+                        JSONObject object = jarray.getJSONObject(j);
+                        jarray.put(j, jarray.get(i));
+                        jarray.put(i, object);
 
                         Themes theme = new Themes();
 
