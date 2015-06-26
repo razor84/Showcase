@@ -62,6 +62,7 @@ public class Screen1Free extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 String title = themesList.get(position).gettitle();
                 String link = themesList.get(position).getlink();
+                String developer = themesList.get(position).getauthor();
                 String screenshot_1 = themesList.get(position).getscreenshot_1();
                 String screenshot_2 = themesList.get(position).getscreenshot_2();
                 String screenshot_3 = themesList.get(position).getscreenshot_3();
@@ -76,6 +77,7 @@ public class Screen1Free extends AppCompatActivity {
                 Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
                 Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
                 Infoactivity.putExtra("keydescription", description);
+                Infoactivity.putExtra("keydeveloper", developer);
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();

@@ -58,7 +58,7 @@
         <activity
             android:name=".Details"
             android:label="@string/details"
-            android:theme="@style/Toolbar2" >
+            android:theme="@style/Theme.Toolbar">
             <intent-filter>
                 <action android:name="android.intent.action.INFOFREE" />
 

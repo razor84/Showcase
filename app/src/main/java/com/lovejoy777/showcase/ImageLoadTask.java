@@ -42,6 +42,9 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
-        imageView.setImageBitmap(result);
+        if (result.getHeight() <2000){
+            imageView.setImageBitmap(Bitmap.createScaledBitmap(result, (int) (result.getWidth() * 0.4), (int) (result.getHeight() * 0.4), true));
+        }
+
     }
 }
