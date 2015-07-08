@@ -1,13 +1,23 @@
 package com.lovejoy777.showcase;
 
 import android.app.ActivityOptions;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,73 +27,45 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // ENDS SWVALUE ELSE
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        // Handle Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        setSupportActionBar(toolbar);
 
 
-        card1 = (CardView) findViewById(R.id.CardView_freethemes1);
-        card2 = (CardView) findViewById(R.id.CardView_paidthemes2);
-        card3 = (CardView) findViewById(R.id.CardView_nonpsthemes3);
+// switch and build.prop call for no launcher Icon.
+        SharedPreferences prefs = this.getSharedPreferences("switch1", Context.MODE_PRIVATE);
+        boolean switch1 = prefs.getBoolean("switch1", false);
 
-        // CARD 1
-        card1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent freeactivity = new Intent(MainActivity.this, Screen1Free.class);
+        Process p1 = null;
+        String noIcon = "";
+        try {
+            p1 = new ProcessBuilder("/system/bin/getprop", "ro.layers.noIcon").redirectErrorStream(true).start();
+            BufferedReader br = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+            String line = "";
+            if ((line = br.readLine()) != null) {
+                noIcon = line;
 
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(freeactivity, bndlanimation);
+                if (noIcon.length() >= 3 && switch1 == true) {
 
-            }
-        }); // end card1
+                    PackageManager p = getPackageManager();
+                    ComponentName componentName = new ComponentName(this, com.lovejoy777.showcase.MainActivity.class); // activity which is first time open in manifiest file which is declare as <category android:name="android.intent.category.LAUNCHER" />
+                    p.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 
-        // CARD 2
-        card2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent donateactivity = new Intent(MainActivity.this, Screen1Paid.class);
+                    // Toast.makeText(MainActivity.this, noIcon, Toast.LENGTH_LONG).show();
+                }
 
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(donateactivity, bndlanimation);
+            } else {
+                //Toast.makeText(MainActivity.this, "is not null", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Icon null", Toast.LENGTH_LONG).show();
 
             }
-        }); // end card6
-
-        // CARD 3
-        card3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent noneplaystoreactivity = new Intent(MainActivity.this, Screen1NonPS.class);
-
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(noneplaystoreactivity, bndlanimation);
-
-            }
-        }); // end card6
-
-    } // ends onCreate
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.back2, R.anim.back1);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            overridePendingTransition(R.anim.back2, R.anim.back1);
-            return true;
+            p1.destroy();
+        } catch (IOException e) {
+// TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        return false;
+
+        Intent intent = new Intent(MainActivity.this,MainActivity1.class);
+        startActivity(intent);
+        overridePendingTransition(0,0);
+        finish();
+
     }
 }

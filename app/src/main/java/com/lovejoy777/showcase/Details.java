@@ -44,6 +44,7 @@ public class Details extends AppCompatActivity {
 
         // GET STRINGS
         String title = extras.getStringExtra("keytitle");
+        final String free = extras.getStringExtra("keyfree");
         final String link = extras.getStringExtra("keylink");
         final String googleplus = extras.getStringExtra("keygoogleplus");
         final String promo = extras.getStringExtra("keypromo");
@@ -70,25 +71,28 @@ public class Details extends AppCompatActivity {
         LinearLayout screenshotLayout = (LinearLayout)findViewById(R.id.LinearLayoutScreenshots);
 
         for (int i=0; i<3;i++){
-            LinearLayout linear = new LinearLayout(this);
-
-            int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
-
-            LinearLayout.LayoutParams params
-                    = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
-            params.rightMargin = margin;
+                LinearLayout linear = new LinearLayout(this);
+
+                int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+
+                LinearLayout.LayoutParams params
+                        = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
-            ScreenshotimageView[i]= new ImageView(this);
+                params.rightMargin = margin;
 
-            ScreenshotimageView[i].setBackgroundColor(getResources().getColor(R.color.accent));
 
-            linear.setLayoutParams(params);
+                ScreenshotimageView[i] = new ImageView(this);
 
-            linear.addView(ScreenshotimageView[i]);
-            screenshotLayout.addView(linear);
+                ScreenshotimageView[i].setBackgroundColor(getResources().getColor(R.color.accent));
+
+                linear.setLayoutParams(params);
+
+                linear.addView(ScreenshotimageView[i]);
+                screenshotLayout.addView(linear);
+
 
         }
 

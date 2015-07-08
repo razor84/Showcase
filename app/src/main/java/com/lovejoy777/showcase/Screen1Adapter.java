@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,16 +21,23 @@ import java.util.ArrayList;
  */
 public class Screen1Adapter extends ArrayAdapter<Themes> {
     ArrayList<Themes> themeList;
+    ArrayList<Themes> themeList1;
     LayoutInflater vi;
     int Resource;
     ViewHolder holder;
+
+
+
+
+
 
     public Screen1Adapter(Context context, int resource, ArrayList<Themes> objects) {
         super(context, resource, objects);
         vi = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Resource = resource;
-        themeList = objects;
+
+
     }
 
 

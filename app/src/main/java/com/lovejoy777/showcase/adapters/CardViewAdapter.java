@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder>{
 
     private ArrayList<Themes> themes;
+    private ArrayList<Themes> test;
     private int rowLayout;
     private Context mContext;
 
@@ -62,9 +63,11 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            themeName = (TextView) itemView.findViewById(R.id.txtName);
-            themeImage = (ImageView)itemView.findViewById(R.id.iv_themeImage);
-            themeDeveloper = (TextView) itemView.findViewById(R.id.txtSurname);
+
+                themeName = (TextView) itemView.findViewById(R.id.txtName);
+                themeImage = (ImageView) itemView.findViewById(R.id.iv_themeImage);
+                themeDeveloper = (TextView) itemView.findViewById(R.id.txtSurname);
+
         }
 
     }

@@ -9,6 +9,7 @@
     <string name="nonps">Third Party Layers</string>
     <string name="details">Details</string>
     <string name="showcasetitle">Showcase</string>
+    <string name="General">General</string>
 
     <string name="description">Description</string>
     <string name="error">Error</string>
@@ -19,6 +20,7 @@
     <string name="version">Version</string>
     <string name="author">Author</string>
     <string name="layerstheme">Layers Theme</string>
+    <string name="action_search">Search</string>
 
     <!-- MAIN SCREEN CARD TEXT -->
     <string name="layersthemestitle">Layers Themes</string>
@@ -26,8 +28,8 @@
     <string name="freecard1">Click to list all free themes</string>
     <string name="paidcard2header">Paid Themes</string>
     <string name="donatecard2">Click to list all paid themes</string>
-    <string name="noneplaystorecard3header">Third Party Themes</string>
-    <string name="noneplaystorecard3">Click to list all third party Themes</string>
+    <string name="noneplaystorecard3header">Donate Themes</string>
+    <string name="noneplaystorecard3">Click to list all Donate Themes</string>
 
 
 

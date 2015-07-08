@@ -12,6 +12,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -52,8 +54,10 @@ public class Screen1Paid extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
         setSupportActionBar(toolbar);
+
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         themesList = new ArrayList<Themes>();
+
         new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
 
         mRecyclerView = (RecyclerView)findViewById(R.id.cardList);
@@ -61,6 +65,7 @@ public class Screen1Paid extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout, this);
+
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnItemTouchListener(
@@ -147,7 +152,7 @@ public class Screen1Paid extends AppCompatActivity {
 
 
                     JSONObject jsono = new JSONObject(data);
-                    JSONArray jarray = jsono.getJSONArray("Paid");
+                    JSONArray jarray = jsono.getJSONArray("Themes");
 
                     Random rnd = new Random();
                     for (int i = jarray.length() - 1; i >= 0; i--)
@@ -161,18 +166,45 @@ public class Screen1Paid extends AppCompatActivity {
                         Themes theme = new Themes();
 
                         theme.settitle(object.getString("title"));
+                        theme.setdescription(object.getString("description"));
                         theme.setauthor(object.getString("author"));
-                        theme.setversion(object.getString("version"));
                         theme.setlink(object.getString("link"));
-                        theme.setgoogleplus(object.getString("googleplus"));
                         theme.seticon(object.getString("icon"));
                         theme.setpromo(object.getString("promo"));
                         theme.setscreenshot_1(object.getString("screenshot_1"));
                         theme.setscreenshot_2(object.getString("screenshot_2"));
                         theme.setscreenshot_3(object.getString("screenshot_3"));
-                        theme.setdescription(object.getString("description"));
+                        theme.setgoogleplus(object.getString("googleplus"));
+                        theme.setversion(object.getString("version"));
+                        theme.setdonate_link(object.getString("donate_link"));
+                        theme.setdonate_version(object.getString("donate_version"));
+                        theme.setbootani(object.getString("bootani"));
+                        theme.setfont(object.getString("font"));
+                        theme.setwallpaper(object.getString("wallpaper"));
+                        theme.setplugin_version(object.getString("plugin_version"));
+                        theme.setfor_L(object.getString("for_L"));
+                        theme.setfor_M(object.getString("for_M"));
+                        theme.setbasic(object.getString("basic"));
+                        theme.setbasic_m(object.getString("basic_m"));
+                        theme.settype2(object.getString("type2"));
+                        theme.settype3(object.getString("type3"));
+                        theme.settype3_m(object.getString("type3_m"));
+                        theme.settouchwiz(object.getString("touchwiz"));
+                        theme.setlg(object.getString("lg"));
+                        theme.setsense(object.getString("sense"));
+                        theme.setxperia(object.getString("xperia"));
+                        theme.sethdpi(object.getString("hdpi"));
+                        theme.setmdpi(object.getString("mdpi"));
+                        theme.setxhdpi(object.getString("xhdpi"));
+                        theme.setxxhdpi(object.getString("xxhdpi"));
+                        theme.setxxxhdpi(object.getString("xxhdpi"));
+                        theme.setfree(object.getString("free"));
+                        theme.setdonate(object.getString("donate"));
+                        theme.setpaid(object.getString("paid"));
 
-                        themesList.add(theme);
+                        if (theme.getpaid().contains("true")) {
+                            themesList.add(theme);
+                        }
                     }
                     return true;
                 }
@@ -201,6 +233,27 @@ public class Screen1Paid extends AppCompatActivity {
             });
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_screen1, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if  (id == R.id.action_search) {
+            Toast.makeText(getApplicationContext(), "Search Clicked",
+                    Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

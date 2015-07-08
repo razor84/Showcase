@@ -6,14 +6,20 @@ import android.content.Intent;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,12 +38,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
  * Created by lovejoy777 on 24/06/15.
  */
-public class Screen1Free extends AppCompatActivity {
+public class Screen1Free extends AppCompatActivity  {
     //private final TextView ThemeName;
     //private final TextView ThemeDeveloper;
     private RecyclerView mRecyclerView;
@@ -57,6 +64,9 @@ public class Screen1Free extends AppCompatActivity {
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         themesList = new ArrayList<Themes>();
+
+
+
         new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
 
         mRecyclerView = (RecyclerView)findViewById(R.id.cardList);
@@ -70,6 +80,7 @@ public class Screen1Free extends AppCompatActivity {
                 new RecyclerItemClickListener(Screen1Free.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        String free = themesList.get(position).getfree();
                         String title = themesList.get(position).gettitle();
                         String link = themesList.get(position).getlink();
                         String googleplus = themesList.get(position).getgoogleplus();
@@ -81,21 +92,24 @@ public class Screen1Free extends AppCompatActivity {
                         String description = themesList.get(position).getdescription();
 
 
-                        Intent Infoactivity = new Intent(Screen1Free.this, Details.class);
+                        Intent Detailsactivity = new Intent(Screen1Free.this, Details.class);
 
-                        Infoactivity.putExtra("keytitle", title);
-                        Infoactivity.putExtra("keylink", link);
-                        Infoactivity.putExtra("keygoogleplus", googleplus);
-                        Infoactivity.putExtra("keypromo", promo);
-                        Infoactivity.putExtra("keyscreenshot_1", screenshot_1);
-                        Infoactivity.putExtra("keyscreenshot_2", screenshot_2);
-                        Infoactivity.putExtra("keyscreenshot_3", screenshot_3);
-                        Infoactivity.putExtra("keydescription", description);
-                        Infoactivity.putExtra("keydeveloper", developer);
+
+
+                        Detailsactivity.putExtra("free", free);
+                        Detailsactivity.putExtra("keytitle", title);
+                        Detailsactivity.putExtra("keylink", link);
+                        Detailsactivity.putExtra("keygoogleplus", googleplus);
+                        Detailsactivity.putExtra("keypromo", promo);
+                        Detailsactivity.putExtra("keyscreenshot_1", screenshot_1);
+                        Detailsactivity.putExtra("keyscreenshot_2", screenshot_2);
+                        Detailsactivity.putExtra("keyscreenshot_3", screenshot_3);
+                        Detailsactivity.putExtra("keydescription", description);
+                        Detailsactivity.putExtra("keydeveloper", developer);
 
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                        startActivity(Infoactivity, bndlanimation);
+                        startActivity(Detailsactivity, bndlanimation);
                     }
                 })
         );
@@ -109,6 +123,7 @@ public class Screen1Free extends AppCompatActivity {
                 new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
                 onItemsLoadComplete();
             }
+
             void onItemsLoadComplete(){
             }
         });
@@ -149,32 +164,102 @@ public class Screen1Free extends AppCompatActivity {
 
 
                     JSONObject jsono = new JSONObject(data);
-                    JSONArray jarray = jsono.getJSONArray("Free");
+                    JSONArray jarray = jsono.getJSONArray("Themes");
 
-                    Random rnd = new Random();
-                    for (int i = jarray.length() - 1; i >= 0; i--)
-                    {
-                        int j = rnd.nextInt(i + 1);
+                    for (int i = 0; i < jarray.length(); i++) {
+                        JSONObject object = jarray.getJSONObject(i);
 
-                        // Simple swap
-                        JSONObject object = jarray.getJSONObject(j);
-                        jarray.put(j, jarray.get(i));
-                        jarray.put(i, object);
-                        Themes theme = new Themes();
 
-                        theme.settitle(object.getString("title"));
-                        theme.setauthor(object.getString("author"));
-                        theme.setversion(object.getString("version"));
-                        theme.setlink(object.getString("link"));
-                        theme.setgoogleplus(object.getString("googleplus"));
-                        theme.seticon(object.getString("icon"));
-                        theme.setpromo(object.getString("promo"));
-                        theme.setscreenshot_1(object.getString("screenshot_1"));
-                        theme.setscreenshot_2(object.getString("screenshot_2"));
-                        theme.setscreenshot_3(object.getString("screenshot_3"));
-                        theme.setdescription(object.getString("description"));
 
-                        themesList.add(theme);
+
+
+                            Themes theme = new Themes();
+
+
+                            //  String freeobj = jsono.getJSONObject("Themes").getString("free");
+                            // JSONObject object.getString("free")
+
+                            //   if(freeobj.contains("true"))
+                            //  {
+
+                            // Toast.makeText(getApplicationContext(), "its fukin true", Toast.LENGTH_LONG).show();
+                            //it's contain value to be read operation
+                            //  }
+                            //  else
+                            //  {
+                            //       Toast.makeText(getApplicationContext(), "its fukin false", Toast.LENGTH_LONG).show();
+                            //it's not contain key club or isnull so do this operation here
+                            //   }
+
+
+                            //  JSONArray jarray = jsono.getJSONArray("Themes");
+
+
+                            //Random rnd = new Random();
+                            // for (int i = jarray.length() - 1; i >= 0; i--)
+                            // {
+                            //    HashMap<String, String> map = new HashMap<String, String>();
+                            //    int j = rnd.nextInt(i + 1);
+
+
+                            // Simple swap
+                            // JSONObject object = jarray.getJSONObject(j);
+                            //jarray.put(j, jarray.get(i));
+                            //jarray.put(i, object);
+                            //  Themes theme = new Themes();
+
+
+                            theme.settitle(object.getString("title"));
+                            theme.setdescription(object.getString("description"));
+                            theme.setauthor(object.getString("author"));
+                            theme.setlink(object.getString("link"));
+                            theme.seticon(object.getString("icon"));
+                            theme.setpromo(object.getString("promo"));
+                            theme.setscreenshot_1(object.getString("screenshot_1"));
+                            theme.setscreenshot_2(object.getString("screenshot_2"));
+                            theme.setscreenshot_3(object.getString("screenshot_3"));
+                            theme.setgoogleplus(object.getString("googleplus"));
+                            theme.setversion(object.getString("version"));
+                            theme.setdonate_link(object.getString("donate_link"));
+                            theme.setdonate_version(object.getString("donate_version"));
+                            theme.setbootani(object.getString("bootani"));
+                            theme.setfont(object.getString("font"));
+                            theme.setwallpaper(object.getString("wallpaper"));
+                            theme.setplugin_version(object.getString("plugin_version"));
+                            theme.setfor_L(object.getString("for_L"));
+                            theme.setfor_M(object.getString("for_M"));
+                            theme.setbasic(object.getString("basic"));
+                            theme.setbasic_m(object.getString("basic_m"));
+                            theme.settype2(object.getString("type2"));
+                            theme.settype3(object.getString("type3"));
+                            theme.settype3_m(object.getString("type3_m"));
+                            theme.settouchwiz(object.getString("touchwiz"));
+                            theme.setlg(object.getString("lg"));
+                            theme.setsense(object.getString("sense"));
+                            theme.setxperia(object.getString("xperia"));
+                            theme.sethdpi(object.getString("hdpi"));
+                            theme.setmdpi(object.getString("mdpi"));
+                            theme.setxhdpi(object.getString("xhdpi"));
+                            theme.setxxhdpi(object.getString("xxhdpi"));
+                            theme.setxxxhdpi(object.getString("xxhdpi"));
+                            theme.setfree(object.getString("free"));
+                            theme.setdonate(object.getString("donate"));
+                            theme.setpaid(object.getString("paid"));
+
+
+                       // if (free1 == "true") {
+                            //String free1 = theme.getfree();
+                            // if (free1 == "true") {
+                     //   Toast.makeText(Screen1Free.this, free1, Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getApplicationContext(), free1, Toast.LENGTH_LONG).show();
+                            // }
+
+                        if (theme.getfree().contains("true")) {
+
+                            themesList.add(theme);
+                        }
+
+                       // }
                     }
                     return true;
                 }
@@ -204,6 +289,27 @@ public class Screen1Free extends AppCompatActivity {
             System.out.println(themesList.size());
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_screen1, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if  (id == R.id.action_search) {
+            Toast.makeText(getApplicationContext(), "Search Clicked",
+                    Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
