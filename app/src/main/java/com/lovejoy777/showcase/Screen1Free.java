@@ -166,100 +166,57 @@ public class Screen1Free extends AppCompatActivity  {
                     JSONObject jsono = new JSONObject(data);
                     JSONArray jarray = jsono.getJSONArray("Themes");
 
-                    for (int i = 0; i < jarray.length(); i++) {
-                        JSONObject object = jarray.getJSONObject(i);
+                    Random rnd = new Random();
+                    for (int i = jarray.length() - 1; i >= 0; i--)
+                    {
+                        int j = rnd.nextInt(i + 1);
 
+                        // Simple swap
+                        JSONObject object = jarray.getJSONObject(j);
+                        jarray.put(j, jarray.get(i));
+                        jarray.put(i, object);
+                        Themes theme = new Themes();
 
-
-
-
-                            Themes theme = new Themes();
-
-
-                            //  String freeobj = jsono.getJSONObject("Themes").getString("free");
-                            // JSONObject object.getString("free")
-
-                            //   if(freeobj.contains("true"))
-                            //  {
-
-                            // Toast.makeText(getApplicationContext(), "its fukin true", Toast.LENGTH_LONG).show();
-                            //it's contain value to be read operation
-                            //  }
-                            //  else
-                            //  {
-                            //       Toast.makeText(getApplicationContext(), "its fukin false", Toast.LENGTH_LONG).show();
-                            //it's not contain key club or isnull so do this operation here
-                            //   }
-
-
-                            //  JSONArray jarray = jsono.getJSONArray("Themes");
-
-
-                            //Random rnd = new Random();
-                            // for (int i = jarray.length() - 1; i >= 0; i--)
-                            // {
-                            //    HashMap<String, String> map = new HashMap<String, String>();
-                            //    int j = rnd.nextInt(i + 1);
-
-
-                            // Simple swap
-                            // JSONObject object = jarray.getJSONObject(j);
-                            //jarray.put(j, jarray.get(i));
-                            //jarray.put(i, object);
-                            //  Themes theme = new Themes();
-
-
-                            theme.settitle(object.getString("title"));
-                            theme.setdescription(object.getString("description"));
-                            theme.setauthor(object.getString("author"));
-                            theme.setlink(object.getString("link"));
-                            theme.seticon(object.getString("icon"));
-                            theme.setpromo(object.getString("promo"));
-                            theme.setscreenshot_1(object.getString("screenshot_1"));
-                            theme.setscreenshot_2(object.getString("screenshot_2"));
-                            theme.setscreenshot_3(object.getString("screenshot_3"));
-                            theme.setgoogleplus(object.getString("googleplus"));
-                            theme.setversion(object.getString("version"));
-                            theme.setdonate_link(object.getString("donate_link"));
-                            theme.setdonate_version(object.getString("donate_version"));
-                            theme.setbootani(object.getString("bootani"));
-                            theme.setfont(object.getString("font"));
-                            theme.setwallpaper(object.getString("wallpaper"));
-                            theme.setplugin_version(object.getString("plugin_version"));
-                            theme.setfor_L(object.getString("for_L"));
-                            theme.setfor_M(object.getString("for_M"));
-                            theme.setbasic(object.getString("basic"));
-                            theme.setbasic_m(object.getString("basic_m"));
-                            theme.settype2(object.getString("type2"));
-                            theme.settype3(object.getString("type3"));
-                            theme.settype3_m(object.getString("type3_m"));
-                            theme.settouchwiz(object.getString("touchwiz"));
-                            theme.setlg(object.getString("lg"));
-                            theme.setsense(object.getString("sense"));
-                            theme.setxperia(object.getString("xperia"));
-                            theme.sethdpi(object.getString("hdpi"));
-                            theme.setmdpi(object.getString("mdpi"));
-                            theme.setxhdpi(object.getString("xhdpi"));
-                            theme.setxxhdpi(object.getString("xxhdpi"));
-                            theme.setxxxhdpi(object.getString("xxhdpi"));
-                            theme.setfree(object.getString("free"));
-                            theme.setdonate(object.getString("donate"));
-                            theme.setpaid(object.getString("paid"));
-
-
-                       // if (free1 == "true") {
-                            //String free1 = theme.getfree();
-                            // if (free1 == "true") {
-                     //   Toast.makeText(Screen1Free.this, free1, Toast.LENGTH_LONG).show();
-                          //  Toast.makeText(getApplicationContext(), free1, Toast.LENGTH_LONG).show();
-                            // }
+                        theme.settitle(object.getString("title"));
+                        theme.setdescription(object.getString("description"));
+                        theme.setauthor(object.getString("author"));
+                        theme.setlink(object.getString("link"));
+                        theme.seticon(object.getString("icon"));
+                        theme.setpromo(object.getString("promo"));
+                        theme.setscreenshot_1(object.getString("screenshot_1"));
+                        theme.setscreenshot_2(object.getString("screenshot_2"));
+                        theme.setscreenshot_3(object.getString("screenshot_3"));
+                        theme.setgoogleplus(object.getString("googleplus"));
+                        theme.setversion(object.getString("version"));
+                        theme.setdonate_link(object.getString("donate_link"));
+                        theme.setdonate_version(object.getString("donate_version"));
+                        theme.setbootani(object.getString("bootani"));
+                        theme.setfont(object.getString("font"));
+                        theme.setwallpaper(object.getString("wallpaper"));
+                        theme.setplugin_version(object.getString("plugin_version"));
+                        theme.setfor_L(object.getString("for_L"));
+                        theme.setfor_M(object.getString("for_M"));
+                        theme.setbasic(object.getString("basic"));
+                        theme.setbasic_m(object.getString("basic_m"));
+                        theme.settype2(object.getString("type2"));
+                        theme.settype3(object.getString("type3"));
+                        theme.settype3_m(object.getString("type3_m"));
+                        theme.settouchwiz(object.getString("touchwiz"));
+                        theme.setlg(object.getString("lg"));
+                        theme.setsense(object.getString("sense"));
+                        theme.setxperia(object.getString("xperia"));
+                        theme.sethdpi(object.getString("hdpi"));
+                        theme.setmdpi(object.getString("mdpi"));
+                        theme.setxhdpi(object.getString("xhdpi"));
+                        theme.setxxhdpi(object.getString("xxhdpi"));
+                        theme.setxxxhdpi(object.getString("xxhdpi"));
+                        theme.setfree(object.getString("free"));
+                        theme.setdonate(object.getString("donate"));
+                        theme.setpaid(object.getString("paid"));
 
                         if (theme.getfree().contains("true")) {
-
                             themesList.add(theme);
                         }
-
-                       // }
                     }
                     return true;
                 }
