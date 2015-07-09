@@ -58,7 +58,7 @@ public class Screen1Paid extends AppCompatActivity {
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         themesList = new ArrayList<Themes>();
 
-        new JSONAsyncTask().execute("https://raw.githubusercontent.com/LayersManager/layers_showcase_json/master/showcase.json");
+        new JSONAsyncTask().execute("https://github.com/BitSyko/layers_showcase_json/blob/master/showcase.json");
 
         mRecyclerView = (RecyclerView)findViewById(R.id.cardList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
