@@ -67,7 +67,7 @@ public class Screen1Free extends AppCompatActivity  {
 
 
 
-        new JSONAsyncTask().execute("https://github.com/BitSyko/layers_showcase_json/blob/master/showcase.json");
+        new JSONAsyncTask().execute("https://raw.githubusercontent.com/BitSyko/layers_showcase_json/master/showcase.json");
 
         mRecyclerView = (RecyclerView)findViewById(R.id.cardList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
