@@ -59,7 +59,7 @@
 
         <activity
             android:name=".Screen1Donate"
-            android:label="@string/nonps"
+            android:label="@string/donate"
             android:theme="@style/Toolbar2" >
             <intent-filter>
                 <action android:name="android.intent.action.SCREEN1NONPS" />

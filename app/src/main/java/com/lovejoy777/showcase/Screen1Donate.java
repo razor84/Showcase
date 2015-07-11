@@ -37,8 +37,7 @@ import java.util.Random;
  * Created by lovejoy777 on 24/06/15.
  */
 public class Screen1Donate extends AppCompatActivity {
-    //private final TextView ThemeName;
-    //private final TextView ThemeDeveloper;
+
     private RecyclerView mRecyclerView;
     ArrayList<Themes> themesList;
     private CardViewAdapter mAdapter;
@@ -116,8 +115,6 @@ public class Screen1Donate extends AppCompatActivity {
 
 
     class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
-
-
 
         @Override
         protected void onPreExecute() {
@@ -253,5 +250,4 @@ public class Screen1Donate extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
