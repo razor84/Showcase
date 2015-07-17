@@ -8,8 +8,8 @@ android {
         applicationId "com.lovejoy777.showcase"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 2
-        versionName "b1.1"
+        versionCode 3
+        versionName "b1.2"
     }
     buildTypes {
         release {

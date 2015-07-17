@@ -69,7 +69,7 @@ public class MainActivity1 extends AppCompatActivity {
         final DownloadTagnameTask downloadTagnameTask = new DownloadTagnameTask(MainActivity1.this);
         downloadTagnameTask.execute("https://api.github.com/repos/BitSyko/layers_showcase_json/releases/latest");
 
-        // if /showcase/tagname/tagname.json doesnt exist then copy file.
+     /**   // if /showcase/tagname/tagname.json doesnt exist then copy file.
         File dir3 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
         if (!dir3.exists()) {
             try
@@ -90,7 +90,7 @@ public class MainActivity1 extends AppCompatActivity {
             {
                 e.printStackTrace();
             }
-        }
+        } */
 
         card1 = (CardView) findViewById(R.id.CardView_freethemes1);
         card2 = (CardView) findViewById(R.id.CardView_paidthemes2);
@@ -201,6 +201,8 @@ public class MainActivity1 extends AppCompatActivity {
                     connection.disconnect();
             }
             return null;
+
+
         }
         @Override
         protected void onPostExecute(String result) {
@@ -209,6 +211,9 @@ public class MainActivity1 extends AppCompatActivity {
                 Toast.makeText(context, "Download tagname error: ", Toast.LENGTH_LONG).show();
 
              else
+
+
+                movetagnamejson();
 
                 // compare new tagname json with existing tagname
                 try {
@@ -284,6 +289,33 @@ public class MainActivity1 extends AppCompatActivity {
                 }
 
         }
+    }
+
+    public Void movetagnamejson() {
+
+        // if /showcase/tagname/tagname.json doesnt exist then copy file.
+        File dir3 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
+        if (!dir3.exists()) {
+            try
+            {
+                InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
+                OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
+
+                // Copy the bits from instream to outstream
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 
