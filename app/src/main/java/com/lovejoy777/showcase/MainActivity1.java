@@ -23,8 +23,6 @@ public class MainActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
@@ -74,8 +72,6 @@ public class MainActivity1 extends AppCompatActivity {
             }
         }); // end card3
 
-
-
     } // ends onCreate
 
     @Override
@@ -101,18 +97,17 @@ public class MainActivity1 extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
+
             case R.id.action_settings:
                 Intent intent1 = new Intent();
                 intent1.setClass(this, Settings.class);
                 startActivity(intent1);
                 break;
 
-
         }
 
 
         return super.onOptionsItemSelected(item);
-
 
     }
 

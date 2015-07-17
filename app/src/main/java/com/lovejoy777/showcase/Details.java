@@ -3,24 +3,21 @@ package com.lovejoy777.showcase;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by lovejoy777 on 24/06/15.
  */
+
 public class Details extends AppCompatActivity {
 
     final ImageView ScreenshotimageView[] = new ImageView[3];
@@ -30,7 +27,7 @@ public class Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details);
 
-        // Handle Toolbar
+        // Handle ToolBar
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,12 +36,11 @@ public class Details extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-        // GET STRING SZP
+        // Get String SZP
         final Intent extras = getIntent();
 
-        // GET STRINGS
+        // Get Strings
         String title = extras.getStringExtra("keytitle");
-        final String free = extras.getStringExtra("keyfree");
         final String link = extras.getStringExtra("keylink");
         final String googleplus = extras.getStringExtra("keygoogleplus");
         final String promo = extras.getStringExtra("keypromo");
@@ -54,20 +50,18 @@ public class Details extends AppCompatActivity {
         String description = extras.getStringExtra("keydescription");
         String developer = extras.getStringExtra("keydeveloper");
 
-        // ASIGN VIEWS
-
+        // Asign Views
         ImageView promoimg= (ImageView) findViewById(R.id.promo);
         TextView txt2 = (TextView) findViewById(R.id.tvdescription);
         TextView developertv = (TextView) findViewById(R.id.tvDeveloper);
 
-        // SET TEXT/IMAGE VIEWS
+        // Set text & image Views
         collapsingToolbar.setTitle(title);
         new ImageLoadTaskPromo(promo, promoimg).execute();
         txt2.setText(description);
         developertv.setText(developer);
 
-
-        //Scroll view with screenshots
+        // Scroll view with screenshots
         LinearLayout screenshotLayout = (LinearLayout)findViewById(R.id.LinearLayoutScreenshots);
 
         for (int i=0; i<3;i++){
@@ -83,13 +77,10 @@ public class Details extends AppCompatActivity {
 
                 params.rightMargin = margin;
 
-
                 ScreenshotimageView[i] = new ImageView(this);
-
                 ScreenshotimageView[i].setBackgroundColor(getResources().getColor(R.color.accent));
 
                 linear.setLayoutParams(params);
-
                 linear.addView(ScreenshotimageView[i]);
                 screenshotLayout.addView(linear);
 
@@ -102,7 +93,7 @@ public class Details extends AppCompatActivity {
 
 
 
-        // INSTALL BUTTON
+        // Install button
         Button installbutton;
         installbutton = (Button) findViewById(R.id.button);
 
@@ -117,9 +108,9 @@ public class Details extends AppCompatActivity {
                          startActivity(installtheme, bndlanimation);
 
             }
-        }); // end INSTALLBUTTON
+        }); // End install button
 
-        // GOOGLEPLUS BUTTON
+        // Google Plus button
         Button googleplusbutton;
         googleplusbutton = (Button) findViewById(R.id.button2);
 
@@ -134,9 +125,9 @@ public class Details extends AppCompatActivity {
                 startActivity(googleplustheme, bndlanimation);
 
             }
-        }); // end GOOGLEPLUSBUTTON
+        }); // End Google Plus button
 
-    }
+    } // End onCreate
 
 }
 
