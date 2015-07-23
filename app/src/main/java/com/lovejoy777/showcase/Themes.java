@@ -47,7 +47,7 @@ public class Themes {
             // TODO Auto-generated constructor stub
         }
 
-        public Themes(String title, String description, String author, String link, String googleplus, String promo, String screenshot_1, String screenshot_2, String screenshot_3, String version, String icon) {
+        public Themes(String title, String description, String author, String link, String googleplus, String promo, String screenshot_1, String screenshot_2, String screenshot_3, String version, String donate_link, String free, String donate, String paid, String icon) {
             super();
             this.title = title;
             this.description = description;
@@ -59,6 +59,7 @@ public class Themes {
             this.screenshot_2 = screenshot_2;
             this.screenshot_3 = screenshot_3;
             this.googleplus = googleplus;
+            this.version = version;
             this.donate_link = donate_link;
             this.donate_version = donate_version;
             this.bootani = bootani;

@@ -1,33 +1,23 @@
 package com.lovejoy777.showcase;
 
 import android.app.ActivityOptions;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 /**
- * Created by lovejoy777 on 24/06/15.
+ * Created by lovejoy777 on 23/07/15.
  */
-
-public class Details extends AppCompatActivity {
+public class DonateDetails extends AppCompatActivity {
 
     final ImageView ScreenshotimageView[] = new ImageView[3];
     Bitmap bitmap[] = new Bitmap[3];
@@ -51,6 +41,7 @@ public class Details extends AppCompatActivity {
         // Get Strings
         String title = extras.getStringExtra("keytitle");
         final String link = extras.getStringExtra("keylink");
+        final String donate_link = extras.getStringExtra("keydonate_link");
         final String googleplus = extras.getStringExtra("keygoogleplus");
         final String promo = extras.getStringExtra("keypromo");
         String screenshot_1 = extras.getStringExtra("keyscreenshot_1");
@@ -76,22 +67,22 @@ public class Details extends AppCompatActivity {
         for (int i=0; i<3;i++){
 
 
-                LinearLayout linear = new LinearLayout(this);
+            LinearLayout linear = new LinearLayout(this);
 
-                int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+            int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 
-                LinearLayout.LayoutParams params
-                        = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params
+                    = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 
-                params.rightMargin = margin;
+            params.rightMargin = margin;
 
-                ScreenshotimageView[i] = new ImageView(this);
-                ScreenshotimageView[i].setBackgroundColor(getResources().getColor(R.color.accent));
+            ScreenshotimageView[i] = new ImageView(this);
+            ScreenshotimageView[i].setBackgroundColor(getResources().getColor(R.color.accent));
 
-                linear.setLayoutParams(params);
-                linear.addView(ScreenshotimageView[i]);
-                screenshotLayout.addView(linear);
+            linear.setLayoutParams(params);
+            linear.addView(ScreenshotimageView[i]);
+            screenshotLayout.addView(linear);
 
 
         }
@@ -110,11 +101,11 @@ public class Details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                         Intent installtheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                Intent installtheme = new Intent(Intent.ACTION_VIEW, Uri.parse(donate_link));
 
-                         Bundle bndlanimation =
-                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                         startActivity(installtheme, bndlanimation);
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                startActivity(installtheme, bndlanimation);
 
             }
         }); // End install button
@@ -139,4 +130,3 @@ public class Details extends AppCompatActivity {
     } // End onCreate
 
 }
-

@@ -82,6 +82,7 @@ public class Screen1Donate extends AppCompatActivity  {
                         String free = themesList.get(position).getfree();
                         String title = themesList.get(position).gettitle();
                         String link = themesList.get(position).getlink();
+                        String donate_link = themesList.get(position).getdonate_link();
                         String googleplus = themesList.get(position).getgoogleplus();
                         String promo = themesList.get(position).getpromo();
                         String developer = themesList.get(position).getauthor();
@@ -90,22 +91,23 @@ public class Screen1Donate extends AppCompatActivity  {
                         String screenshot_3 = themesList.get(position).getscreenshot_3();
                         String description = themesList.get(position).getdescription();
 
-                        Intent Detailsactivity = new Intent(Screen1Donate.this, Details.class);
+                        Intent DonateDetails = new Intent(Screen1Donate.this, DonateDetails.class);
 
-                        Detailsactivity.putExtra("free", free);
-                        Detailsactivity.putExtra("keytitle", title);
-                        Detailsactivity.putExtra("keylink", link);
-                        Detailsactivity.putExtra("keygoogleplus", googleplus);
-                        Detailsactivity.putExtra("keypromo", promo);
-                        Detailsactivity.putExtra("keyscreenshot_1", screenshot_1);
-                        Detailsactivity.putExtra("keyscreenshot_2", screenshot_2);
-                        Detailsactivity.putExtra("keyscreenshot_3", screenshot_3);
-                        Detailsactivity.putExtra("keydescription", description);
-                        Detailsactivity.putExtra("keydeveloper", developer);
+                        DonateDetails.putExtra("free", free);
+                        DonateDetails.putExtra("keytitle", title);
+                        DonateDetails.putExtra("keylink", link);
+                        DonateDetails.putExtra("keydonate_link", donate_link);
+                        DonateDetails.putExtra("keygoogleplus", googleplus);
+                        DonateDetails.putExtra("keypromo", promo);
+                        DonateDetails.putExtra("keyscreenshot_1", screenshot_1);
+                        DonateDetails.putExtra("keyscreenshot_2", screenshot_2);
+                        DonateDetails.putExtra("keyscreenshot_3", screenshot_3);
+                        DonateDetails.putExtra("keydescription", description);
+                        DonateDetails.putExtra("keydeveloper", developer);
 
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                        startActivity(Detailsactivity, bndlanimation);
+                        startActivity(DonateDetails, bndlanimation);
                     }
                 })
         );
