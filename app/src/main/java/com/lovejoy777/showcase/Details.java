@@ -1,5 +1,6 @@
 package com.lovejoy777.showcase;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 public class Details extends AppCompatActivity {
 
+    private Activity activity;
     final ImageView ScreenshotimageView[] = new ImageView[3];
     Bitmap bitmap[] = new Bitmap[3];
 
@@ -24,6 +26,8 @@ public class Details extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details);
+
+        activity = this;
 
         // Handle ToolBar
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
@@ -73,6 +77,13 @@ public class Details extends AppCompatActivity {
             linear.setLayoutParams(params);
             linear.addView(ScreenshotimageView[i]);
             screenshotLayout.addView(linear);
+
+            ScreenshotimageView[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FullScreenActivity.launch(activity, (ImageView) view, "img");
+                }
+            });
 
 
         }
