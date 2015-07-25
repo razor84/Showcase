@@ -31,11 +31,11 @@ public class Theme implements Serializable {
     private String lg;
     private String sense;
     private String xperia;
-    private String hdpi;
-    private String mdpi;
-    private String xhdpi;
-    private String xxhdpi;
-    private String xxxhdpi;
+    private boolean hdpi;
+    private boolean mdpi;
+    private boolean xhdpi;
+    private boolean xxhdpi;
+    private boolean xxxhdpi;
     private boolean free;
     private boolean donate;
     private boolean paid;
@@ -267,46 +267,6 @@ public class Theme implements Serializable {
         this.xperia = xperia;
     }
 
-    public String getHdpi() {
-        return hdpi;
-    }
-
-    public void setHdpi(String hdpi) {
-        this.hdpi = hdpi;
-    }
-
-    public String getMdpi() {
-        return mdpi;
-    }
-
-    public void setMdpi(String mdpi) {
-        this.mdpi = mdpi;
-    }
-
-    public String getXhdpi() {
-        return xhdpi;
-    }
-
-    public void setXhdpi(String xhdpi) {
-        this.xhdpi = xhdpi;
-    }
-
-    public String getXxhdpi() {
-        return xxhdpi;
-    }
-
-    public void setXxhdpi(String xxhdpi) {
-        this.xxhdpi = xxhdpi;
-    }
-
-    public String getXxxhdpi() {
-        return xxxhdpi;
-    }
-
-    public void setXxxhdpi(String xxxhdpi) {
-        this.xxxhdpi = xxxhdpi;
-    }
-
     public boolean isFree() {
         return free;
     }
@@ -329,5 +289,45 @@ public class Theme implements Serializable {
 
     public void setPaid(boolean paid) {
         this.paid = paid;
+    }
+
+    public boolean isHdpi() {
+        return hdpi;
+    }
+
+    public void setHdpi(boolean hdpi) {
+        this.hdpi = hdpi;
+    }
+
+    public boolean isMdpi() {
+        return mdpi;
+    }
+
+    public void setMdpi(boolean mdpi) {
+        this.mdpi = mdpi;
+    }
+
+    public boolean isXhdpi() {
+        return xhdpi;
+    }
+
+    public void setXhdpi(boolean xhdpi) {
+        this.xhdpi = xhdpi;
+    }
+
+    public boolean isXxhdpi() {
+        return xxhdpi;
+    }
+
+    public void setXxhdpi(boolean xxhdpi) {
+        this.xxhdpi = xxhdpi;
+    }
+
+    public boolean isXxxhdpi() {
+        return xxxhdpi;
+    }
+
+    public void setXxxhdpi(boolean xxxhdpi) {
+        this.xxxhdpi = xxxhdpi;
     }
 }

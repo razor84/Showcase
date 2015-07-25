@@ -11,10 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 public class Details extends AppCompatActivity {
 
@@ -130,6 +127,19 @@ public class Details extends AppCompatActivity {
             }
         }); // End Google Plus button
 
+
+        //Properties table
+
+        LinearLayout propertiesHolder = (LinearLayout) findViewById(R.id.properties);
+
+
+        propertiesHolder.addView(createRow("mdpi", theme.isMdpi()));
+        propertiesHolder.addView(createRow("hdpi", theme.isHdpi()));
+        propertiesHolder.addView(createRow("xhdpi", theme.isXhdpi()));
+        propertiesHolder.addView(createRow("xxhdpi", theme.isXxhdpi()));
+        propertiesHolder.addView(createRow("xxxhdpi", theme.isXxxhdpi()));
+
+
     } // End onCreate
 
     @Override
@@ -147,6 +157,24 @@ public class Details extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.back2, R.anim.back1);
+    }
+
+
+    public View createRow(String text, boolean isChecked) {
+
+        CheckBox checkBox = new CheckBox(this);
+        checkBox.setText(text);
+        checkBox.setChecked(isChecked);
+        checkBox.setClickable(false);
+
+        TableRow row = new TableRow(this);
+        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+
+        row.addView(checkBox);
+
+        return row;
+
     }
 
 }
