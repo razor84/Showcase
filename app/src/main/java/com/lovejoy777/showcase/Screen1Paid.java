@@ -1,7 +1,6 @@
 package com.lovejoy777.showcase;
 
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.net.ParseException;
 import android.os.AsyncTask;
@@ -17,27 +16,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lovejoy777.showcase.adapters.CardViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
@@ -50,7 +40,7 @@ import java.util.Random;
 public class Screen1Paid extends AppCompatActivity  {
 
     private RecyclerView mRecyclerView;
-    ArrayList<Themes> themesList;
+    ArrayList<Theme> themesList;
     private CardViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefresh = null;
 
@@ -65,7 +55,7 @@ public class Screen1Paid extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
-        themesList = new ArrayList<Themes>();
+        themesList = new ArrayList<Theme>();
 
         new JSONAsyncTask().execute();
 
@@ -80,16 +70,17 @@ public class Screen1Paid extends AppCompatActivity  {
                 new RecyclerItemClickListener(Screen1Paid.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String free = themesList.get(position).getfree();
-                        String title = themesList.get(position).gettitle();
-                        String link = themesList.get(position).getlink();
-                        String googleplus = themesList.get(position).getgoogleplus();
-                        String promo = themesList.get(position).getpromo();
-                        String developer = themesList.get(position).getauthor();
-                        String screenshot_1 = themesList.get(position).getscreenshot_1();
-                        String screenshot_2 = themesList.get(position).getscreenshot_2();
-                        String screenshot_3 = themesList.get(position).getscreenshot_3();
-                        String description = themesList.get(position).getdescription();
+                        String free = String.valueOf(themesList.get(position).isFree());
+                        String title = themesList.get(position).getTitle();
+                        String link = themesList.get(position).getLink();
+                        String googleplus = themesList.get(position).getGoogleplus();
+                        String promo = themesList.get(position).getPromo();
+                        String developer = themesList.get(position).getAuthor();
+                        String screenshot_1 = themesList.get(position).getScreenshot_1();
+                        String screenshot_2 = themesList.get(position).getScreenshot_2();
+                        String screenshot_3 = themesList.get(position).getScreenshot_3();
+                        String description = themesList.get(position).getDescription();
+
 
                         Intent Detailsactivity = new Intent(Screen1Paid.this, Details.class);
 
@@ -168,46 +159,16 @@ public class Screen1Paid extends AppCompatActivity  {
                     JSONObject object = jarray.getJSONObject(j);
                     jarray.put(j, jarray.get(i));
                     jarray.put(i, object);
-                    Themes theme = new Themes();
 
-                    theme.settitle(object.getString("title"));
-                    theme.setdescription(object.getString("description"));
-                    theme.setauthor(object.getString("author"));
-                    theme.setlink(object.getString("link"));
-                    theme.seticon(object.getString("icon"));
-                    theme.setpromo(object.getString("promo"));
-                    theme.setscreenshot_1(object.getString("screenshot_1"));
-                    theme.setscreenshot_2(object.getString("screenshot_2"));
-                    theme.setscreenshot_3(object.getString("screenshot_3"));
-                    theme.setgoogleplus(object.getString("googleplus"));
-                    theme.setversion(object.getString("version"));
-                    theme.setdonate_link(object.getString("donate_link"));
-                    theme.setdonate_version(object.getString("donate_version"));
-                    theme.setbootani(object.getString("bootani"));
-                    theme.setfont(object.getString("font"));
-                    theme.setwallpaper(object.getString("wallpaper"));
-                    theme.setplugin_version(object.getString("plugin_version"));
-                    theme.setfor_L(object.getString("for_L"));
-                    theme.setfor_M(object.getString("for_M"));
-                    theme.setbasic(object.getString("basic"));
-                    theme.setbasic_m(object.getString("basic_m"));
-                    theme.settype2(object.getString("type2"));
-                    theme.settype3(object.getString("type3"));
-                    theme.settype3_m(object.getString("type3_m"));
-                    theme.settouchwiz(object.getString("touchwiz"));
-                    theme.setlg(object.getString("lg"));
-                    theme.setsense(object.getString("sense"));
-                    theme.setxperia(object.getString("xperia"));
-                    theme.sethdpi(object.getString("hdpi"));
-                    theme.setmdpi(object.getString("mdpi"));
-                    theme.setxhdpi(object.getString("xhdpi"));
-                    theme.setxxhdpi(object.getString("xxhdpi"));
-                    theme.setxxxhdpi(object.getString("xxhdpi"));
-                    theme.setfree(object.getString("free"));
-                    theme.setdonate(object.getString("donate"));
-                    theme.setpaid(object.getString("paid"));
 
-                    if (theme.getpaid().contains("true")) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+                    Theme theme = objectMapper
+                            .readValue(object.toString(), Theme.class);
+
+
+                    if (theme.isPaid()) {
                         themesList.add(theme);
                     }
                 }
