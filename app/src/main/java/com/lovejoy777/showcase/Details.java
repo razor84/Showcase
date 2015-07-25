@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -41,7 +42,9 @@ public class Details extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
@@ -73,6 +76,7 @@ public class Details extends AppCompatActivity {
         // Scroll view with screenshots
         LinearLayout screenshotLayout = (LinearLayout)findViewById(R.id.LinearLayoutScreenshots);
 
+
         for (int i=0; i<3;i++){
 
 
@@ -95,6 +99,7 @@ public class Details extends AppCompatActivity {
 
 
         }
+
 
         new ImageLoadTask(this, screenshot_1, ScreenshotimageView[0]).execute();
         new ImageLoadTask(this, screenshot_2, ScreenshotimageView[1]).execute();
@@ -137,6 +142,23 @@ public class Details extends AppCompatActivity {
         }); // End Google Plus button
 
     } // End onCreate
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.back2, R.anim.back1);
+    }
 
 }
 

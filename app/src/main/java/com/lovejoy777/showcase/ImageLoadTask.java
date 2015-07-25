@@ -11,9 +11,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by lovejoy777 on 25/06/15.
- */
 public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
     private Context context;
     private String url;
