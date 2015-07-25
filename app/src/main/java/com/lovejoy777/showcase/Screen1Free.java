@@ -50,6 +50,7 @@ public class Screen1Free extends AppCompatActivity {
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        toolbar.setTitle(mode + " Themes");
         setSupportActionBar(toolbar);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
@@ -69,31 +70,8 @@ public class Screen1Free extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        String free = String.valueOf(themesList.get(position).isFree());
-                        String title = themesList.get(position).getTitle();
-                        String link = themesList.get(position).getLink();
-                        String googleplus = themesList.get(position).getGoogleplus();
-                        String promo = themesList.get(position).getPromo();
-                        String developer = themesList.get(position).getAuthor();
-                        String screenshot_1 = themesList.get(position).getScreenshot_1();
-                        String screenshot_2 = themesList.get(position).getScreenshot_2();
-                        String screenshot_3 = themesList.get(position).getScreenshot_3();
-                        String description = themesList.get(position).getDescription();
-
-                        Class destinationClass = mode.equals("donate") ? DonateDetails.class : Details.class;
-
-                        Intent Detailsactivity = new Intent(Screen1Free.this, destinationClass);
-
-                        Detailsactivity.putExtra("free", free);
-                        Detailsactivity.putExtra("keytitle", title);
-                        Detailsactivity.putExtra("keylink", link);
-                        Detailsactivity.putExtra("keygoogleplus", googleplus);
-                        Detailsactivity.putExtra("keypromo", promo);
-                        Detailsactivity.putExtra("keyscreenshot_1", screenshot_1);
-                        Detailsactivity.putExtra("keyscreenshot_2", screenshot_2);
-                        Detailsactivity.putExtra("keyscreenshot_3", screenshot_3);
-                        Detailsactivity.putExtra("keydescription", description);
-                        Detailsactivity.putExtra("keydeveloper", developer);
+                        Intent Detailsactivity = new Intent(Screen1Free.this, Details.class);
+                        Detailsactivity.putExtra("theme", themesList.get(position));
 
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -165,9 +143,9 @@ public class Screen1Free extends AppCompatActivity {
                             .readValue(object.toString(), Theme.class);
 
 
-                    if ((theme.isFree() && mode.equals("free"))
-                            || (theme.isPaid() && mode.equals("paid"))
-                            || (theme.isDonate() && mode.equals("donate"))) {
+                    if ((theme.isFree() && mode.equals("Free"))
+                            || (theme.isPaid() && mode.equals("Paid"))
+                            || (theme.isDonate() && mode.equals("Donate"))) {
                         themesList.add(theme);
                     }
                 }

@@ -1,6 +1,8 @@
 package com.lovejoy777.showcase;
 
-public class Theme {
+import java.io.Serializable;
+
+public class Theme implements Serializable {
     private String title;
     private String description;
     private String author;
