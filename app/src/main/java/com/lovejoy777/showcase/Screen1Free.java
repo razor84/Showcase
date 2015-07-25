@@ -45,6 +45,8 @@ public class Screen1Free extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen1);
 
+        mode = getIntent().getStringExtra("type");
+
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
@@ -78,7 +80,9 @@ public class Screen1Free extends AppCompatActivity {
                         String screenshot_3 = themesList.get(position).getScreenshot_3();
                         String description = themesList.get(position).getDescription();
 
-                        Intent Detailsactivity = new Intent(Screen1Free.this, Details.class);
+                        Class destinationClass = mode.equals("donate") ? DonateDetails.class : Details.class;
+
+                        Intent Detailsactivity = new Intent(Screen1Free.this, destinationClass);
 
                         Detailsactivity.putExtra("free", free);
                         Detailsactivity.putExtra("keytitle", title);
@@ -156,12 +160,14 @@ public class Screen1Free extends AppCompatActivity {
 
                     ObjectMapper objectMapper = new ObjectMapper();
                     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                    
+
                     Theme theme = objectMapper
                             .readValue(object.toString(), Theme.class);
 
 
-                    if (theme.isFree()) {
+                    if ((theme.isFree() && mode.equals("free"))
+                            || (theme.isPaid() && mode.equals("paid"))
+                            || (theme.isDonate() && mode.equals("donate"))) {
                         themesList.add(theme);
                     }
                 }
