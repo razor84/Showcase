@@ -14,15 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.MappedByteBuffer;
@@ -69,28 +63,28 @@ public class MainActivity1 extends AppCompatActivity {
         final DownloadTagnameTask downloadTagnameTask = new DownloadTagnameTask(MainActivity1.this);
         downloadTagnameTask.execute("https://api.github.com/repos/BitSyko/layers_showcase_json/releases/latest");
 
-     /**   // if /showcase/tagname/tagname.json doesnt exist then copy file.
-        File dir3 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-        if (!dir3.exists()) {
-            try
-            {
-                InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-                OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
+        /**   // if /showcase/tagname/tagname.json doesnt exist then copy file.
+         File dir3 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
+         if (!dir3.exists()) {
+         try
+         {
+         InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
+         OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
 
-                // Copy the bits from instream to outstream
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        } */
+         // Copy the bits from instream to outstream
+         byte[] buf = new byte[1024];
+         int len;
+         while ((len = in.read(buf)) > 0) {
+         out.write(buf, 0, len);
+         }
+         in.close();
+         out.close();
+         }
+         catch (IOException e)
+         {
+         e.printStackTrace();
+         }
+         } */
 
         card1 = (CardView) findViewById(R.id.CardView_freethemes1);
         card2 = (CardView) findViewById(R.id.CardView_paidthemes2);
@@ -102,6 +96,7 @@ public class MainActivity1 extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent freeactivity = new Intent(MainActivity1.this, Screen1Free.class);
+                freeactivity.putExtra("type", "Free");
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -114,7 +109,9 @@ public class MainActivity1 extends AppCompatActivity {
         card2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent donateactivity = new Intent(MainActivity1.this, Screen1Paid.class);
+
+                Intent donateactivity = new Intent(MainActivity1.this, Screen1Free.class);
+                donateactivity.putExtra("type", "Paid");
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -127,7 +124,8 @@ public class MainActivity1 extends AppCompatActivity {
         card3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent noneplaystoreactivity = new Intent(MainActivity1.this, Screen1Donate.class);
+                Intent noneplaystoreactivity = new Intent(MainActivity1.this, Screen1Free.class);
+                noneplaystoreactivity.putExtra("type", "Donate");
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -204,89 +202,90 @@ public class MainActivity1 extends AppCompatActivity {
 
 
         }
+
         @Override
         protected void onPostExecute(String result) {
             //  mWakeLock.release();
             if (result != null)
                 Toast.makeText(context, "Download tagname error: ", Toast.LENGTH_LONG).show();
 
-             else
+            else
 
 
                 movetagnamejson();
 
-                // compare new tagname json with existing tagname
+            // compare new tagname json with existing tagname
+            try {
+
+                File tagname1 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
+                FileInputStream stream1 = new FileInputStream(tagname1);
+                String jString1 = null;
                 try {
-
-                    File tagname1 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-                    FileInputStream stream1 = new FileInputStream(tagname1);
-                    String jString1 = null;
-                    try {
-                        FileChannel fc = stream1.getChannel();
-                        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+                    FileChannel fc = stream1.getChannel();
+                    MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
                 /* Instead of using default, pass in a decoder. */
-                        jString1 = Charset.defaultCharset().decode(bb).toString();
-                    } finally {
-                        stream1.close();
-                    }
-
-                    JSONObject jObject1 = new JSONObject(jString1);
-
-                    String tag_name1 = jObject1.getString("tag_name");
-
-                    File tagname = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-                    FileInputStream stream = new FileInputStream(tagname);
-                    String jString = null;
-                    try {
-                        FileChannel fc = stream.getChannel();
-                        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-                /* Instead of using default, pass in a decoder. */
-                        jString = Charset.defaultCharset().decode(bb).toString();
-                    } finally {
-                        stream.close();
-                    }
-
-                    JSONObject jObject = new JSONObject(jString);
-
-                    String tag_name = jObject.getString("tag_name");
-
-                    // check new against existing tagnames
-                    if (!tag_name1.equals(tag_name)) {
-
-                        //Toast.makeText(getApplicationContext(), "update", Toast.LENGTH_LONG).show();
-                        // cp new tagname json to existing tagname json
-                        InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-                        OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-
-                        // Copy the bits from instream to outstream
-                        byte[] buf = new byte[1024];
-                        int len;
-                        while ((len = in.read(buf)) > 0) {
-                            out.write(buf, 0, len);
-                        }
-                        in.close();
-                        out.close();
-
-                        // if update is available download showcase.json
-                        final DownloadShowcaseTask downloadShowcaseTask = new DownloadShowcaseTask(MainActivity1.this);
-                        downloadShowcaseTask.execute("https://github.com/BitSyko/layers_showcase_json/releases/download/" + tag_name + "/showcase.json");
-
-                    }
-
-
-                    // if showcase.json doesnt exist download
-                    File dir4 = new File(Environment.getExternalStorageDirectory() + "/showcase/showcasejson/showcase.json");
-                    if (!dir4.exists()) {
-
-                        // download showcase.json
-                        final DownloadShowcaseTask downloadShowcaseTask = new DownloadShowcaseTask(MainActivity1.this);
-                        downloadShowcaseTask.execute("https://github.com/BitSyko/layers_showcase_json/releases/download/" + tag_name + "/showcase.json");
-
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    jString1 = Charset.defaultCharset().decode(bb).toString();
+                } finally {
+                    stream1.close();
                 }
+
+                JSONObject jObject1 = new JSONObject(jString1);
+
+                String tag_name1 = jObject1.getString("tag_name");
+
+                File tagname = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
+                FileInputStream stream = new FileInputStream(tagname);
+                String jString = null;
+                try {
+                    FileChannel fc = stream.getChannel();
+                    MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+                /* Instead of using default, pass in a decoder. */
+                    jString = Charset.defaultCharset().decode(bb).toString();
+                } finally {
+                    stream.close();
+                }
+
+                JSONObject jObject = new JSONObject(jString);
+
+                String tag_name = jObject.getString("tag_name");
+
+                // check new against existing tagnames
+                if (!tag_name1.equals(tag_name)) {
+
+                    //Toast.makeText(getApplicationContext(), "update", Toast.LENGTH_LONG).show();
+                    // cp new tagname json to existing tagname json
+                    InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
+                    OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
+
+                    // Copy the bits from instream to outstream
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    in.close();
+                    out.close();
+
+                    // if update is available download showcase.json
+                    final DownloadShowcaseTask downloadShowcaseTask = new DownloadShowcaseTask(MainActivity1.this);
+                    downloadShowcaseTask.execute("https://github.com/BitSyko/layers_showcase_json/releases/download/" + tag_name + "/showcase.json");
+
+                }
+
+
+                // if showcase.json doesnt exist download
+                File dir4 = new File(Environment.getExternalStorageDirectory() + "/showcase/showcasejson/showcase.json");
+                if (!dir4.exists()) {
+
+                    // download showcase.json
+                    final DownloadShowcaseTask downloadShowcaseTask = new DownloadShowcaseTask(MainActivity1.this);
+                    downloadShowcaseTask.execute("https://github.com/BitSyko/layers_showcase_json/releases/download/" + tag_name + "/showcase.json");
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
     }
@@ -296,8 +295,7 @@ public class MainActivity1 extends AppCompatActivity {
         // if /showcase/tagname/tagname.json doesnt exist then copy file.
         File dir3 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
         if (!dir3.exists()) {
-            try
-            {
+            try {
                 InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
                 OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
 
@@ -309,9 +307,7 @@ public class MainActivity1 extends AppCompatActivity {
                 }
                 in.close();
                 out.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -402,7 +398,7 @@ public class MainActivity1 extends AppCompatActivity {
         }
     }
 
-            @Override
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.back2, R.anim.back1);
@@ -425,7 +421,9 @@ public class MainActivity1 extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.action_settings:
                 Intent intent1 = new Intent();
                 intent1.setClass(this, Settings.class);

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.Themes;
+import com.lovejoy777.showcase.Theme;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import java.util.ArrayList;
  */
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder>{
 
-    private ArrayList<Themes> themes;
-    private ArrayList<Themes> test;
+    private ArrayList<Theme> themes;
+    private ArrayList<Theme> test;
     private int rowLayout;
     private Context mContext;
 
-    public CardViewAdapter(ArrayList<Themes> themes, int rowLayout, Context context) {
+    public CardViewAdapter(ArrayList<Theme> themes, int rowLayout, Context context) {
         this.themes = themes;
         this.rowLayout = rowLayout;
         this.mContext = context;
@@ -42,11 +42,11 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        Themes theme = themes.get(i);
-        viewHolder.themeName.setText(theme.gettitle());
-        viewHolder.themeDeveloper.setText(theme.getauthor());
+        Theme theme = themes.get(i);
+        viewHolder.themeName.setText(theme.getTitle());
+        viewHolder.themeDeveloper.setText(theme.getAuthor());
         viewHolder.themeImage.setImageResource(R.mipmap.ic_launcher);
-        new DownloadImageTask(viewHolder.themeImage).execute(themes.get(i).geticon());
+        new DownloadImageTask(viewHolder.themeImage).execute(themes.get(i).getIcon());
 
 
     }

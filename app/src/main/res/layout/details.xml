@@ -44,7 +44,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--</android.support.v4.widget.NestedScrollView> -->
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -209,6 +208,45 @@
                     </LinearLayout>
                 </HorizontalScrollView>
             </LinearLayout>
+
+            <android.support.v7.widget.CardView
+
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                card_view:cardBackgroundColor="@color/card_background"
+                android:layout_below="@+id/test"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="36dp"
+                android:id="@+id/CardViewCategory2"
+                android:elegantTextHeight="false"
+                android:elevation="5dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Tv_Category2Name"
+                    android:elevation="5dp"
+                    android:textColor="@color/accent"
+                    android:textStyle="bold"
+                    android:text="Properties"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginStart="16dp"
+                    android:id="@+id/properties"
+                    android:layout_marginBottom="16dp">
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </RelativeLayout>
 

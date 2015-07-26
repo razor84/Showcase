@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ import java.util.ArrayList;
 /**
  * Created by lovejoy777 on 23/06/15.
  */
-public class Screen1Adapter extends ArrayAdapter<Themes> {
-    ArrayList<Themes> themeList;
-    ArrayList<Themes> themeList1;
+public class Screen1Adapter extends ArrayAdapter<Theme> {
+    ArrayList<Theme> themeList;
+    ArrayList<Theme> themeList1;
     LayoutInflater vi;
     int Resource;
     ViewHolder holder;
@@ -31,7 +30,7 @@ public class Screen1Adapter extends ArrayAdapter<Themes> {
 
 
 
-    public Screen1Adapter(Context context, int resource, ArrayList<Themes> objects) {
+    public Screen1Adapter(Context context, int resource, ArrayList<Theme> objects) {
         super(context, resource, objects);
         vi = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,10 +56,10 @@ public class Screen1Adapter extends ArrayAdapter<Themes> {
             holder = (ViewHolder) v.getTag();
         }
         holder.iconview.setImageResource(R.mipmap.ic_launcher);
-        new DownloadImageTask(holder.iconview).execute(themeList.get(position).geticon());
-        holder.tvtitle.setText(themeList.get(position).gettitle());
-        holder.tvauthor.setText("Author: " + themeList.get(position).getauthor());
-        holder.tvversion.setText("version: " + themeList.get(position).getversion());
+        new DownloadImageTask(holder.iconview).execute(themeList.get(position).getIcon());
+        holder.tvtitle.setText(themeList.get(position).getTitle());
+        holder.tvauthor.setText("Author: " + themeList.get(position).getAuthor());
+        holder.tvversion.setText("version: " + themeList.get(position).getVersion());
         return v;
 
     }

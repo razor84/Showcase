@@ -103,6 +103,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".FullScreenActivity"/>
+
     </application>
 
 </manifest>
