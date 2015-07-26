@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class Details extends AppCompatActivity {
 
@@ -31,6 +34,9 @@ public class Details extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+        final Point screenSize = new Point();
+        getWindowManager().getDefaultDisplay().getRealSize(screenSize);
+
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -49,47 +55,49 @@ public class Details extends AppCompatActivity {
 
         // Set text & image Views
         collapsingToolbar.setTitle(theme.getTitle());
-        new ImageLoadTaskPromo(theme.getPromo(), promoimg).execute();
+
+        Glide.with(this).load(theme.getPromo()).asBitmap().placeholder(R.drawable.loadingpromo).into(promoimg);
+
         txt2.setText(theme.getDescription());
         developertv.setText(theme.getAuthor());
 
         // Scroll view with screenshots
         LinearLayout screenshotLayout = (LinearLayout) findViewById(R.id.LinearLayoutScreenshots);
 
+        //   screenshotLayout.getLayoutParams().height = screenSize.y / 2;
+        //   screenshotLayout.requestLayout();
+
+        final String[] screenshotsUrls = {
+                theme.getScreenshot_1(),
+                theme.getScreenshot_2(),
+                theme.getScreenshot_3()};
+
+
+        float height = screenSize.y / 2;
+
+        Log.d("Height: ", String.valueOf(height));
+
         for (int i = 0; i < 3; i++) {
-
-            LinearLayout linear = new LinearLayout(this);
-
-            int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
-
-            LinearLayout.LayoutParams params
-                    = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-
-            params.rightMargin = margin;
-
             ScreenshotimageView[i] = new ImageView(this);
-            ScreenshotimageView[i].setBackgroundColor(getResources().getColor(R.color.accent));
 
-            linear.setLayoutParams(params);
-            linear.addView(ScreenshotimageView[i]);
-            screenshotLayout.addView(linear);
+            screenshotLayout.addView(ScreenshotimageView[i]);
 
+            final int finalI = i;
             ScreenshotimageView[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FullScreenActivity.launch(activity, (ImageView) view, "img");
+                    FullScreenActivity.launch(activity, (ImageView) view, screenshotsUrls[finalI], "img");
                 }
             });
 
+            Glide.with(this)
+                    .load(screenshotsUrls[finalI])
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .override((int) (height * 0.66), (int) height)
+                    .into(ScreenshotimageView[finalI]);
 
         }
-
-
-        new ImageLoadTask(this, theme.getScreenshot_1(), ScreenshotimageView[0]).execute();
-        new ImageLoadTask(this, theme.getScreenshot_2(), ScreenshotimageView[1]).execute();
-        new ImageLoadTask(this, theme.getScreenshot_3(), ScreenshotimageView[2]).execute();
-
 
         // Install button
         Button installbutton;
@@ -169,7 +177,6 @@ public class Details extends AppCompatActivity {
 
         TableRow row = new TableRow(this);
         row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
 
         row.addView(checkBox);
 
