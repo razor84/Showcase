@@ -13,8 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Picasso;
 
 public class Details extends AppCompatActivity {
 
@@ -55,7 +54,7 @@ public class Details extends AppCompatActivity {
         // Set text & image Views
         collapsingToolbar.setTitle(theme.getTitle());
 
-        Glide.with(this).load(theme.getPromo()).asBitmap().placeholder(R.drawable.loadingpromo).into(promoimg);
+        Picasso.with(this).load(theme.getPromo()).placeholder(R.drawable.loadingpromo).into(promoimg);
 
         txt2.setText(theme.getDescription());
         developertv.setText(theme.getAuthor());
@@ -89,12 +88,11 @@ public class Details extends AppCompatActivity {
                 }
             });
 
-            Glide.with(this)
+            Picasso.with(this)
                     .load(screenshotsUrls[finalI])
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .override((int) (height * 0.66), (int) height)
+                    .centerInside()
+                    .resize((int) (height * 0.66), (int) height)
                     .into(ScreenshotimageView[finalI]);
-
         }
 
         // Install button

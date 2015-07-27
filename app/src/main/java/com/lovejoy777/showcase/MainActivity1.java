@@ -23,9 +23,6 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
-/**
- * Created by lovejoy777 on 03/07/15.
- */
 public class MainActivity1 extends AppCompatActivity {
 
     CardView card1, card2, card3;
@@ -427,7 +424,9 @@ public class MainActivity1 extends AppCompatActivity {
             case R.id.action_settings:
                 Intent intent1 = new Intent();
                 intent1.setClass(this, Settings.class);
-                startActivity(intent1);
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                startActivity(intent1, bndlanimation);
                 break;
         }
 

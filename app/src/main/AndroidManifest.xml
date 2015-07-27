@@ -49,44 +49,11 @@
         </activity>
 
         <activity
-            android:name=".Screen1Paid"
-            android:label="@string/paid"
-            android:theme="@style/Toolbar2" >
-            <intent-filter>
-                <action android:name="android.intent.action.SCREEN1PAID" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".Screen1Donate"
-            android:label="@string/donate"
-            android:theme="@style/Theme.Toolbar" >
-            <intent-filter>
-                <action android:name="android.intent.action.SCREEN1NONPS" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".Details"
             android:label="@string/details"
             android:theme="@style/Theme.Toolbar">
             <intent-filter>
                 <action android:name="android.intent.action.INFOFREE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".DonateDetails"
-            android:label="@string/details"
-            android:theme="@style/Toolbar2">
-            <intent-filter>
-                <action android:name="android.intent.action.INFODONATE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
