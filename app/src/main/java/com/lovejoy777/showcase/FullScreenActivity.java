@@ -24,6 +24,8 @@ public class FullScreenActivity extends Activity {
 
         Picasso.with(this)
                 .load(getIntent().getStringExtra("url"))
+                .fit()
+                .centerInside()
                 .placeholder(drawable)
                 .into(image);
 
