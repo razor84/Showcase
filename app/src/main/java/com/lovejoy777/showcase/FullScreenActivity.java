@@ -8,11 +8,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.widget.ImageView;
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 public class FullScreenActivity extends Activity {
 
-    //FIXME:
+    //#BlameAndrew
     private static Drawable drawable;
 
     @Override
@@ -20,13 +20,15 @@ public class FullScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_screen);
 
-        ImageView image = (ImageView) findViewById(R.id.image);
+        final ImageView image = (ImageView) findViewById(R.id.image);
 
-        Glide.with(this)
+        Picasso.with(this)
                 .load(getIntent().getStringExtra("url"))
-                .fitCenter()
+                .fit()
+                .centerInside()
                 .placeholder(drawable)
                 .into(image);
+
     }
 
     public static void launch(Activity activity, ImageView transitionView, String url, String id) {
@@ -39,6 +41,7 @@ public class FullScreenActivity extends Activity {
         transitionView.setTransitionName(id);
         Intent intent = new Intent(activity, FullScreenActivity.class);
         intent.putExtra("url", url);
+
         ActivityCompat.startActivity(activity, intent, options.toBundle());
 
     }
@@ -46,6 +49,5 @@ public class FullScreenActivity extends Activity {
     public void click(View view) {
         this.finishAfterTransition();
     }
-
 
 }

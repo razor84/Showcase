@@ -98,10 +98,6 @@ public class Screen1 extends AppCompatActivity {
             public void onRefresh() {
                 themesList.clear();
                 new JSONAsyncTask().execute();
-                onItemsLoadComplete();
-            }
-
-            void onItemsLoadComplete() {
             }
         });
     }
