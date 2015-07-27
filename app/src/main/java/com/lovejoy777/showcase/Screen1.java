@@ -38,6 +38,7 @@ public class Screen1 extends AppCompatActivity {
     private CardViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefresh = null;
     private String mode;
+    private String modeTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,12 @@ public class Screen1 extends AppCompatActivity {
         setContentView(R.layout.screen1);
 
         mode = getIntent().getStringExtra("type");
+        modeTitle = getIntent().getStringExtra("title");
 
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        toolbar.setTitle(mode + " Themes");
+        toolbar.setTitle(modeTitle + " Themes");
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;

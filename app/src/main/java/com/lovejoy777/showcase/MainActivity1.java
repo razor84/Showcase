@@ -28,7 +28,7 @@ import java.nio.charset.Charset;
  */
 public class MainActivity1 extends AppCompatActivity {
 
-    CardView card1, card2, card3;
+    CardView card1, card2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,6 @@ public class MainActivity1 extends AppCompatActivity {
 
         card1 = (CardView) findViewById(R.id.CardView_freethemes1);
         card2 = (CardView) findViewById(R.id.CardView_paidthemes2);
-        card3 = (CardView) findViewById(R.id.CardView_nonpsthemes3);
 
         // CARD 1
         card1.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +96,7 @@ public class MainActivity1 extends AppCompatActivity {
 
                 Intent freeactivity = new Intent(MainActivity1.this, Screen1.class);
                 freeactivity.putExtra("type", "Free");
+                freeactivity.putExtra("title", "Free/Donate");
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -112,6 +112,7 @@ public class MainActivity1 extends AppCompatActivity {
 
                 Intent donateactivity = new Intent(MainActivity1.this, Screen1.class);
                 donateactivity.putExtra("type", "Paid");
+                donateactivity.putExtra("title", "Paid");
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -120,19 +121,7 @@ public class MainActivity1 extends AppCompatActivity {
             }
         }); // end card2
 
-        // CARD 3
-        card3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent noneplaystoreactivity = new Intent(MainActivity1.this, Screen1.class);
-                noneplaystoreactivity.putExtra("type", "Donate");
 
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(noneplaystoreactivity, bndlanimation);
-
-            }
-        }); // end card3
 
     } // ends onCreate
 

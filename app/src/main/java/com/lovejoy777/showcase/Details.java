@@ -97,7 +97,7 @@ public class Details extends AppCompatActivity {
 
         }
 
-        // Install button
+        // Get Theme button
         Button installbutton;
         installbutton = (Button) findViewById(R.id.button);
 
@@ -105,7 +105,7 @@ public class Details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String link = theme.isDonate() ? theme.getDonate_link() : theme.getLink();
+                String link = theme.getLink();
 
                 Intent installtheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 
@@ -114,13 +114,40 @@ public class Details extends AppCompatActivity {
                 startActivity(installtheme, bndlanimation);
 
             }
-        }); // End install button
+        }); // End Get Theme button
 
-        // Google Plus button
-        Button googleplusbutton;
-        googleplusbutton = (Button) findViewById(R.id.button2);
+        // Donate button
+        Button donatebutton;
+        donatebutton = (Button) findViewById(R.id.button1);
 
-        googleplusbutton.setOnClickListener(new View.OnClickListener() {
+        String link = theme.getDonate_link();
+
+        if (link.equals("false")) {
+
+            donatebutton.setVisibility(View.GONE);
+        }
+
+        donatebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String link = theme.getDonate_link();
+
+
+                Intent donatetheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+
+                Bundle bndlanimation =
+                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                startActivity(donatetheme, bndlanimation);
+
+            }
+        }); // End Donate button
+
+        // Info button
+        Button infobutton;
+        infobutton = (Button) findViewById(R.id.button2);
+
+        infobutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -131,7 +158,7 @@ public class Details extends AppCompatActivity {
                 startActivity(googleplustheme, bndlanimation);
 
             }
-        }); // End Google Plus button
+        }); // End Info button
 
 
         //Properties table
