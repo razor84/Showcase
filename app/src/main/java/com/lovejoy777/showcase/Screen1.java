@@ -6,12 +6,12 @@ import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.*;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -32,9 +32,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Screen1Free extends AppCompatActivity {
+public class Screen1 extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
     ArrayList<Theme> themesList;
     private CardViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefresh = null;
@@ -52,26 +51,34 @@ public class Screen1Free extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
         toolbar.setTitle(mode + " Themes");
         setSupportActionBar(toolbar);
+
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         themesList = new ArrayList<Theme>();
 
         new JSONAsyncTask().execute();
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.cardList);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.cardList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout, this);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.filter("");
+
 
         mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(Screen1Free.this, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(Screen1.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        Intent Detailsactivity = new Intent(Screen1Free.this, Details.class);
-                        Detailsactivity.putExtra("theme", themesList.get(position));
+                        Intent Detailsactivity = new Intent(Screen1.this, Details.class);
+
+                        Detailsactivity.putExtra("theme", mAdapter.getItem(position));
 
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -79,6 +86,8 @@ public class Screen1Free extends AppCompatActivity {
                     }
                 })
         );
+
+
 
         //initialize swipetorefresh
         mSwipeRefresh.setColorSchemeResources(R.color.accent, R.color.primary);
@@ -93,6 +102,33 @@ public class Screen1Free extends AppCompatActivity {
             void onItemsLoadComplete() {
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                mAdapter.filter(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                mAdapter.filter(s);
+                return false;
+            }
+        });
+
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
@@ -165,8 +201,10 @@ public class Screen1Free extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
-            if (result == false)
+            mAdapter.filter("");
+            if (!result) {
                 Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
+            }
             mSwipeRefresh.post(new Runnable() {
                 @Override
                 public void run() {

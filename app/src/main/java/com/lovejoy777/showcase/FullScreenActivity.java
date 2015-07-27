@@ -24,7 +24,7 @@ public class FullScreenActivity extends Activity {
 
         Glide.with(this)
                 .load(getIntent().getStringExtra("url"))
-                .asBitmap()
+                .fitCenter()
                 .placeholder(drawable)
                 .into(image);
     }

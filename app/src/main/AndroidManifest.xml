@@ -38,7 +38,7 @@
 
 
         <activity
-            android:name=".Screen1Free"
+            android:name=".Screen1"
             android:label="@string/free"
             android:theme="@style/Toolbar2" >
             <intent-filter>

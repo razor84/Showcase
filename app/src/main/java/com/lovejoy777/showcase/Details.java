@@ -33,7 +33,6 @@ public class Details extends AppCompatActivity {
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         final Point screenSize = new Point();
         getWindowManager().getDefaultDisplay().getRealSize(screenSize);
 
@@ -92,7 +91,6 @@ public class Details extends AppCompatActivity {
 
             Glide.with(this)
                     .load(screenshotsUrls[finalI])
-                    .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .override((int) (height * 0.66), (int) height)
                     .into(ScreenshotimageView[finalI]);

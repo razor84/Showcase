@@ -95,7 +95,7 @@ public class MainActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent freeactivity = new Intent(MainActivity1.this, Screen1Free.class);
+                Intent freeactivity = new Intent(MainActivity1.this, Screen1.class);
                 freeactivity.putExtra("type", "Free");
 
                 Bundle bndlanimation =
@@ -110,7 +110,7 @@ public class MainActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent donateactivity = new Intent(MainActivity1.this, Screen1Free.class);
+                Intent donateactivity = new Intent(MainActivity1.this, Screen1.class);
                 donateactivity.putExtra("type", "Paid");
 
                 Bundle bndlanimation =
@@ -124,7 +124,7 @@ public class MainActivity1 extends AppCompatActivity {
         card3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent noneplaystoreactivity = new Intent(MainActivity1.this, Screen1Free.class);
+                Intent noneplaystoreactivity = new Intent(MainActivity1.this, Screen1.class);
                 noneplaystoreactivity.putExtra("type", "Donate");
 
                 Bundle bndlanimation =
