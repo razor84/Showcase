@@ -12,15 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lovejoy777.showcase.R;
 import com.lovejoy777.showcase.Theme;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
-/**
- * Created by Niklas on 26.06.2015.
- */
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder>{
 
     private ArrayList<Theme> themes;
@@ -45,9 +43,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         Theme theme = themes.get(i);
         viewHolder.themeName.setText(theme.getTitle());
         viewHolder.themeDeveloper.setText(theme.getAuthor());
-        viewHolder.themeImage.setImageResource(R.mipmap.ic_launcher);
-        new DownloadImageTask(viewHolder.themeImage).execute(themes.get(i).getIcon());
-
+        Glide.with(mContext).load(theme.getIcon()).placeholder(R.mipmap.ic_launcher).into(viewHolder.themeImage);
 
     }
 
@@ -72,29 +68,4 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmicon;
-
-        public DownloadImageTask(ImageView bmimage) {
-            this.bmicon = bmimage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap micon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                micon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return micon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmicon.setImageBitmap(result);
-        }
-
-    }
 }
