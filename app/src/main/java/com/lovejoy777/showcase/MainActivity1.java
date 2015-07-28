@@ -191,7 +191,7 @@ public class MainActivity1 extends AppCompatActivity {
         protected void onPostExecute(String result) {
             //  mWakeLock.release();
             if (result != null)
-                Toast.makeText(context, "Download tagname error: ", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Download database error: ", Toast.LENGTH_LONG).show();
 
             else
 
@@ -376,7 +376,7 @@ public class MainActivity1 extends AppCompatActivity {
         protected void onPostExecute(String result) {
             progressShowcase.dismiss();
             if (result != null)
-                Toast.makeText(context, "Download showcase error: ", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Download database error: ", Toast.LENGTH_LONG).show();
 
 
         }

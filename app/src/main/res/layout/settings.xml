@@ -102,7 +102,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Warning: Only for supported roms with"
+                        android:text="Be sure your ROM includes the Layers Manager in the Settings app"
                         android:id="@+id/textView5"
                         android:layout_gravity="start|top"
                         android:layout_marginStart="16dp"

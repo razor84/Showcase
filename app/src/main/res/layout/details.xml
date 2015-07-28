@@ -238,7 +238,7 @@
                     android:elevation="5dp"
                     android:textColor="@color/accent"
                     android:textStyle="bold"
-                    android:text="Properties"
+                    android:text="@string/screensize"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:textSize="16sp"/>

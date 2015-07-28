@@ -50,7 +50,7 @@ public class Screen1 extends AppCompatActivity {
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        toolbar.setTitle(mode + " Themes");
+        toolbar.setTitle(mode + " Layers");
         setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
@@ -200,7 +200,7 @@ public class Screen1 extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             mAdapter.filter("");
             if (!result) {
-                Toast.makeText(getApplicationContext(), "Unable to fetch data from server", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Unable to fetch database from server", Toast.LENGTH_LONG).show();
             }
             mSwipeRefresh.post(new Runnable() {
                 @Override
