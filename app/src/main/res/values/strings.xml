@@ -37,7 +37,7 @@
     <string name="nosupport">This Theme does not support the Android Version you are currently running.
         Installing this theme can cause Bootloops or Force Closes.</string>
 
-    <string name="densitySupport">This Theme supports you devices display density which is</string>
+    <string name="densitySupport">This Theme supports your device\u0027s display density which is</string>
     <string name="nodensitysupport">This Theme does not support your device\u0027s display density.
 This may cause blurry looking drawables or drawables which are not themed.</string>
 
