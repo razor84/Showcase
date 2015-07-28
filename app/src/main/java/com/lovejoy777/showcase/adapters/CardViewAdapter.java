@@ -19,12 +19,14 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     private ArrayList<Theme> filteredThemes;
     private int rowLayout;
     private Context mContext;
+    private  int mode;
 
-    public CardViewAdapter(ArrayList<Theme> themes, int rowLayout, Context context) {
+    public CardViewAdapter(ArrayList<Theme> themes, int rowLayout, Context context,int mode) {
         this.themes = themes;
         this.filteredThemes = new ArrayList<Theme>(themes);
         this.rowLayout = rowLayout;
         this.mContext = context;
+        this.mode = mode;
     }
 
     @Override
@@ -38,8 +40,11 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         Theme theme = filteredThemes.get(i);
         viewHolder.themeName.setText(theme.getTitle());
         viewHolder.themeDeveloper.setText(theme.getAuthor());
-        Picasso.with(mContext).load(theme.getIcon()).placeholder(R.mipmap.ic_launcher).noFade().into(viewHolder.themeImage);
-
+        if (mode==1) {
+            Picasso.with(mContext).load(theme.getPromo()).placeholder(R.drawable.loadingpromo).fit().centerCrop().into(viewHolder.themeImage);
+        }else{
+            Picasso.with(mContext).load(theme.getIcon()).placeholder(R.mipmap.ic_launcher).noFade().into(viewHolder.themeImage);
+        }
     }
 
     public Theme getItem(int id) {

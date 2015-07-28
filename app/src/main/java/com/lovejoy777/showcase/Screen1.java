@@ -1,7 +1,9 @@
 package com.lovejoy777.showcase;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ParseException;
 import android.os.AsyncTask;
@@ -69,7 +71,14 @@ public class Screen1 extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout, this);
+        SharedPreferences prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        boolean bigCards = prefs.getBoolean("bigCards", false);
+        if (bigCards){
+            mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout_big_image, this,1);
+        } else{
+            mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout, this,0);
+        }
+
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.filter("");
 

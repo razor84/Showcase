@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 
 /**
@@ -22,6 +23,8 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
         PreferenceManager prefMgr = getPreferenceManager();
         prefMgr.setSharedPreferencesName("myPrefs");
         addPreferencesFromResource(R.xml.settings);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
     }
 

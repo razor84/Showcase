@@ -13,6 +13,13 @@
             android:summary="Be sure your ROM includes the Layers Manager in the Settings app."
         />
 
+        <SwitchPreference
+            android:key="bigCards"
+            android:title="Show big cards"
+            android:defaultValue="false"
+            android:summary="Instead of little cards with the themes icon show beautiful big cards with a bigger image."
+            />
+
 
 
     </PreferenceCategory>
