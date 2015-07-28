@@ -16,7 +16,7 @@
         <SwitchPreference
             android:key="bigCards"
             android:title="Show big cards"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:summary="Instead of little cards with the themes icon show beautiful big cards with a bigger image."
             />
 

@@ -72,7 +72,7 @@ public class Screen1 extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         SharedPreferences prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-        boolean bigCards = prefs.getBoolean("bigCards", false);
+        boolean bigCards = prefs.getBoolean("bigCards", true);
         if (bigCards){
             mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout_big_image, this,1);
         } else{

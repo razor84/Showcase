@@ -162,65 +162,41 @@ public class Details extends AppCompatActivity {
 
         TextView screendensity = (TextView) findViewById(R.id.textView7);
         ImageView screendensityImage = (ImageView) findViewById(R.id.imageView3);
-        ImageView density2 = (ImageView) findViewById(R.id.density2);
+
 
         TextView androidversion = (TextView) findViewById(R.id.textView4);
         ImageView androidversionImage = (ImageView) findViewById(R.id.imageView4);
-        ImageView androidversion2 = (ImageView) findViewById(R.id.androidversion2);
 
-        density2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder installdialog = new AlertDialog.Builder(Details.this);
 
-                installdialog.setTitle(getString(R.string.density));
-                installdialog.setMessage(getString(R.string.densityAlert));
-                installdialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                installdialog.show();
-
-            }
-        });
 
         float Density = getResources().getDisplayMetrics().density;
         if (((android.os.Build.VERSION.RELEASE.startsWith("5.0") || android.os.Build.VERSION.RELEASE.startsWith("5.1")) && theme.isFor_L())) {
             androidversion.setText(getString(R.string.supportsL));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
         } else if (((android.os.Build.VERSION.RELEASE.startsWith("5.2") || android.os.Build.VERSION.RELEASE.startsWith("M")) && theme.isFor_M())) {
-            androidversion2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             androidversion.setText(getString(R.string.supportsM));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
         } else {
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
-            androidversion2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
             androidversion.setText(getString(R.string.nosupport));
         }
 
         if (Density == 4.0 && theme.isXxxhdpi()) {
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensity.setText(getString(R.string.densitySupport) + " XXXHDPI");
         } else if (Density == 3.0 && theme.isXxhdpi()) {
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensity.setText(getString(R.string.densitySupport) + " XXHDPI");
         } else if (Density == 2.0 && theme.isXhdpi()) {
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensity.setText(getString(R.string.densitySupport) + " XHDPI");
         } else if (Density == 1.5 && theme.isHdpi()) {
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensity.setText(getString(R.string.densitySupport) + " HDPI");
         } else if (Density == 1.0 && theme.isMdpi()) {
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensity.setText(getString(R.string.densitySupport) + " MDPI");
         } else {
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
             screendensity.setText(getString(R.string.nodensitysupport));
         }

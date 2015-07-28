@@ -92,34 +92,20 @@
                 android:layout_marginEnd="16dp"/>
             </RelativeLayout>
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/display"
-                android:layout_below="@+id/rel"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android:id="@+id/density2"/>
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/androidversion"
+            <Button
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/info"
+                android:textColor="@color/buttonText"
+                android:layout_width="158dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
                 android:layout_below="@+id/rel"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_toEndOf="@+id/density2"
-                android:id="@+id/androidversion2"/>
+                android:layout_marginTop="8dp"
+                android:layout_alignParentStart="true"
+                />
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/androidskin"
-                android:layout_below="@+id/rel"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_toEndOf="@+id/androidversion2"
-                android:id="@+id/androidskin2"/>
             <Button
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -128,7 +114,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/gettheme"
                 android:textColor="@color/buttonText"
-                android:layout_width="150dp"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/button"
                 android:layout_weight="1"
@@ -215,15 +201,15 @@
                         android:textSize="16sp"
                         android:layout_toEndOf="@+id/imageView3"/>
                     <ImageView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:id="@+id/imageView3"
                         android:src="@drawable/display"
                         android:tint="@color/primary"
                         android:elevation="5dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_centerVertical="true"
                         />
 
                     <TextView
@@ -234,7 +220,8 @@
                         android:layout_below="@+id/Tv_Category2Name"
                         android:layout_toEndOf="@+id/imageView3"
                         android:layout_marginStart="18dp"
-                        android:layout_marginBottom="16dp"/>
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"/>
                 </RelativeLayout>
 
 
@@ -271,15 +258,14 @@
                         android:textSize="16sp"
                         android:layout_toEndOf="@+id/imageView4"/>
                     <ImageView
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
                         android:id="@+id/imageView4"
                         android:src="@drawable/androidversion"
                         android:tint="@color/primary"
                         android:elevation="5dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_centerVertical="true"
                         />
 
                     <TextView
@@ -290,21 +276,14 @@
                         android:layout_below="@+id/Tv_Category3Name"
                         android:layout_toEndOf="@+id/imageView4"
                         android:layout_marginStart="18dp"
-                        android:layout_marginBottom="16dp"/>
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"/>
                 </RelativeLayout>
 
 
             </android.support.v7.widget.CardView>
 
-            <Button
-            android:text="@string/info"
-            android:textColor="@color/buttonText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:layout_marginTop="16dp"
-            android:layout_below="@+id/CardViewCategory3"
-            />
+
 
         </RelativeLayout>
 
