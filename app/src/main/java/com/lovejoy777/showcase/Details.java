@@ -196,8 +196,6 @@ public class Details extends AppCompatActivity {
 
     private String getDensityName(Context context) {
         float density = context.getResources().getDisplayMetrics().density;
-        Toast.makeText(Details.this,"DENSITY: " +density,Toast.LENGTH_LONG).show();
-        System.out.println("DENSITY: " + density);
         if (density >= 3.5) {
             return "xxxhdpi";
         }
