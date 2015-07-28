@@ -308,7 +308,7 @@ public class MainActivity1 extends AppCompatActivity {
         protected void onPreExecute() {
 
             progressShowcase = ProgressDialog.show(MainActivity1.this, "Downloading",
-                    "updating themes...", true);
+                    "Updating database...", true);
         }
 
         private Context context;
