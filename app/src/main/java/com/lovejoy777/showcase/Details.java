@@ -48,16 +48,18 @@ public class Details extends AppCompatActivity {
 
         // Asign Views
         ImageView promoimg = (ImageView) findViewById(R.id.promo);
-        TextView txt2 = (TextView) findViewById(R.id.tvdescription);
-        TextView developertv = (TextView) findViewById(R.id.tvDeveloper);
+        ImageView icon = (ImageView) findViewById(R.id.icon);
+        TextView txt2 = (TextView) findViewById(R.id.textView2);
+        TextView developertv = (TextView) findViewById(R.id.textView);
 
         // Set text & image Views
         collapsingToolbar.setTitle(theme.getTitle());
 
         Picasso.with(this).load(theme.getPromo()).placeholder(R.drawable.loadingpromo).into(promoimg);
+        Picasso.with(this).load(theme.getIcon()).placeholder(R.drawable.ic_launcher).into(icon);
 
         txt2.setText(theme.getDescription());
-        developertv.setText(theme.getAuthor());
+        developertv.setText("by "+theme.getAuthor());
 
         // Scroll view with screenshots
         LinearLayout screenshotLayout = (LinearLayout) findViewById(R.id.LinearLayoutScreenshots);
@@ -115,9 +117,8 @@ public class Details extends AppCompatActivity {
         }); // End Get Theme button
 
         // Donate button
-        Button donatebutton;
-        donatebutton = (Button) findViewById(R.id.button1);
-
+        LinearLayout donatebutton;
+        donatebutton = (LinearLayout) findViewById(R.id.donateLayout);
         String link = theme.getDonate_link();
 
         if (link.equals("false")) {
@@ -139,7 +140,7 @@ public class Details extends AppCompatActivity {
                 startActivity(donatetheme, bndlanimation);
 
             }
-        }); // End Donate button
+        }); // End Donate button */
 
         // Info button
         Button infobutton;

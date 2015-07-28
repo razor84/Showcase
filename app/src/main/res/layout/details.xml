@@ -55,157 +55,99 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/LinearLayout1"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            android:id="@+id/rel"
             >
-
-
-
-            <Button
-                android:text="@string/info"
-                android:textColor="@color/buttonText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/button2"
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/ic_launcher"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_weight="1"
+                android:id="@+id/icon"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="by Test"
+                android:id="@+id/textView"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/icon"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/textColorPrimary"
                 />
 
-            <Button
-                android:text="@string/donatev"
-                android:textColor="@color/buttonText"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button1"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                />
+                android:text="Description"
+                android:id="@+id/textView2"
+                android:layout_below="@+id/textView"
+                android:layout_toEndOf="@+id/icon"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="16dp"/>
+            </RelativeLayout>
 
             <Button
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_below="@+id/rel"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
                 android:text="@string/gettheme"
                 android:textColor="@color/buttonText"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button"
-                android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 />
 
-
-            </LinearLayout>
-
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                card_view:cardBackgroundColor="@color/card_background"
-                android:layout_marginTop="16dp"
-                android:id="@+id/CradViewWhatsNew"
-                android:elegantTextHeight="false"
-                android:elevation="5dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:paddingBottom="20dp"
-                android:layout_below="@+id/LinearLayout1">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5.59">
-
-                    <TextView
-                        android:textColor="@color/textColorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/description"
-                        android:id="@+id/textView52"
-                        android:layout_gravity="start|top"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:textStyle="bold"
-                        android:elevation="5dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/error"
-                        android:id="@+id/tvdescription"
-                        android:layout_gravity="start|top"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:textColor="@color/text_color_secondary"
-                        android:elevation="5dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="16dp"/>
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                card_view:cardBackgroundColor="@color/card_background"
+                android:id="@+id/donateLayout"
                 android:layout_marginTop="8dp"
-                android:id="@+id/CardViewDeveloper"
-                android:elegantTextHeight="false"
-                android:elevation="5dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:paddingBottom="8dp"
-                android:layout_below="@+id/CradViewWhatsNew"
-                >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_below="@id/button"
+                android:background="#b3FF5252">
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5.59">
+                    android:id="@+id/donateImage"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/gift"
+                    android:paddingStart="8dp"
+                    android:tint="@color/text_color_inverse"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
 
-                    <TextView
-                        android:textColor="@color/textColorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/developer"
-                        android:id="@+id/textView53"
-                        android:layout_gravity="start|top"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:textStyle="bold"
-                        android:elevation="5dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/testdeveloper"
-                        android:id="@+id/tvDeveloper"
-                        android:layout_gravity="start|top"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:textColor="@color/text_color_secondary"
-                        android:elevation="5dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="16dp"/>
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Donate version available"
+                    android:id="@+id/textView6"
+                    android:paddingLeft="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_below="@+id/LinearLayout1"
+                    android:layout_toEndOf="@+id/donateImage"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_color_inverse"/>
+            </LinearLayout>
 
 
             <HorizontalScrollView
-                android:layout_below="@+id/CardViewDeveloper"
+                android:layout_below="@+id/donateLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/LinearLayoutScreenshotsHolder"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:layout_marginTop="16dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -254,6 +196,16 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <Button
+            android:text="@string/info"
+            android:textColor="@color/buttonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/CardViewCategory2"
+            />
 
         </RelativeLayout>
 
