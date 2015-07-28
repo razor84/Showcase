@@ -32,6 +32,9 @@
     <color name="tutorial_background_4">#ffF44336</color>
     <color name="tutorial_background_5">#ffFF9800</color>
 
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
+
     <!-- other colors -->
     <color name="white">#ffffff</color>
     <color name="divider">#B6B6B6</color>
