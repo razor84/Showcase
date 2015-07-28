@@ -128,7 +128,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/gettheme"
                 android:textColor="@color/buttonText"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/button"
                 android:layout_weight="1"
