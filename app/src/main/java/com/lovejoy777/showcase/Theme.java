@@ -20,8 +20,8 @@ public class Theme implements Serializable {
     private String font;
     private String wallpaper;
     private String plugin_version;
-    private String for_L;
-    private String for_M;
+    private boolean for_L;
+    private boolean for_M;
     private String basic;
     private String basic_m;
     private String type2;
@@ -179,19 +179,19 @@ public class Theme implements Serializable {
         this.plugin_version = plugin_version;
     }
 
-    public String getFor_L() {
+    public boolean isFor_L() {
         return for_L;
     }
 
-    public void setFor_L(String for_L) {
+    public void setFor_L(boolean for_L) {
         this.for_L = for_L;
     }
 
-    public String getFor_M() {
+    public boolean isFor_M() {
         return for_M;
     }
 
-    public void setFor_M(String for_M) {
+    public void setFor_M(boolean for_M) {
         this.for_M = for_M;
     }
 
