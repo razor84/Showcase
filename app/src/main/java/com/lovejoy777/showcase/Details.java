@@ -3,6 +3,7 @@ package com.lovejoy777.showcase;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -17,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class Details extends AppCompatActivity {
 
@@ -158,7 +161,7 @@ public class Details extends AppCompatActivity {
 
         //Properties table
 
-        //LinearLayout propertiesHolder = (LinearLayout) findViewById(R.id.properties);
+
 
         TextView screendensity = (TextView) findViewById(R.id.textView7);
         ImageView screendensityImage = (ImageView) findViewById(R.id.imageView3);
@@ -167,9 +170,6 @@ public class Details extends AppCompatActivity {
         TextView androidversion = (TextView) findViewById(R.id.textView4);
         ImageView androidversionImage = (ImageView) findViewById(R.id.imageView4);
 
-
-
-        float Density = getResources().getDisplayMetrics().density;
         if (((android.os.Build.VERSION.RELEASE.startsWith("5.0") || android.os.Build.VERSION.RELEASE.startsWith("5.1")) && theme.isFor_L())) {
             androidversion.setText(getString(R.string.supportsL));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
@@ -181,28 +181,38 @@ public class Details extends AppCompatActivity {
             androidversion.setText(getString(R.string.nosupport));
         }
 
-        if (Density == 4.0 && theme.isXxxhdpi()) {
+        String DeviceDensity = getDensityName(this);
+        System.out.println(DeviceDensity);
+
+        if (theme.isSupportedDpi(DeviceDensity)){
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText(getString(R.string.densitySupport) + " XXXHDPI");
-        } else if (Density == 3.0 && theme.isXxhdpi()) {
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText(getString(R.string.densitySupport) + " XXHDPI");
-        } else if (Density == 2.0 && theme.isXhdpi()) {
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText(getString(R.string.densitySupport) + " XHDPI");
-        } else if (Density == 1.5 && theme.isHdpi()) {
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText(getString(R.string.densitySupport) + " HDPI");
-        } else if (Density == 1.0 && theme.isMdpi()) {
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText(getString(R.string.densitySupport) + " MDPI");
-        } else {
+            screendensity.setText(getString(R.string.densitySupport) + " "+DeviceDensity);
+        }else {
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
             screendensity.setText(getString(R.string.nodensitysupport));
         }
 
-
     } // End onCreate
+
+    private static String getDensityName(Context context) {
+        float density = context.getResources().getDisplayMetrics().density;
+        if (density >= 4.0) {
+            return "xxxhdpi";
+        }
+        if (density >= 3.0) {
+            return "xxhdpi";
+        }
+        if (density >= 2.0) {
+            return "xhdpi";
+        }
+        if (density >= 1.5) {
+            return "hdpi";
+        }
+        if (density >= 1.0) {
+            return "mdpi";
+        }
+        return "ldpi";
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -303,6 +303,34 @@ public class Theme implements Serializable {
         return mdpi;
     }
 
+    public boolean isSupportedDpi(String Dpi) {
+        if (Dpi.equals("mdpi")) {
+            return mdpi;
+        } else{
+            if(Dpi.equals("hdpi")) {
+                return hdpi;
+            }else{
+                if(Dpi.equals("xhdpi")) {
+                    return xhdpi;
+                }else{
+                    if(Dpi.equals("xxhdpi")) {
+                        return xxhdpi;
+                    }else{
+                        if(Dpi.equals("xxxhdpi")) {
+                            return xxxhdpi;
+                        } else{
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+    }
+
     public void setMdpi(boolean mdpi) {
         this.mdpi = mdpi;
     }
