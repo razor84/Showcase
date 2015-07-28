@@ -93,7 +93,6 @@ public class MainActivity1 extends AppCompatActivity {
 
                 Intent freeactivity = new Intent(MainActivity1.this, Screen1.class);
                 freeactivity.putExtra("type", "Free");
-                freeactivity.putExtra("title", "Free/Donate");
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
@@ -109,7 +108,6 @@ public class MainActivity1 extends AppCompatActivity {
 
                 Intent donateactivity = new Intent(MainActivity1.this, Screen1.class);
                 donateactivity.putExtra("type", "Paid");
-                donateactivity.putExtra("title", "Paid");
 
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
