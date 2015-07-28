@@ -3,21 +3,16 @@ package com.lovejoy777.showcase;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Point;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -67,7 +62,7 @@ public class Details extends AppCompatActivity {
         Picasso.with(this).load(theme.getIcon()).placeholder(R.drawable.ic_launcher).into(icon);
 
         txt2.setText(theme.getDescription());
-        developertv.setText("by "+theme.getAuthor());
+        developertv.setText("by " + theme.getAuthor());
 
         // Scroll view with screenshots
         LinearLayout screenshotLayout = (LinearLayout) findViewById(R.id.LinearLayoutScreenshots);
@@ -79,7 +74,6 @@ public class Details extends AppCompatActivity {
                 theme.getScreenshot_1(),
                 theme.getScreenshot_2(),
                 theme.getScreenshot_3()};
-
 
         float height = screenSize.y / 2;
 
@@ -117,9 +111,7 @@ public class Details extends AppCompatActivity {
 
                 Intent installtheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(installtheme, bndlanimation);
+                startActivity(installtheme);
 
             }
         }); // End Get Theme button
@@ -143,9 +135,7 @@ public class Details extends AppCompatActivity {
 
                 Intent donatetheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(donatetheme, bndlanimation);
+                startActivity(donatetheme);
 
             }
         }); // End Donate button */
@@ -160,9 +150,7 @@ public class Details extends AppCompatActivity {
 
                 Intent googleplustheme = new Intent(Intent.ACTION_VIEW, Uri.parse(theme.getGoogleplus()));
 
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(googleplustheme, bndlanimation);
+                startActivity(googleplustheme);
 
             }
         }); // End Info button
@@ -174,19 +162,19 @@ public class Details extends AppCompatActivity {
 
         TextView screendensity = (TextView) findViewById(R.id.textView7);
         ImageView screendensityImage = (ImageView) findViewById(R.id.imageView3);
-        ImageView density2 = (ImageView)findViewById(R.id.density2);
+        ImageView density2 = (ImageView) findViewById(R.id.density2);
 
         TextView androidversion = (TextView) findViewById(R.id.textView4);
         ImageView androidversionImage = (ImageView) findViewById(R.id.imageView4);
-        ImageView androidversion2 = (ImageView)findViewById(R.id.androidversion2);
+        ImageView androidversion2 = (ImageView) findViewById(R.id.androidversion2);
 
         density2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder installdialog = new AlertDialog.Builder(Details.this);
 
-                installdialog.setTitle("Display density");
-                installdialog.setMessage("Icon indicates if this theme supports your devices display density\nGreen = supported\nRed = not supported");
+                installdialog.setTitle(getString(R.string.density));
+                installdialog.setMessage(getString(R.string.densityAlert));
                 installdialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -198,51 +186,44 @@ public class Details extends AppCompatActivity {
         });
 
         float Density = getResources().getDisplayMetrics().density;
-        if (((android.os.Build.VERSION.RELEASE.startsWith("5.0")||android.os.Build.VERSION.RELEASE.startsWith("5.1"))& theme.getFor_L().equals("true"))){
-            androidversion.setText("This Theme supports your Android version (Android Lollipop)");
+        if (((android.os.Build.VERSION.RELEASE.startsWith("5.0") || android.os.Build.VERSION.RELEASE.startsWith("5.1")) && theme.isFor_L())) {
+            androidversion.setText(getString(R.string.supportsL));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-        }else {
-            if (((android.os.Build.VERSION.RELEASE.startsWith("5.2")||android.os.Build.VERSION.RELEASE.startsWith("M"))& theme.getFor_M().equals("true"))){
-                androidversion2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-                androidversion.setText("This Theme supports your Android version (Android M)");
-                androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            }else{
-                androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
-                androidversion2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
-                androidversion.setText("This Theme does not support the Android Version you are currently running.\nInstalling this theme can cause Bootloops or Force Closes.");
-            }
-        }
-        if (Density ==3.0 & theme.isXxhdpi()){
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText("This Theme supports you devices display density which is XXHDPI");
-        }else if(Density ==4.0 & theme.isXxxhdpi()){
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText("This Theme supports you devices display density which is XXXHDPI");
-        }else if(Density ==2.0 & theme.isXhdpi()){
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText("This Theme supports you devices display density which is XHDPI");
-        }else if(Density ==1.5 & theme.isHdpi()){
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText("This Theme supports you devices display density which is HDPI");
-        }else if(Density ==1.0 & theme.isMdpi()){
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText("This Theme supports you devices display density which is MDPI");
-        }else{
-            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
-            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
-            screendensity.setText("This Theme does not support your device´s display density.\nThis may cause blurry looking drawables or drawables which are not themed.");
+        } else if (((android.os.Build.VERSION.RELEASE.startsWith("5.2") || android.os.Build.VERSION.RELEASE.startsWith("M")) && theme.isFor_M())) {
+            androidversion2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            androidversion.setText(getString(R.string.supportsM));
+            androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+        } else {
+            androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+            androidversion2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+            androidversion.setText(getString(R.string.nosupport));
         }
 
-        //propertiesHolder.addView(createRow("mdpi", theme.isMdpi()));
-        //propertiesHolder.addView(createRow("hdpi", theme.isHdpi()));
-        //propertiesHolder.addView(createRow("xhdpi", theme.isXhdpi()));
-        //propertiesHolder.addView(createRow("xxhdpi", theme.isXxhdpi()));
-       // propertiesHolder.addView(createRow("xxxhdpi", theme.isXxxhdpi()));
+        if (Density == 4.0 && theme.isXxxhdpi()) {
+            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensity.setText(getString(R.string.densitySupport) + " XXXHDPI");
+        } else if (Density == 3.0 && theme.isXxhdpi()) {
+            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensity.setText(getString(R.string.densitySupport) + " XXHDPI");
+        } else if (Density == 2.0 && theme.isXhdpi()) {
+            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensity.setText(getString(R.string.densitySupport) + " XHDPI");
+        } else if (Density == 1.5 && theme.isHdpi()) {
+            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensity.setText(getString(R.string.densitySupport) + " HDPI");
+        } else if (Density == 1.0 && theme.isMdpi()) {
+            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            screendensity.setText(getString(R.string.densitySupport) + " MDPI");
+        } else {
+            density2.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+            screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+            screendensity.setText(getString(R.string.nodensitysupport));
+        }
 
 
     } // End onCreate

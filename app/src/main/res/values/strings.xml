@@ -31,6 +31,18 @@
     <string name="paidcard2header">Paid Layers</string>
     <string name="donatecard2">Click to list all paid layers</string>
 
+    <!-- DETAILS MESSAGES -->
+    <string name="supportsL">This Theme supports your Android version (Android Lollipop)</string>
+    <string name="supportsM">This Theme supports your Android version (Android M)</string>
+    <string name="nosupport">This Theme does not support the Android Version you are currently running.
+        Installing this theme can cause Bootloops or Force Closes.</string>
 
+    <string name="densitySupport">This Theme supports you devices display density which is</string>
+    <string name="nodensitysupport">This Theme does not support your device\u0027s display density.
+This may cause blurry looking drawables or drawables which are not themed.</string>
+
+    <string name="density">Display density</string>
+    <string name="densityAlert">Icon indicates if this theme supports your devices display density
+        \nGreen = supported\nRed = not supported</string>
 
 </resources>
