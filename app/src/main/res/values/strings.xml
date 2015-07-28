@@ -13,7 +13,7 @@
 
     <string name="description">Description</string>
     <string name="error">Error</string>
-    <string name="developer">Developer</string>
+    <string name="developer">Author</string>
     <string name="testdeveloper">TestDeveloper</string>
     <string name="info">Info</string>
     <string name="gettheme">Get Theme</string>
