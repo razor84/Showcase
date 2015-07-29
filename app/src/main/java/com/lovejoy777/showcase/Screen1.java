@@ -4,21 +4,20 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.*;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,8 +25,6 @@ import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
-import com.lovejoy777.showcase.filters.FilterDev;
-import com.lovejoy777.showcase.filters.FilterName;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +81,7 @@ public class Screen1 extends AppCompatActivity {
         }
 
         mRecyclerView.setAdapter(mAdapter);
-        //  mAdapter.filter("");
+        mAdapter.filter("");
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(Screen1.this, new RecyclerItemClickListener.OnItemClickListener() {
@@ -108,44 +105,10 @@ public class Screen1 extends AppCompatActivity {
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                  themesList.clear();
-                  new JSONAsyncTask().execute();
+                themesList.clear();
+                new JSONAsyncTask().execute();
             }
         });
-
-
-        SearchView themeName = (SearchView) findViewById(R.id.search_name);
-
-        themeName.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                mAdapter.addFilter(new FilterName(s));
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                mAdapter.addFilter(new FilterName(s));
-                return false;
-            }
-        });
-
-        SearchView themeDev = (SearchView) findViewById(R.id.search_dev);
-
-        themeDev.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                mAdapter.addFilter(new FilterDev(s));
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                mAdapter.addFilter(new FilterDev(s));
-                return false;
-            }
-        });
-
     }
 
     @Override
@@ -153,6 +116,33 @@ public class Screen1 extends AppCompatActivity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("Theme name/developer");
+
+        SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.secondary_text_dark));
+        searchAutoComplete.setTextColor(Color.WHITE);
+
+        ((ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_button)).setImageResource(R.drawable.ic_search_white_24dp);
+        ((ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn)).setImageResource(R.drawable.ic_close_white_24dp);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                mAdapter.filter(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                mAdapter.filter(s);
+                return false;
+            }
+        });
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -226,7 +216,7 @@ public class Screen1 extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
-            mAdapter.refreshFilteredList();
+            mAdapter.filter("");
             if (!result) {
                 Toast.makeText(getApplicationContext(), "Unable to fetch database from server", Toast.LENGTH_LONG).show();
             }

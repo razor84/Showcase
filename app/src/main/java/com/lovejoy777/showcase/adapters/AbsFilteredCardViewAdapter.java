@@ -4,10 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.lovejoy777.showcase.Theme;
-import com.lovejoy777.showcase.filters.Filter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public abstract class AbsFilteredCardViewAdapter extends RecyclerView.Adapter<AbsFilteredCardViewAdapter.AbsViewHolder> {
 
@@ -15,7 +13,6 @@ public abstract class AbsFilteredCardViewAdapter extends RecyclerView.Adapter<Ab
     protected ArrayList<Theme> filteredThemes;
     protected int rowLayout;
     protected Context mContext;
-    private ArrayList<Filter> filters = new ArrayList<Filter>();
 
     public AbsFilteredCardViewAdapter(ArrayList<Theme> themes, int rowLayout, Context context) {
         this.themes = themes;
@@ -28,36 +25,27 @@ public abstract class AbsFilteredCardViewAdapter extends RecyclerView.Adapter<Ab
         return filteredThemes.get(id);
     }
 
-    public void refreshFilteredList() {
+    public void filter(String filter) {
 
         filteredThemes.clear();
 
+        if (filter == null || filter.isEmpty() || filter.equals("")) {
+            filteredThemes.addAll(themes);
+            notifyDataSetChanged();
+            return;
+        }
+
         for (Theme theme : themes) {
-            if (checkTheme(theme)) {
+            if (theme.getTitle().toLowerCase().contains(filter)
+                    || theme.getAuthor().toLowerCase().contains(filter)) {
                 filteredThemes.add(theme);
             }
         }
-
 
         notifyDataSetChanged();
 
     }
 
-    private boolean checkTheme(Theme theme) {
-        for (Filter filter : filters) {
-            if (!filter.filterTheme(theme)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public void addFilter(Filter filter) {
-        filters.remove(filter);
-        filters.add(filter);
-        refreshFilteredList();
-    }
 
     @Override
     public int getItemCount() {
