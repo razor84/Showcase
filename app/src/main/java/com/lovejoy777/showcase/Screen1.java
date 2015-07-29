@@ -21,8 +21,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lovejoy777.showcase.adapters.CardViewAdapter;
+import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
+import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
+import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +32,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
@@ -40,10 +41,9 @@ import java.util.Random;
 public class Screen1 extends AppCompatActivity {
 
     ArrayList<Theme> themesList;
-    private CardViewAdapter mAdapter;
+    private AbsFilteredCardViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefresh = null;
     private String mode;
-    private String modeTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +73,15 @@ public class Screen1 extends AppCompatActivity {
 
         SharedPreferences prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         boolean bigCards = prefs.getBoolean("bigCards", true);
-        if (bigCards){
-            mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout_big_image, this,1);
-        } else{
-            mAdapter = new CardViewAdapter(themesList, R.layout.adapter_card_layout, this,0);
+
+        if (bigCards) {
+            mAdapter = new BigCardsViewAdapter(themesList, this);
+        } else {
+            mAdapter = new SmallCardsViewAdapter(themesList, this);
         }
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.filter("");
-
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(Screen1.this, new RecyclerItemClickListener.OnItemClickListener() {
@@ -119,7 +119,7 @@ public class Screen1 extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint("Theme name");
+        searchView.setQueryHint("Theme name/developer");
 
         SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         searchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.secondary_text_dark));
