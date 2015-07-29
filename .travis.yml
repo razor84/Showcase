@@ -10,8 +10,17 @@ android:
   licenses:
   - android-sdk-license-.+
   - google-gdk-license-.+
+branches:
+  except:
+  - /^*-v[0-9]/
 script:
   - gradle assembleRelease
+before_deploy:
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=wip-$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push -q https://${GH_TOKEN}@github.com/BitSyko/Showcase --tags
 deploy:
   skip_cleanup: true
   provider: releases
@@ -21,3 +30,5 @@ deploy:
   on:
     repo: BitSyko/Showcase
     branch: wip
+    tags: false
+    condition: "$TRAVIS_PULL_REQUEST = false"
