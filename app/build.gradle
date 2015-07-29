@@ -10,6 +10,7 @@ android {
         targetSdkVersion 22
         versionCode 3
         versionName "b1.2"
+        archivesBaseName = "Showcase"
     }
     buildTypes {
         release {
