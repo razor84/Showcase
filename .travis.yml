@@ -2,7 +2,7 @@ language: android
 android:
   components:
   - build-tools-22.0.1
-  - android-L
+  - android-22
   - platform-tools
   - tools
   - add-on
@@ -10,6 +10,8 @@ android:
   licenses:
   - android-sdk-license-.+
   - google-gdk-license-.+
+script:
+  - gradle assembleRelease
 deploy:
   skip_cleanup: true
   provider: releases
