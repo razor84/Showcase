@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Layers Showcase</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="free">Free Layers</string>
@@ -32,17 +31,17 @@
     <string name="donatecard2">Click to list all paid layers</string>
 
     <!-- DETAILS MESSAGES -->
-    <string name="supportsL">This Theme supports your Android version (Android Lollipop)</string>
-    <string name="supportsM">This Theme supports your Android version (Android M)</string>
-    <string name="nosupport">This Theme does not support the Android Version you are currently running.
-        Installing this theme can cause Bootloops or Force Closes.</string>
+    <string name="supportsL">This Layer supports your Android version (Android Lollipop)</string>
+    <string name="supportsM">This Layer supports your Android version (Android M)</string>
+    <string name="nosupport">This Layer does not support the Android Version you are currently running.
+        Installing this layer can cause Bootloops or Force Closes.</string>
 
-    <string name="densitySupport">This Theme supports your device\u0027s display density which is</string>
-    <string name="nodensitysupport">This Theme does not support your device\u0027s display density.
+    <string name="densitySupport">This Layer supports your device\u0027s display density which is</string>
+    <string name="nodensitysupport">This Layer does not support your device\u0027s display density.
 This may cause blurry looking drawables or drawables which are not themed.</string>
 
     <string name="density">Display density</string>
-    <string name="densityAlert">Icon indicates if this theme supports your devices display density
+    <string name="densityAlert">Icon indicates if this layer supports your devices display density
         \nGreen = supported\nRed = not supported</string>
 
 </resources>
