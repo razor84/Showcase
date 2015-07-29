@@ -1,0 +1,21 @@
+language: android
+android:
+  components:
+  - build-tools-22.0.1
+  - android-L
+  - platform-tools
+  - tools
+  - add-on
+  - extra
+  licenses:
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: lsyEw2SsEu5CKj9+6bOuS7L2Q+hE9e17kKEEDfbKGYIMvrNAxW/3L+tIhVm1wAXi5HZHP3uYZYG+/dPvGv2Ctq0EUhnHGsXNNt2TS5R5XXPq3MJwtQcQvjbgtP6RJzUDxrf+g2GfolRd+tH22U2jX7JgT3lF21pRW1llYbLqwbcRcZPVKtOvDblw8zA/WWhYi0eRvaCC+2ZNTIRd8XjKwgfs4ZakTKoQxJNZP1Vk4BJ/U5YrAfxZ1v8W8pN1nYuJZPmbQ8MrO94rN390eKth3w01TPwVA1iZOU9VEnNE5BmocCFmJjZAk1TUgpfgeEOA0jLvEskQjv1i398aIoGYXO1FK7/8j9W2LqmVV9N9qcNUBOkvKPjqkOk8D3M7VXtLWkzEvt9V9HUJj3W/OlJIFct78NIyiS0MqQvIzyRsO5NAyEfGBBwjf3rQ7T0NOrll0gI2deaG8w2BGn3UJ9Cj0D02qJwZ0gmr67t96od74Gsc5KDmWrDoelS+Vf6/L40tsquZdWP2ggjP9ATHdHp35T/uK+JQUNzWYIrfJ69g9LPSO1W7JaDpmu2dM+lxg8P1meDLPyJCRW0y4y9t4HWnNuHw7L10/JuRjbnbxIDNobvmVLHU7wJgU1xSlq6NbAeZxBErLlgmK8CwdwYfbQ/mh5nm3qE0LPMPdM69yY7WhAU=
+  file: ''
+  on:
+    repo: BitSyko/Showcase
+    branch: wip
