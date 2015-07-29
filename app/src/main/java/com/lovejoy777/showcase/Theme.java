@@ -1,5 +1,7 @@
 package com.lovejoy777.showcase;
 
+import com.lovejoy777.showcase.enums.Density;
+
 import java.io.Serializable;
 
 public class Theme implements Serializable {
@@ -303,33 +305,26 @@ public class Theme implements Serializable {
         return mdpi;
     }
 
-    public boolean isSupportedDpi(String Dpi) {
-        if (Dpi.equals("mdpi")) {
-            return mdpi;
-        } else{
-            if(Dpi.equals("hdpi")) {
+    public boolean isSupportedDpi(Density dpi) {
+
+        switch (dpi) {
+            case MDPI:
+                return mdpi;
+            case HDPI:
                 return hdpi;
-            }else{
-                if(Dpi.equals("xhdpi")) {
-                    return xhdpi;
-                }else{
-                    if(Dpi.equals("xxhdpi")) {
-                        return xxhdpi;
-                    }else{
-                        if(Dpi.equals("xxxhdpi")) {
-                            return xxxhdpi;
-                        } else{
-                            return false;
-                        }
-                    }
-                }
-            }
+            case XHDPI:
+                return xhdpi;
+            case XXHDPI:
+                return xxhdpi;
+            case XXXHDPI:
+                return xxxhdpi;
+            default:
+                return false;
+
         }
-
-
-
-
     }
+
+
 
     public void setMdpi(boolean mdpi) {
         this.mdpi = mdpi;

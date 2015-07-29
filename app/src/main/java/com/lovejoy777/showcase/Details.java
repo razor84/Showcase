@@ -1,10 +1,6 @@
 package com.lovejoy777.showcase;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -17,9 +13,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import com.lovejoy777.showcase.enums.Density;
+import com.lovejoy777.showcase.enums.SystemVersion;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 public class Details extends AppCompatActivity {
 
@@ -162,7 +158,6 @@ public class Details extends AppCompatActivity {
         //Properties table
 
 
-
         TextView screendensity = (TextView) findViewById(R.id.textView7);
         ImageView screendensityImage = (ImageView) findViewById(R.id.imageView3);
 
@@ -170,10 +165,12 @@ public class Details extends AppCompatActivity {
         TextView androidversion = (TextView) findViewById(R.id.textView4);
         ImageView androidversionImage = (ImageView) findViewById(R.id.imageView4);
 
-        if (((android.os.Build.VERSION.RELEASE.startsWith("5.0") || android.os.Build.VERSION.RELEASE.startsWith("5.1")) && theme.isFor_L())) {
+        SystemVersion systemVersion = Helpers.getSystemVersion();
+
+        if (systemVersion == SystemVersion.Lollipop && theme.isFor_L()) {
             androidversion.setText(getString(R.string.supportsL));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-        } else if (((android.os.Build.VERSION.RELEASE.startsWith("5.2") || android.os.Build.VERSION.RELEASE.startsWith("M")) && theme.isFor_M())) {
+        } else if (systemVersion == SystemVersion.M && theme.isFor_M()) {
             androidversion.setText(getString(R.string.supportsM));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
         } else {
@@ -181,38 +178,17 @@ public class Details extends AppCompatActivity {
             androidversion.setText(getString(R.string.nosupport));
         }
 
-        String DeviceDensity = getDensityName(this);
-        System.out.println(DeviceDensity);
+        Density deviceDensity = Helpers.getDensity(this);
 
-        if (theme.isSupportedDpi(DeviceDensity)){
+        if (theme.isSupportedDpi(deviceDensity)) {
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-            screendensity.setText(getString(R.string.densitySupport) + " "+DeviceDensity);
-        }else {
+            screendensity.setText(getString(R.string.densitySupport) + " " + deviceDensity.toString().toLowerCase());
+        } else {
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
             screendensity.setText(getString(R.string.nodensitysupport));
         }
 
     } // End onCreate
-
-    private String getDensityName(Context context) {
-        float density = context.getResources().getDisplayMetrics().density;
-        if (density >= 3.5) {
-            return "xxxhdpi";
-        }
-        if (density >= 3.0) {
-            return "xxhdpi";
-        }
-        if (density >= 2.0) {
-            return "xhdpi";
-        }
-        if (density >= 1.5) {
-            return "hdpi";
-        }
-        if (density >= 1.0) {
-            return "mdpi";
-        }
-        return "ldpi";
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
