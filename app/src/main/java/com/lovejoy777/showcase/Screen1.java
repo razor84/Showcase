@@ -1,7 +1,9 @@
 package com.lovejoy777.showcase;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,15 +11,21 @@ import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.SearchRecentSuggestions;
+import android.speech.RecognizerIntent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.*;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +33,9 @@ import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
+import com.quinny898.library.persistentsearch.SearchBox;
+import com.quinny898.library.persistentsearch.SearchResult;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,19 +55,29 @@ public class Screen1 extends AppCompatActivity {
     private AbsFilteredCardViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefresh = null;
     private String mode;
+    private SearchBox search;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen1);
 
+
+
         mode = getIntent().getStringExtra("type");
 
         // Handle Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
         toolbar.setTitle(mode + " Layers");
         setSupportActionBar(toolbar);
+
+
+        search = (SearchBox) findViewById(R.id.searchbox);
+        search.enableVoiceRecognition(this);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -111,13 +132,86 @@ public class Screen1 extends AppCompatActivity {
         });
     }
 
+
+    public void openSearch() {
+        toolbar.setTitle("");
+        search.revealFromMenuItem(R.id.action_search, this);
+       // for (suggestions.) {
+
+
+
+       //     SearchResult option = new SearchResult("Result "
+       //            + Integer.toString(x), getResources().getDrawable(
+       ////             R.drawable.ic_history));
+      //      search.addSearchable(option);
+      //  }
+        search.setMenuListener(new SearchBox.MenuListener() {
+
+            @Override
+            public void onMenuClick() {
+                // Hamburger has been clicked
+                Toast.makeText(Screen1.this, "Menu click",
+                        Toast.LENGTH_LONG).show();
+            }
+
+        });
+        search.setSearchListener(new SearchBox.SearchListener() {
+
+            @Override
+            public void onSearchOpened() {
+                // Use this to tint the screen
+
+            }
+
+            @Override
+            public void onSearchClosed() {
+                // Use this to un-tint the screen
+                closeSearch();
+            }
+
+            @Override
+            public void onSearchTermChanged() {
+                // React to the search term changing
+                // Called after it has updated results
+            }
+
+            @Override
+            public void onSearch(String searchTerm) {
+                mAdapter.filter(searchTerm);
+                toolbar.setTitle(searchTerm);
+            }
+
+            @Override
+            public void onSearchCleared() {
+
+            }
+
+        });
+
+    }
+
+    protected void closeSearch() {
+        search.hideCircularly(this);
+        if(search.getSearchText().isEmpty())toolbar.setTitle("");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1234 && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            //search.populateEditText(matches.get(0));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        /*MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint("Theme name/developer");
 
@@ -140,7 +234,7 @@ public class Screen1 extends AppCompatActivity {
                 mAdapter.filter(s);
                 return false;
             }
-        });
+        }); */
 
 
         return super.onCreateOptionsMenu(menu);
@@ -235,8 +329,84 @@ public class Screen1 extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.action_search:
+                openSearch();
+                return true;
+            case R.id.action_filter:
+                String[] AndroidVersions = {"Any", "Lollipop", "M"};
+                String[] AndroidPlatforms = {"Any", "Touchwiz", "LG", "Sense", "Xperia", "Asus ZenUI"};
+                String[] AndroidDensities = {"Any", "hdpi", "mdpi", "xhdpi", "xxhdpi", "xxxhdpi"};
+                String[] LayersVersions = {"Any", "Basic RRO L", "Basic RRO M", "Layers Type 2 L", "Layers Type 3", "Layers Type 3 M"};
+
+                final AlertDialog.Builder colorDialog = new AlertDialog.Builder(this);
+                final LayoutInflater inflater = this.getLayoutInflater();
+                colorDialog.setTitle("Filter Layers");
+                View DialogView = inflater.inflate(R.layout.dialog_filter, null);
+                colorDialog.setView(DialogView);
+
+                //Android Version spinner
+                final Spinner AndroidVersionSpinner= (Spinner) DialogView.findViewById(R.id.androidVersionSpinner);
+                AndroidVersionSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
+                ArrayAdapter<String> AndroidVersionAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, AndroidVersions);
+                AndroidVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                AndroidVersionSpinner.setAdapter(AndroidVersionAdapter);
+
+                //Android Platform spinner
+                final Spinner AndroidPlatformSpinner= (Spinner) DialogView.findViewById(R.id.androidPlatformSpinner);
+                AndroidPlatformSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
+                ArrayAdapter<String> AndroidPlatformAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, AndroidPlatforms);
+                AndroidPlatformAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                AndroidPlatformSpinner.setAdapter(AndroidPlatformAdapter);
+
+                //Android Density spinner
+                final Spinner AndroidDensitySpinner= (Spinner) DialogView.findViewById(R.id.androidDensitySpinner);
+                AndroidDensitySpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
+                ArrayAdapter<String> AndroidDensityAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, AndroidDensities);
+                AndroidDensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                AndroidDensitySpinner.setAdapter(AndroidDensityAdapter);
+
+                //Layers Version Spinner
+                final Spinner LayersVersionSpinner= (Spinner) DialogView.findViewById(R.id.LayersVersionSpinne);
+                LayersVersionSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
+                ArrayAdapter<String> LayersVersionAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, LayersVersions);
+                LayersVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                LayersVersionSpinner.setAdapter(LayersVersionAdapter);
+
+                colorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                colorDialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+
+
+                });
+                colorDialog.create();
+                colorDialog.show();
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public class OnSpinnerItemClicked implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent,
+                                   View view, int pos, long id) {
+
+
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
         }
     }
 
@@ -245,5 +415,8 @@ public class Screen1 extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.back2, R.anim.back1);
     }
+
+
+
 
 }

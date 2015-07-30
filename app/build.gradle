@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+    }
+    dependencies {
+        compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT'
+    }
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -24,6 +34,7 @@ android {
         exclude 'META-INF/LICENSE'
     }
 
+
 }
 
 dependencies {
@@ -35,4 +46,5 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.4.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+
 }
