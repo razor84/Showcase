@@ -1,11 +1,7 @@
-package com.lovejoy777.showcase;
+package com.lovejoy777.showcase.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -14,16 +10,23 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import com.lovejoy777.showcase.Helpers;
+import com.lovejoy777.showcase.R;
+import com.lovejoy777.showcase.Theme;
 import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.SystemVersion;
 import com.squareup.picasso.Picasso;
 
-public class Details extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     private Activity activity;
     final ImageView ScreenshotimageView[] = new ImageView[3];
@@ -93,7 +96,7 @@ public class Details extends AppCompatActivity {
             ScreenshotimageView[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FullScreenActivity.launch(activity, (ImageView) view, screenshotsUrls[finalI], "img");
+                    FullscreenActivity.launch(activity, (ImageView) view, screenshotsUrls[finalI], "img");
                 }
             });
 
@@ -232,4 +235,3 @@ public class Details extends AppCompatActivity {
     }
 
 }
-

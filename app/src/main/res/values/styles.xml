@@ -1,11 +1,13 @@
 <resources>
 
-    <style name="LayersTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
 
+
+    <!-- Normal app Theme -->
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
     </style>
-
 
     <!-- Toolbars -->
     <style name="Base.Theme.Test" parent="Theme.AppCompat.Light.NoActionBar">
@@ -34,16 +36,6 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
     </style>
-
-
-
-    <!-- Normal app Theme -->
-    <style name="AppTheme" parent="android:Theme.Material.Light">
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primary_dark</item>
-        <item name="android:colorAccent">@color/accent</item>
-    </style>
-
 
 
 

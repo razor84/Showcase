@@ -13,7 +13,7 @@
         android:minHeight="?android:attr/actionBarSize"
         android:background="?android:attr/colorPrimary"
         android:gravity="center"
-        tools:context="com.lovejoy777.showcase.Screen1"
+        tools:context="com.lovejoy777.showcase.Activities.LayerListActivity"
         android:elevation="4dp"
         android:theme="@style/Base.Theme.Test">
 

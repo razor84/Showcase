@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase;
+package com.lovejoy777.showcase.Activities;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -6,14 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.SearchRecentSuggestions;
 import android.speech.RecognizerIntent;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.*;
@@ -24,17 +21,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lovejoy777.showcase.R;
+import com.lovejoy777.showcase.Theme;
 import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
 import com.quinny898.library.persistentsearch.SearchBox;
-import com.quinny898.library.persistentsearch.SearchResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +46,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Screen1 extends AppCompatActivity {
+public class LayerListActivity extends AppCompatActivity {
 
     ArrayList<Theme> themesList;
     private AbsFilteredCardViewAdapter mAdapter;
@@ -108,11 +105,11 @@ public class Screen1 extends AppCompatActivity {
         mAdapter.filter("");
 
         mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(Screen1.this, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(LayerListActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        Intent Detailsactivity = new Intent(Screen1.this, Details.class);
+                        Intent Detailsactivity = new Intent(LayerListActivity.this, DetailActivity.class);
 
                         Detailsactivity.putExtra("theme", mAdapter.getItem(position));
 
@@ -153,7 +150,7 @@ public class Screen1 extends AppCompatActivity {
             @Override
             public void onMenuClick() {
                 // Hamburger has been clicked
-                Toast.makeText(Screen1.this, "Menu click",
+                Toast.makeText(LayerListActivity.this, "Menu click",
                         Toast.LENGTH_LONG).show();
             }
 
@@ -331,28 +328,28 @@ public class Screen1 extends AppCompatActivity {
                 //Android Version spinner
                 final Spinner AndroidVersionSpinner= (Spinner) DialogView.findViewById(R.id.androidVersionSpinner);
                 AndroidVersionSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> AndroidVersionAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, AndroidVersions);
+                ArrayAdapter<String> AndroidVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidVersions);
                 AndroidVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 AndroidVersionSpinner.setAdapter(AndroidVersionAdapter);
 
                 //Android Platform spinner
                 final Spinner AndroidPlatformSpinner= (Spinner) DialogView.findViewById(R.id.androidPlatformSpinner);
                 AndroidPlatformSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> AndroidPlatformAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, AndroidPlatforms);
+                ArrayAdapter<String> AndroidPlatformAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidPlatforms);
                 AndroidPlatformAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 AndroidPlatformSpinner.setAdapter(AndroidPlatformAdapter);
 
                 //Android Density spinner
                 final Spinner AndroidDensitySpinner= (Spinner) DialogView.findViewById(R.id.androidDensitySpinner);
                 AndroidDensitySpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> AndroidDensityAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, AndroidDensities);
+                ArrayAdapter<String> AndroidDensityAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidDensities);
                 AndroidDensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 AndroidDensitySpinner.setAdapter(AndroidDensityAdapter);
 
                 //Layers Version Spinner
                 final Spinner LayersVersionSpinner= (Spinner) DialogView.findViewById(R.id.LayersVersionSpinne);
                 LayersVersionSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> LayersVersionAdapter = new ArrayAdapter<String>(Screen1.this, android.R.layout.simple_spinner_item, LayersVersions);
+                ArrayAdapter<String> LayersVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, LayersVersions);
                 LayersVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 LayersVersionSpinner.setAdapter(LayersVersionAdapter);
 
@@ -402,7 +399,7 @@ public class Screen1 extends AppCompatActivity {
             closeSearch();
             search.clearSearchable();
             mAdapter.filter("");
-            toolbar.setTitle(mode+" Layers");
+            toolbar.setTitle(mode + " Layers");
             searchopened = false;
         } else {
             super.onBackPressed();

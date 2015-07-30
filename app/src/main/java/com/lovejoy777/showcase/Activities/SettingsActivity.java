@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase;
+package com.lovejoy777.showcase.Activities;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,14 +7,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Toolbar;
+
+import com.lovejoy777.showcase.R;
 
 
 /**
  * Created by lovejoy777 on 02/07/15.
  */
-public class Settings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,7 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
         prefMgr.setSharedPreferencesName("myPrefs");
         addPreferencesFromResource(R.xml.settings);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
 
     }
 
@@ -42,7 +45,7 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
 
         } else {
 
-            Toast.makeText(Settings.this, "null build.prop commit", Toast.LENGTH_LONG).show();
+            Toast.makeText(SettingsActivity.this, "null build.prop commit", Toast.LENGTH_LONG).show();
             SharedPreferences myPrefs = this.getSharedPreferences("myPrefs", MODE_WORLD_READABLE);
             SharedPreferences.Editor editor = myPrefs.edit();
             editor.putBoolean("switch1", false);
@@ -106,6 +109,17 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
             killLauncherIcon();
         } else{
             ReviveLauncherIcon();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

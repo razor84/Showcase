@@ -2,11 +2,17 @@ package com.lovejoy777.showcase;
 
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.lovejoy777.showcase.Activities.AboutActivity;
+import com.lovejoy777.showcase.Activities.LayerListActivity;
+import com.lovejoy777.showcase.Activities.SettingsActivity;
+
 import org.json.JSONObject;
 
 import java.io.*;
@@ -26,6 +37,7 @@ import java.nio.charset.Charset;
 public class MainActivity1 extends AppCompatActivity {
 
     CardView card1, card2;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +47,15 @@ public class MainActivity1 extends AppCompatActivity {
 
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        toolbar.setNavigationIcon(R.drawable.ic_action_menu);
         setSupportActionBar(toolbar);
+
+        //set NavigationDrawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
 
         // mk dir showcase
         File dir = new File(Environment.getExternalStorageDirectory() + "/showcase");
@@ -91,7 +110,7 @@ public class MainActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent freeactivity = new Intent(MainActivity1.this, Screen1.class);
+                Intent freeactivity = new Intent(MainActivity1.this, LayerListActivity.class);
                 freeactivity.putExtra("type", "Free");
 
                 Bundle bndlanimation =
@@ -106,7 +125,7 @@ public class MainActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent donateactivity = new Intent(MainActivity1.this, Screen1.class);
+                Intent donateactivity = new Intent(MainActivity1.this, LayerListActivity.class);
                 donateactivity.putExtra("type", "Paid");
 
                 Bundle bndlanimation =
@@ -119,6 +138,78 @@ public class MainActivity1 extends AppCompatActivity {
 
 
     } // ends onCreate
+
+    //set NavigationDrawerContent
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        mDrawerLayout.closeDrawers();
+                        //menuItem.setChecked(true);
+                        Bundle bndlanimation =
+                                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                        int id = menuItem.getItemId();
+                        switch (id){
+                            case R.id.nav_home:
+                                Intent main = new Intent(MainActivity1.this, MainActivity1.class);
+                                startActivity(main, bndlanimation);
+                                break;
+                            case R.id.nav_about:
+                                Intent about = new Intent(MainActivity1.this, AboutActivity.class);
+                                startActivity(about, bndlanimation);
+                                break;
+                            case R.id.nav_free:
+                                Intent freeactivity = new Intent(MainActivity1.this, LayerListActivity.class);
+                                freeactivity.putExtra("type", "Free");
+                                startActivity(freeactivity, bndlanimation);
+                                break;
+                            case R.id.nav_paid:
+                                Intent paidactivity = new Intent(MainActivity1.this, LayerListActivity.class);
+                                paidactivity.putExtra("type", "Free");
+                                startActivity(paidactivity, bndlanimation);
+                                break;
+                            case R.id.nav_manager:
+                                boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
+                                if(installed) {
+                                    //This intent will help you to launch if the package is already installed
+                                    Intent intent = new Intent();
+                                    intent.setComponent(new ComponentName("com.lovejoy777.rroandlayersmanager", "com.lovejoy777.rroandlayersmanager.menu"));
+                                    startActivity(intent);
+                                    break;
+                                } else {
+                                    Toast.makeText(MainActivity1.this, "Please install the Layers Manager App", Toast.LENGTH_LONG).show();
+                                    System.out.println("App is not currently installed on your phone");
+                                    break;
+                                }
+                            case R.id.nav_settings:
+                                Intent settings = new Intent(MainActivity1.this, SettingsActivity.class);
+                                startActivity(settings, bndlanimation);
+                                break;
+                            case R.id.nav_playStore:
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=Layers+Theme&c=apps&docType=1&sp=CAFiDgoMTGF5ZXJzIFRoZW1legIYAIoBAggB:S:ANO1ljK_ZAY")),bndlanimation);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+    }
+
+    private boolean appInstalledOrNot(String uri) {
+        PackageManager pm = getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
+    }
+
+
+
 
     private class DownloadTagnameTask extends AsyncTask<String, Integer, String> {
 
@@ -392,7 +483,7 @@ public class MainActivity1 extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+
 
         return true;
     }
@@ -406,15 +497,8 @@ public class MainActivity1 extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.action_settings:
-                Intent intent1 = new Intent();
-                intent1.setClass(this, Settings.class);
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(intent1, bndlanimation);
-                break;
         }
 
         return super.onOptionsItemSelected(item);
