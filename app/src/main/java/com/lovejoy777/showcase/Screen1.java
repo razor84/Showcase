@@ -55,6 +55,7 @@ public class Screen1 extends AppCompatActivity {
     private AbsFilteredCardViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefresh = null;
     private String mode;
+    boolean searchopened;
     private SearchBox search;
     private Toolbar toolbar;
 
@@ -63,6 +64,7 @@ public class Screen1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen1);
 
+        searchopened = false;
 
 
         mode = getIntent().getStringExtra("type");
@@ -161,13 +163,18 @@ public class Screen1 extends AppCompatActivity {
             @Override
             public void onSearchOpened() {
                 // Use this to tint the screen
-
+                searchopened = true;
+                System.out.println("OnOpened: "+searchopened);
             }
 
             @Override
             public void onSearchClosed() {
                 // Use this to un-tint the screen
-                closeSearch();
+                if (searchopened) {
+                    closeSearch();
+                    searchopened = false;
+                    System.out.println("onClosed " + searchopened);
+                }
             }
 
             @Override
@@ -389,8 +396,19 @@ public class Screen1 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.back2, R.anim.back1);
+
+        System.out.println("onbackprreddses");
+        if (searchopened) {
+            closeSearch();
+            search.clearSearchable();
+            mAdapter.filter("");
+            toolbar.setTitle(mode+" Layers");
+            searchopened = false;
+        } else {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.back2, R.anim.back1);
+        }
+
     }
 
 
