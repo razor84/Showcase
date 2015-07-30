@@ -2,7 +2,10 @@ package com.lovejoy777.showcase;
 
 import android.content.Context;
 import com.lovejoy777.showcase.enums.Density;
-import com.lovejoy777.showcase.enums.SystemVersion;
+import com.lovejoy777.showcase.enums.AndroidVersion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Helpers {
 
@@ -27,14 +30,23 @@ public class Helpers {
     }
 
 
-    public static SystemVersion getSystemVersion() {
+    public static AndroidVersion getSystemVersion() {
         if ((android.os.Build.VERSION.RELEASE.startsWith("5.0") || android.os.Build.VERSION.RELEASE.startsWith("5.1"))) {
-            return SystemVersion.Lollipop;
+            return AndroidVersion.Lollipop;
         } else if ((android.os.Build.VERSION.RELEASE.startsWith("5.2") || android.os.Build.VERSION.RELEASE.startsWith("M"))) {
-            return SystemVersion.M;
+            return AndroidVersion.M;
         } else {
-            return SystemVersion.Other;
+            return AndroidVersion.Other;
         }
+    }
+
+    public static List<Theme> createDebugThemes() {
+
+        ArrayList<Theme> themes = new ArrayList<Theme>();
+
+
+
+        return themes;
     }
 
 }

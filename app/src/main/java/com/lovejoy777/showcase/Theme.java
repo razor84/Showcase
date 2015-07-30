@@ -1,6 +1,9 @@
 package com.lovejoy777.showcase;
 
+import com.lovejoy777.showcase.enums.AndroidPlatform;
 import com.lovejoy777.showcase.enums.Density;
+import com.lovejoy777.showcase.enums.AndroidVersion;
+import com.lovejoy777.showcase.enums.LayersVersion;
 
 import java.io.Serializable;
 
@@ -18,21 +21,22 @@ public class Theme implements Serializable {
     private String version;
     private String donate_link;
     private String donate_version;
-    private String bootani;
-    private String font;
+    private boolean bootani;
+    private boolean font;
     private String wallpaper;
     private String plugin_version;
     private boolean for_L;
     private boolean for_M;
-    private String basic;
-    private String basic_m;
-    private String type2;
-    private String type3;
-    private String type3_m;
-    private String touchwiz;
-    private String lg;
-    private String sense;
-    private String xperia;
+    private boolean basic;
+    private boolean basic_m;
+    private boolean type2;
+    private boolean type3;
+    private boolean type3_m;
+    private boolean touchwiz;
+    private boolean lg;
+    private boolean sense;
+    private boolean xperia;
+    private boolean zenui;
     private boolean hdpi;
     private boolean mdpi;
     private boolean xhdpi;
@@ -149,19 +153,19 @@ public class Theme implements Serializable {
         this.donate_version = donate_version;
     }
 
-    public String getBootani() {
+    public boolean isBootani() {
         return bootani;
     }
 
-    public void setBootani(String bootani) {
+    public void setBootani(boolean bootani) {
         this.bootani = bootani;
     }
 
-    public String getFont() {
+    public boolean isFont() {
         return font;
     }
 
-    public void setFont(String font) {
+    public void setFont(boolean font) {
         this.font = font;
     }
 
@@ -197,76 +201,84 @@ public class Theme implements Serializable {
         this.for_M = for_M;
     }
 
-    public String getBasic() {
+    public boolean isBasic() {
         return basic;
     }
 
-    public void setBasic(String basic) {
+    public void setBasic(boolean basic) {
         this.basic = basic;
     }
 
-    public String getBasic_m() {
+    public boolean isBasic_m() {
         return basic_m;
     }
 
-    public void setBasic_m(String basic_m) {
+    public void setBasic_m(boolean basic_m) {
         this.basic_m = basic_m;
     }
 
-    public String getType2() {
+    public boolean isType2() {
         return type2;
     }
 
-    public void setType2(String type2) {
+    public void setType2(boolean type2) {
         this.type2 = type2;
     }
 
-    public String getType3() {
+    public boolean isType3() {
         return type3;
     }
 
-    public void setType3(String type3) {
+    public void setType3(boolean type3) {
         this.type3 = type3;
     }
 
-    public String getType3_m() {
+    public boolean isType3_m() {
         return type3_m;
     }
 
-    public void setType3_m(String type3_m) {
+    public void setType3_m(boolean type3_m) {
         this.type3_m = type3_m;
     }
 
-    public String getTouchwiz() {
+    public boolean isTouchwiz() {
         return touchwiz;
     }
 
-    public void setTouchwiz(String touchwiz) {
+    public void setTouchwiz(boolean touchwiz) {
         this.touchwiz = touchwiz;
     }
 
-    public String getLg() {
+    public boolean isLg() {
         return lg;
     }
 
-    public void setLg(String lg) {
+    public void setLg(boolean lg) {
         this.lg = lg;
     }
 
-    public String getSense() {
+    public boolean isSense() {
         return sense;
     }
 
-    public void setSense(String sense) {
+    public void setSense(boolean sense) {
         this.sense = sense;
     }
 
-    public String getXperia() {
+    public boolean isXperia() {
         return xperia;
     }
 
-    public void setXperia(String xperia) {
+    public void setXperia(boolean xperia) {
         this.xperia = xperia;
+    }
+
+    public boolean isZenui() {
+        return zenui;
+    }
+
+    public void setZenui(boolean zenui) {
+        this.zenui = zenui;
     }
 
     public boolean isFree() {
@@ -305,27 +317,6 @@ public class Theme implements Serializable {
         return mdpi;
     }
 
-    public boolean isSupportedDpi(Density dpi) {
-
-        switch (dpi) {
-            case MDPI:
-                return mdpi;
-            case HDPI:
-                return hdpi;
-            case XHDPI:
-                return xhdpi;
-            case XXHDPI:
-                return xxhdpi;
-            case XXXHDPI:
-                return xxxhdpi;
-            default:
-                return false;
-
-        }
-    }
-
-
-
     public void setMdpi(boolean mdpi) {
         this.mdpi = mdpi;
     }
@@ -353,4 +344,78 @@ public class Theme implements Serializable {
     public void setXxxhdpi(boolean xxxhdpi) {
         this.xxxhdpi = xxxhdpi;
     }
+
+    public boolean isSupportingDpi(Density dpi) {
+
+        switch (dpi) {
+            case MDPI:
+                return mdpi;
+            case HDPI:
+                return hdpi;
+            case XHDPI:
+                return xhdpi;
+            case XXHDPI:
+                return xxhdpi;
+            case XXXHDPI:
+                return xxxhdpi;
+            default:
+                throw new IllegalArgumentException("Wrong DPI");
+
+        }
+    }
+
+    public boolean isSupportingAndroidVersion(AndroidVersion version) {
+
+        switch (version) {
+            case M:
+                return for_M;
+            case Lollipop:
+                return for_L;
+            default:
+                throw new IllegalArgumentException("Wrong System version");
+        }
+
+    }
+
+    public boolean isSupportingAndroidPlatform(AndroidPlatform platform) {
+
+        switch (platform) {
+
+            case Touchwiz:
+                return touchwiz;
+            case LG:
+                return lg;
+            case Sense:
+                return sense;
+            case Xperia:
+                return xperia;
+            case Asus:
+                return zenui;
+            default:
+                throw new IllegalArgumentException("Wrong System platform");
+
+
+        }
+
+    }
+
+    public boolean isSupportingLayersVersion(LayersVersion layersVersion) {
+
+        switch (layersVersion) {
+            case Basic_L:
+                return basic;
+            case Basic_M:
+                return basic_m;
+            case Type2L:
+                return type2;
+            case Type3:
+                return type3;
+            case Type3_M:
+                return type3_m;
+            default:
+                throw new IllegalArgumentException("Wrong Layers platform");
+        }
+
+    }
+
 }

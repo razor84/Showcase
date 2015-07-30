@@ -19,12 +19,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lovejoy777.showcase.Activities.AboutActivity;
 import com.lovejoy777.showcase.Activities.LayerListActivity;
 import com.lovejoy777.showcase.Activities.SettingsActivity;
 
+import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -55,6 +57,12 @@ public class MainActivity1 extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
+
+          //  ImageView picture = (ImageView) navigationView.findViewById(R.id.imVie_AppLogo);
+
+            //Set picture
+          //  Picasso.with(this).load(R.drawable.bitsyko).placeholder(R.drawable.bitsyko).centerCrop().into(viewHolder.themeImage);
+
         }
 
         // mk dir showcase

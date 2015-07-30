@@ -13,14 +13,13 @@ import android.os.Environment;
 import android.speech.RecognizerIntent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.*;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.*;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -31,8 +30,12 @@ import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
+import com.lovejoy777.showcase.enums.AndroidPlatform;
+import com.lovejoy777.showcase.enums.AndroidVersion;
+import com.lovejoy777.showcase.enums.Density;
+import com.lovejoy777.showcase.enums.LayersVersion;
+import com.lovejoy777.showcase.filters.*;
 import com.quinny898.library.persistentsearch.SearchBox;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,7 +78,7 @@ public class LayerListActivity extends AppCompatActivity {
 
         search = (SearchBox) findViewById(R.id.searchbox);
         search.enableVoiceRecognition(this);
-        search.setLogoText("Showcase");
+        search.setLogoText("");
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
 
@@ -102,7 +105,8 @@ public class LayerListActivity extends AppCompatActivity {
         }
 
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.filter("");
+        mAdapter.refreshFilteredList();
+        //  mAdapter.refreshFilteredList("");
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(LayerListActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
@@ -136,15 +140,14 @@ public class LayerListActivity extends AppCompatActivity {
     public void openSearch() {
         toolbar.setTitle("");
         search.revealFromMenuItem(R.id.action_search, this);
-       // for (suggestions.) {
+        // for (suggestions.) {
 
 
-
-       //     SearchResult option = new SearchResult("Result "
-       //            + Integer.toString(x), getResources().getDrawable(
-       ////             R.drawable.ic_history));
-      //      search.addSearchable(option);
-      //  }
+        //     SearchResult option = new SearchResult("Result "
+        //            + Integer.toString(x), getResources().getDrawable(
+        ////             R.drawable.ic_history));
+        //      search.addSearchable(option);
+        //  }
         search.setMenuListener(new SearchBox.MenuListener() {
 
             @Override
@@ -161,7 +164,7 @@ public class LayerListActivity extends AppCompatActivity {
             public void onSearchOpened() {
                 // Use this to tint the screen
                 searchopened = true;
-                System.out.println("OnOpened: "+searchopened);
+                System.out.println("OnOpened: ");
             }
 
             @Override
@@ -170,35 +173,38 @@ public class LayerListActivity extends AppCompatActivity {
                 if (searchopened) {
                     closeSearch();
                     searchopened = false;
-                    System.out.println("onClosed " + searchopened);
+                    System.out.println("onClosed ");
                 }
             }
 
             @Override
             public void onSearchTermChanged() {
-                mAdapter.filter(search.getSearchText());
-                // React to the search term changing
-                // Called after it has updated results
+                mAdapter.addFilter(new FilterName(search.getSearchText()));
+
             }
 
             @Override
             public void onSearch(String searchTerm) {
-                mAdapter.filter(searchTerm);
+                mAdapter.addFilter(new FilterName(searchTerm));
                 toolbar.setTitle(searchTerm);
             }
 
             @Override
             public void onSearchCleared() {
-                mAdapter.filter("");
+                mAdapter.addFilter(new FilterName(""));
             }
 
         });
 
     }
 
-    protected void closeSearch() {
+    private void closeSearch() {
         search.hideCircularly(this);
-        if(search.getSearchText().isEmpty())toolbar.setTitle(mode+" Layers");
+        if (search.getSearchText().isEmpty()) {
+            toolbar.setTitle(mode + " Layers");
+        } else {
+            toolbar.setTitle(search.getSearchText());
+        }
     }
 
     @Override
@@ -291,7 +297,7 @@ public class LayerListActivity extends AppCompatActivity {
 
         protected void onPostExecute(Boolean result) {
             mAdapter.notifyDataSetChanged();
-            mAdapter.filter("");
+            mAdapter.refreshFilteredList();
             if (!result) {
                 Toast.makeText(getApplicationContext(), "Unable to fetch database from server", Toast.LENGTH_LONG).show();
             }
@@ -304,6 +310,9 @@ public class LayerListActivity extends AppCompatActivity {
         }
     }
 
+    //4 for spinners and 2 for checkboxes
+    int[] lastLocations = new int[6];
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -314,7 +323,7 @@ public class LayerListActivity extends AppCompatActivity {
                 openSearch();
                 return true;
             case R.id.action_filter:
-                String[] AndroidVersions = {"Any", "Lollipop", "M"};
+                final String[] AndroidVersions = {"Any", "Lollipop", "M"};
                 String[] AndroidPlatforms = {"Any", "Touchwiz", "LG", "Sense", "Xperia", "Asus ZenUI"};
                 String[] AndroidDensities = {"Any", "hdpi", "mdpi", "xhdpi", "xxhdpi", "xxxhdpi"};
                 String[] LayersVersions = {"Any", "Basic RRO L", "Basic RRO M", "Layers Type 2 L", "Layers Type 3", "Layers Type 3 M"};
@@ -326,68 +335,99 @@ public class LayerListActivity extends AppCompatActivity {
                 colorDialog.setView(DialogView);
 
                 //Android Version spinner
-                final Spinner AndroidVersionSpinner= (Spinner) DialogView.findViewById(R.id.androidVersionSpinner);
-                AndroidVersionSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> AndroidVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidVersions);
-                AndroidVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                AndroidVersionSpinner.setAdapter(AndroidVersionAdapter);
+                final Spinner androidVersionSpinner = (Spinner) DialogView.findViewById(R.id.androidVersionSpinner);
+                ArrayAdapter<String> androidVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidVersions);
+                androidVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                androidVersionSpinner.setAdapter(androidVersionAdapter);
+                androidVersionSpinner.setSelection(lastLocations[0]);
 
                 //Android Platform spinner
-                final Spinner AndroidPlatformSpinner= (Spinner) DialogView.findViewById(R.id.androidPlatformSpinner);
-                AndroidPlatformSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> AndroidPlatformAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidPlatforms);
-                AndroidPlatformAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                AndroidPlatformSpinner.setAdapter(AndroidPlatformAdapter);
+                final Spinner androidPlatformSpinner = (Spinner) DialogView.findViewById(R.id.androidPlatformSpinner);
+                ArrayAdapter<String> androidPlatformAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidPlatforms);
+                androidPlatformAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                androidPlatformSpinner.setAdapter(androidPlatformAdapter);
+                androidPlatformSpinner.setSelection(lastLocations[1]);
 
                 //Android Density spinner
-                final Spinner AndroidDensitySpinner= (Spinner) DialogView.findViewById(R.id.androidDensitySpinner);
-                AndroidDensitySpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> AndroidDensityAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidDensities);
-                AndroidDensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                AndroidDensitySpinner.setAdapter(AndroidDensityAdapter);
+                final Spinner androidDensitySpinner = (Spinner) DialogView.findViewById(R.id.androidDensitySpinner);
+                ArrayAdapter<String> androidDensityAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidDensities);
+                androidDensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                androidDensitySpinner.setAdapter(androidDensityAdapter);
+                androidDensitySpinner.setSelection(lastLocations[2]);
 
                 //Layers Version Spinner
-                final Spinner LayersVersionSpinner= (Spinner) DialogView.findViewById(R.id.LayersVersionSpinne);
-                LayersVersionSpinner.setOnItemSelectedListener(new OnSpinnerItemClicked());
-                ArrayAdapter<String> LayersVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, LayersVersions);
-                LayersVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                LayersVersionSpinner.setAdapter(LayersVersionAdapter);
+                final Spinner layersVersionSpinner = (Spinner) DialogView.findViewById(R.id.LayersVersionSpinne);
+                ArrayAdapter<String> layersVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, LayersVersions);
+                layersVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                layersVersionSpinner.setAdapter(layersVersionAdapter);
+                layersVersionSpinner.setSelection(lastLocations[3]);
+
+                final CheckBox fontCheckBox = (CheckBox) DialogView.findViewById(R.id.fontCheckbox);
+                fontCheckBox.setChecked((lastLocations[4] != 0));
+
+                final CheckBox bootanimationCheckBox = (CheckBox) DialogView.findViewById(R.id.bootanimationCheckbox);
+                bootanimationCheckBox.setChecked((lastLocations[5] != 0));
 
                 colorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        lastLocations[0] = androidVersionSpinner.getSelectedItemPosition();
+                        lastLocations[1] = androidPlatformSpinner.getSelectedItemPosition();
+                        lastLocations[2] = androidDensitySpinner.getSelectedItemPosition();
+                        lastLocations[3] = layersVersionSpinner.getSelectedItemPosition();
+                        lastLocations[4] = fontCheckBox.isChecked() ? 1 : 0;
+                        lastLocations[5] = bootanimationCheckBox.isChecked() ? 1 : 0;
+
+
+                        if (lastLocations[0] != 0) {
+                            AndroidVersion version = AndroidVersion.valueOf((String) androidVersionSpinner.getSelectedItem());
+                            mAdapter.addFilter(new FilterSystemVersion(version));
+                        } else {
+                            mAdapter.removeFilter(new FilterSystemVersion(null));
+                        }
+
+                        if (lastLocations[1] != 0) {
+                            AndroidPlatform platform = AndroidPlatform.fromString((String) androidPlatformSpinner.getSelectedItem());
+                            mAdapter.addFilter(new FilterSystemPlatform(platform));
+                        } else {
+                            mAdapter.removeFilter(new FilterSystemPlatform(null));
+                        }
+
+                        if (lastLocations[2] != 0) {
+                            Density density = Density.valueOf(((String) androidDensitySpinner.getSelectedItem()).toUpperCase());
+                            mAdapter.addFilter(new FilterDensity(density));
+                        } else {
+                            mAdapter.removeFilter(new FilterDensity(null));
+                        }
+
+                        if (lastLocations[3] != 0) {
+                            LayersVersion layersVersion = LayersVersion.fromString((String) layersVersionSpinner.getSelectedItem());
+                            mAdapter.addFilter(new FilterLayersVersion(layersVersion));
+                        } else {
+                            mAdapter.removeFilter(new FilterLayersVersion(null));
+                        }
+
+                        if (lastLocations[4] != 0) {
+                            mAdapter.addFilter(new FilterBootanimation());
+                        } else {
+                            mAdapter.removeFilter(new FilterBootanimation());
+                        }
+
+                        if (lastLocations[5] != 0) {
+                            mAdapter.addFilter(new FilterFont());
+                        } else {
+                            mAdapter.removeFilter(new FilterFont());
+                        }
+
 
                     }
                 });
-                colorDialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
 
 
-                });
                 colorDialog.create();
                 colorDialog.show();
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public class OnSpinnerItemClicked implements AdapterView.OnItemSelectedListener {
-
-        @Override
-        public void onItemSelected(AdapterView<?> parent,
-                                   View view, int pos, long id) {
-
-
-
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView parent) {
-            // Do nothing.
         }
     }
 
@@ -398,7 +438,6 @@ public class LayerListActivity extends AppCompatActivity {
         if (searchopened) {
             closeSearch();
             search.clearSearchable();
-            mAdapter.filter("");
             toolbar.setTitle(mode + " Layers");
             searchopened = false;
         } else {
@@ -407,8 +446,6 @@ public class LayerListActivity extends AppCompatActivity {
         }
 
     }
-
-
 
 
 }

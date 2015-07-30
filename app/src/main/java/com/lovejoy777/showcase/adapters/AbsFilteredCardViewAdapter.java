@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.lovejoy777.showcase.Theme;
+import com.lovejoy777.showcase.filters.Filter;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public abstract class AbsFilteredCardViewAdapter extends RecyclerView.Adapter<Ab
 
     protected ArrayList<Theme> themes;
     protected ArrayList<Theme> filteredThemes;
+    private ArrayList<Filter> filters = new ArrayList<Filter>();
     protected int rowLayout;
     protected Context mContext;
 
@@ -25,19 +27,12 @@ public abstract class AbsFilteredCardViewAdapter extends RecyclerView.Adapter<Ab
         return filteredThemes.get(id);
     }
 
-    public void filter(String filter) {
+    public void refreshFilteredList() {
 
         filteredThemes.clear();
 
-        if (filter == null || filter.isEmpty() || filter.equals("")) {
-            filteredThemes.addAll(themes);
-            notifyDataSetChanged();
-            return;
-        }
-
         for (Theme theme : themes) {
-            if (theme.getTitle().toLowerCase().contains(filter)
-                    || theme.getAuthor().toLowerCase().contains(filter)) {
+            if (checkTheme(theme, filters)) {
                 filteredThemes.add(theme);
             }
         }
@@ -46,6 +41,26 @@ public abstract class AbsFilteredCardViewAdapter extends RecyclerView.Adapter<Ab
 
     }
 
+    private boolean checkTheme(Theme theme, ArrayList<Filter> filters) {
+        for (Filter filter : filters) {
+            if (!filter.filterTheme(theme)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void addFilter(Filter filter) {
+        filters.remove(filter);
+        filters.add(filter);
+        refreshFilteredList();
+    }
+
+    public void removeFilter(Filter filter) {
+        filters.remove(filter);
+        refreshFilteredList();
+    }
 
     @Override
     public int getItemCount() {
@@ -57,6 +72,7 @@ public abstract class AbsFilteredCardViewAdapter extends RecyclerView.Adapter<Ab
         public AbsViewHolder(View itemView) {
             super(itemView);
         }
+
     }
 
 

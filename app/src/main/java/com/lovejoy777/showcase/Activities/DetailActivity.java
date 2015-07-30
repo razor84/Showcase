@@ -23,7 +23,7 @@ import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;
 import com.lovejoy777.showcase.Theme;
 import com.lovejoy777.showcase.enums.Density;
-import com.lovejoy777.showcase.enums.SystemVersion;
+import com.lovejoy777.showcase.enums.AndroidVersion;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
@@ -174,12 +174,12 @@ public class DetailActivity extends AppCompatActivity {
         TextView androidversion = (TextView) findViewById(R.id.textView4);
         ImageView androidversionImage = (ImageView) findViewById(R.id.imageView4);
 
-        SystemVersion systemVersion = Helpers.getSystemVersion();
+        AndroidVersion androidVersion = Helpers.getSystemVersion();
 
-        if (systemVersion == SystemVersion.Lollipop && theme.isFor_L()) {
+        if (androidVersion == AndroidVersion.Lollipop && theme.isFor_L()) {
             androidversion.setText(getString(R.string.supportsL));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-        } else if (systemVersion == SystemVersion.M && theme.isFor_M()) {
+        } else if (androidVersion == AndroidVersion.M && theme.isFor_M()) {
             androidversion.setText(getString(R.string.supportsM));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
         } else {
@@ -189,7 +189,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Density deviceDensity = Helpers.getDensity(this);
 
-        if (theme.isSupportedDpi(deviceDensity)) {
+        if (theme.isSupportingDpi(deviceDensity)) {
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensity.setText(getString(R.string.densitySupport) + " " + deviceDensity.toString().toLowerCase());
         } else {

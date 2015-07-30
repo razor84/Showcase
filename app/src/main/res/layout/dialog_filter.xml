@@ -104,7 +104,7 @@
         android:layout_marginRight="16dp" />
 
     <CheckBox android:gravity="center|right"
-        android:id="@+id/search_filter_hd"
+        android:id="@+id/fontCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="48.0dip"
         android:layout_marginTop="4.0dip"
@@ -120,10 +120,10 @@
         android:layout_height="48.0dip"
         android:layout_marginRight="8.0dip"
         android:text="Font"
-        android:layout_toLeftOf="@id/search_filter_hd"
+        android:layout_toLeftOf="@id/fontCheckbox"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="false"
-        android:layout_alignTop="@+id/search_filter_hd"
+        android:layout_alignTop="@+id/fontCheckbox"
         android:layout_marginLeft="16dp" />
 
     <CheckBox android:gravity="center|right"
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="48.0dip"
         android:layout_marginTop="4.0dip"
-        android:layout_below="@+id/search_filter_hd"
+        android:layout_below="@+id/fontCheckbox"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp" />
     <TextView

@@ -1,6 +1,6 @@
 package com.lovejoy777.showcase.enums;
 
-public enum SystemVersion {
+public enum AndroidVersion {
     Lollipop,
     M,
     Other
