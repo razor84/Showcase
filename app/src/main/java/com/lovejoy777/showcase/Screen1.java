@@ -76,6 +76,7 @@ public class Screen1 extends AppCompatActivity {
 
         search = (SearchBox) findViewById(R.id.searchbox);
         search.enableVoiceRecognition(this);
+        search.setLogoText("Showcase");
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
 
@@ -171,6 +172,7 @@ public class Screen1 extends AppCompatActivity {
 
             @Override
             public void onSearchTermChanged() {
+                mAdapter.filter(search.getSearchText());
                 // React to the search term changing
                 // Called after it has updated results
             }
@@ -183,7 +185,7 @@ public class Screen1 extends AppCompatActivity {
 
             @Override
             public void onSearchCleared() {
-
+                mAdapter.filter("");
             }
 
         });
@@ -192,7 +194,7 @@ public class Screen1 extends AppCompatActivity {
 
     protected void closeSearch() {
         search.hideCircularly(this);
-        if(search.getSearchText().isEmpty())toolbar.setTitle("");
+        if(search.getSearchText().isEmpty())toolbar.setTitle(mode+" Layers");
     }
 
     @Override
@@ -210,31 +212,6 @@ public class Screen1 extends AppCompatActivity {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
-
-        /*MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint("Theme name/developer");
-
-        SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        searchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.secondary_text_dark));
-        searchAutoComplete.setTextColor(Color.WHITE);
-
-        ((ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_button)).setImageResource(R.drawable.ic_search_white_24dp);
-        ((ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn)).setImageResource(R.drawable.ic_close_white_24dp);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                mAdapter.filter(s);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                mAdapter.filter(s);
-                return false;
-            }
-        }); */
 
 
         return super.onCreateOptionsMenu(menu);
