@@ -81,7 +81,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.FullscreenActivity"/>
+        <activity android:name=".Activities.FullscreenActivity2"/>
 
     </application>
 

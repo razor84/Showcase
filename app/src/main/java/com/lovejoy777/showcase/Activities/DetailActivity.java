@@ -96,7 +96,7 @@ public class DetailActivity extends AppCompatActivity {
             ScreenshotimageView[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FullscreenActivity.launch(activity, (ImageView) view, screenshotsUrls[finalI], "img");
+                    FullscreenActivity2.launch(activity, (ImageView) view, screenshotsUrls[finalI], "img");
                 }
             });
 
