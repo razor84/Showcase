@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         boolean switch1 = prefs.getBoolean("switch1", false);
 
         boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
-        if(installed && switch1 == true) {
+        if (installed && switch1 == true) {
 
             PackageManager p = getPackageManager();
             ComponentName componentName = new ComponentName(this, com.lovejoy777.showcase.MainActivity.class); // activity which is first time open in manifiest file which is declare as <category android:name="android.intent.category.LAUNCHER" />
@@ -27,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // start MainActivity1
-        Intent intent = new Intent(MainActivity.this,MainActivity1.class);
+        Intent intent = new Intent(MainActivity.this, MainActivity1.class);
         startActivity(intent);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         finish();
 
     }
+
     // check for installed app method
     private boolean appInstalledOrNot(String uri) {
         PackageManager pm = getPackageManager();
@@ -40,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             app_installed = true;
-        }
-        catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
             app_installed = false;
         }
         return app_installed;

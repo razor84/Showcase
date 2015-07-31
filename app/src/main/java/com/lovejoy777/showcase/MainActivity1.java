@@ -11,22 +11,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.lovejoy777.showcase.Activities.AboutActivity;
-import com.lovejoy777.showcase.Activities.LayerListActivity;
 import com.lovejoy777.showcase.Activities.SettingsActivity;
-
-import com.squareup.picasso.Picasso;
+import com.lovejoy777.showcase.fragments.AbsBackButtonFragment;
+import com.lovejoy777.showcase.fragments.LayerListFragment;
+import com.lovejoy777.showcase.fragments.MainFragment;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -38,8 +36,8 @@ import java.nio.charset.Charset;
 
 public class MainActivity1 extends AppCompatActivity {
 
-    CardView card1, card2;
     private DrawerLayout mDrawerLayout;
+    private AbsBackButtonFragment lastFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +55,6 @@ public class MainActivity1 extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
-
-          //  ImageView picture = (ImageView) navigationView.findViewById(R.id.imVie_AppLogo);
-
-            //Set picture
-          //  Picasso.with(this).load(R.drawable.bitsyko).placeholder(R.drawable.bitsyko).centerCrop().into(viewHolder.themeImage);
-
         }
 
         // mk dir showcase
@@ -87,63 +79,11 @@ public class MainActivity1 extends AppCompatActivity {
         final DownloadTagnameTask downloadTagnameTask = new DownloadTagnameTask(MainActivity1.this);
         downloadTagnameTask.execute("https://api.github.com/repos/BitSyko/layers_showcase_json/releases/latest");
 
-        /**   // if /showcase/tagname/tagname.json doesnt exist then copy file.
-         File dir3 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-         if (!dir3.exists()) {
-         try
-         {
-         InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-         OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
+        //Home fragment
 
-         // Copy the bits from instream to outstream
-         byte[] buf = new byte[1024];
-         int len;
-         while ((len = in.read(buf)) > 0) {
-         out.write(buf, 0, len);
-         }
-         in.close();
-         out.close();
-         }
-         catch (IOException e)
-         {
-         e.printStackTrace();
-         }
-         } */
-
-        card1 = (CardView) findViewById(R.id.CardView_freethemes1);
-        card2 = (CardView) findViewById(R.id.CardView_paidthemes2);
-
-        // CARD 1
-        card1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent freeactivity = new Intent(MainActivity1.this, LayerListActivity.class);
-                freeactivity.putExtra("type", "Free");
-
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(freeactivity, bndlanimation);
-
-            }
-        }); // end card1
-
-        // CARD 2
-        card2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent donateactivity = new Intent(MainActivity1.this, LayerListActivity.class);
-                donateactivity.putExtra("type", "Paid");
-
-                Bundle bndlanimation =
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                startActivity(donateactivity, bndlanimation);
-
-            }
-        }); // end card2
-
-
+        Fragment fragment = new MainFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
 
     } // ends onCreate
 
@@ -154,32 +94,42 @@ public class MainActivity1 extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         mDrawerLayout.closeDrawers();
-                        //menuItem.setChecked(true);
+                        menuItem.setChecked(true);
                         Bundle bndlanimation =
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                         int id = menuItem.getItemId();
-                        switch (id){
+                        FragmentManager fragmentManager;
+                        switch (id) {
                             case R.id.nav_home:
-                                Intent main = new Intent(MainActivity1.this, MainActivity1.class);
-                                startActivity(main, bndlanimation);
+                                lastFragment = new MainFragment();
+                                fragmentManager = getSupportFragmentManager();
+                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).commit();
                                 break;
                             case R.id.nav_about:
                                 Intent about = new Intent(MainActivity1.this, AboutActivity.class);
                                 startActivity(about, bndlanimation);
                                 break;
                             case R.id.nav_free:
-                                Intent freeactivity = new Intent(MainActivity1.this, LayerListActivity.class);
-                                freeactivity.putExtra("type", "Free");
-                                startActivity(freeactivity, bndlanimation);
+                                Bundle data = new Bundle();
+                                data.putString("type", "Free");
+
+                                lastFragment = new LayerListFragment();
+                                lastFragment.setArguments(data);
+                                fragmentManager = getSupportFragmentManager();
+                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).commit();
                                 break;
                             case R.id.nav_paid:
-                                Intent paidactivity = new Intent(MainActivity1.this, LayerListActivity.class);
-                                paidactivity.putExtra("type", "Free");
-                                startActivity(paidactivity, bndlanimation);
+                                data = new Bundle();
+                                data.putString("type", "Paid");
+
+                                lastFragment = new LayerListFragment();
+                                lastFragment.setArguments(data);
+                                fragmentManager = getSupportFragmentManager();
+                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).commit();
                                 break;
                             case R.id.nav_manager:
                                 boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
-                                if(installed) {
+                                if (installed) {
                                     //This intent will help you to launch if the package is already installed
                                     Intent intent = new Intent();
                                     intent.setComponent(new ComponentName("com.lovejoy777.rroandlayersmanager", "com.lovejoy777.rroandlayersmanager.menu"));
@@ -195,7 +145,7 @@ public class MainActivity1 extends AppCompatActivity {
                                 startActivity(settings, bndlanimation);
                                 break;
                             case R.id.nav_playStore:
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=Layers+Theme&c=apps&docType=1&sp=CAFiDgoMTGF5ZXJzIFRoZW1legIYAIoBAggB:S:ANO1ljK_ZAY")),bndlanimation);
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=Layers+Theme&c=apps&docType=1&sp=CAFiDgoMTGF5ZXJzIFRoZW1legIYAIoBAggB:S:ANO1ljK_ZAY")));
                                 break;
                         }
                         return false;
@@ -209,14 +159,11 @@ public class MainActivity1 extends AppCompatActivity {
         try {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             app_installed = true;
-        }
-        catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
             app_installed = false;
         }
         return app_installed;
     }
-
-
 
 
     private class DownloadTagnameTask extends AsyncTask<String, Integer, String> {
@@ -482,18 +429,19 @@ public class MainActivity1 extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.back2, R.anim.back1);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onBackPressed() {
+        //  super.onBackPressed();
 
-        // Inflate the menu; this adds items to the action bar if it is present.
+        if (lastFragment != null && !lastFragment.onBackButton()) {
+            return;
+        }
 
-
-        return true;
+        super.onBackPressed();
     }
 
     @Override

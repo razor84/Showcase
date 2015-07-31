@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase.Activities;
+package com.lovejoy777.showcase.fragments;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -10,9 +10,7 @@ import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.speech.RecognizerIntent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lovejoy777.showcase.Activities.DetailActivity;
 import com.lovejoy777.showcase.R;
 import com.lovejoy777.showcase.Theme;
 import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
@@ -49,7 +48,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class LayerListActivity extends AppCompatActivity {
+public class LayerListFragment extends AbsBackButtonFragment {
 
     ArrayList<Theme> themesList;
     private AbsFilteredCardViewAdapter mAdapter;
@@ -60,66 +59,56 @@ public class LayerListActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen1);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.screen1, null);
 
         searchopened = false;
 
+        mode = getArguments().getString("type");
 
-        mode = getIntent().getStringExtra("type");
-
-        // Handle Toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_action_back);
-        toolbar.setTitle(mode + " Layers");
-        setSupportActionBar(toolbar);
-
-
-        search = (SearchBox) findViewById(R.id.searchbox);
+        search = (SearchBox) getActivity().findViewById(R.id.searchbox);
         search.enableVoiceRecognition(this);
         search.setLogoText("");
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        this.setSupportActionBar(toolbar);
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar = (android.support.v7.widget.Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(mode + " Layers");
+        setHasOptionsMenu(true);
 
-        mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefresh = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
 
         themesList = new ArrayList<Theme>();
 
         new JSONAsyncTask().execute();
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.cardList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.cardList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        SharedPreferences prefs = this.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         boolean bigCards = prefs.getBoolean("bigCards", true);
 
         if (bigCards) {
-            mAdapter = new BigCardsViewAdapter(themesList, this);
+            mAdapter = new BigCardsViewAdapter(themesList, getActivity());
         } else {
-            mAdapter = new SmallCardsViewAdapter(themesList, this);
+            mAdapter = new SmallCardsViewAdapter(themesList, getActivity());
         }
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.refreshFilteredList();
-        //  mAdapter.refreshFilteredList("");
 
         mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(LayerListActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(LayerListFragment.this.getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        Intent Detailsactivity = new Intent(LayerListActivity.this, DetailActivity.class);
+                        Intent Detailsactivity = new Intent(getActivity(), DetailActivity.class);
 
                         Detailsactivity.putExtra("theme", mAdapter.getItem(position));
 
                         Bundle bndlanimation =
-                                ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
-                        startActivity(Detailsactivity, bndlanimation);
+                                ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                        getActivity().startActivity(Detailsactivity, bndlanimation);
                     }
                 })
         );
@@ -134,26 +123,22 @@ public class LayerListActivity extends AppCompatActivity {
                 new JSONAsyncTask().execute();
             }
         });
-    }
 
+
+        return root;
+
+    }
 
     public void openSearch() {
         toolbar.setTitle("");
-        search.revealFromMenuItem(R.id.action_search, this);
-        // for (suggestions.) {
+        search.revealFromMenuItem(R.id.action_search, getActivity());
 
-
-        //     SearchResult option = new SearchResult("Result "
-        //            + Integer.toString(x), getResources().getDrawable(
-        ////             R.drawable.ic_history));
-        //      search.addSearchable(option);
-        //  }
         search.setMenuListener(new SearchBox.MenuListener() {
 
             @Override
             public void onMenuClick() {
                 // Hamburger has been clicked
-                Toast.makeText(LayerListActivity.this, "Menu click",
+                Toast.makeText(getActivity(), "Menu click",
                         Toast.LENGTH_LONG).show();
             }
 
@@ -199,7 +184,7 @@ public class LayerListActivity extends AppCompatActivity {
     }
 
     private void closeSearch() {
-        search.hideCircularly(this);
+        search.hideCircularly(getActivity());
         if (search.getSearchText().isEmpty()) {
             toolbar.setTitle(mode + " Layers");
         } else {
@@ -207,24 +192,21 @@ public class LayerListActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1234 && resultCode == RESULT_OK) {
-            ArrayList<String> matches = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            //search.populateEditText(matches.get(0));
+    /*
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == 1234 && resultCode == RESULT_OK) {
+                ArrayList<String> matches = data
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                //search.populateEditText(matches.get(0));
+            }
+            super.onActivityResult(requestCode, resultCode, data);
         }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+    */
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
-
-
-        return super.onCreateOptionsMenu(menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.menu_search, menu);
     }
 
     class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
@@ -299,7 +281,7 @@ public class LayerListActivity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             mAdapter.refreshFilteredList();
             if (!result) {
-                Toast.makeText(getApplicationContext(), "Unable to fetch database from server", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Unable to fetch database from server", Toast.LENGTH_LONG).show();
             }
             mSwipeRefresh.post(new Runnable() {
                 @Override
@@ -317,7 +299,7 @@ public class LayerListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                // onBackPressed();
                 return true;
             case R.id.action_search:
                 openSearch();
@@ -328,36 +310,36 @@ public class LayerListActivity extends AppCompatActivity {
                 String[] AndroidDensities = {"Any", "hdpi", "mdpi", "xhdpi", "xxhdpi", "xxxhdpi"};
                 String[] LayersVersions = {"Any", "Basic RRO L", "Basic RRO M", "Layers Type 2 L", "Layers Type 3", "Layers Type 3 M"};
 
-                final AlertDialog.Builder colorDialog = new AlertDialog.Builder(this);
-                final LayoutInflater inflater = this.getLayoutInflater();
+                final AlertDialog.Builder colorDialog = new AlertDialog.Builder(getActivity());
+                final LayoutInflater inflater = this.getLayoutInflater(null);
                 colorDialog.setTitle("Filter Layers");
                 View DialogView = inflater.inflate(R.layout.dialog_filter, null);
                 colorDialog.setView(DialogView);
 
                 //Android Version spinner
                 final Spinner androidVersionSpinner = (Spinner) DialogView.findViewById(R.id.androidVersionSpinner);
-                ArrayAdapter<String> androidVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidVersions);
+                ArrayAdapter<String> androidVersionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, AndroidVersions);
                 androidVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 androidVersionSpinner.setAdapter(androidVersionAdapter);
                 androidVersionSpinner.setSelection(lastLocations[0]);
 
                 //Android Platform spinner
                 final Spinner androidPlatformSpinner = (Spinner) DialogView.findViewById(R.id.androidPlatformSpinner);
-                ArrayAdapter<String> androidPlatformAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidPlatforms);
+                ArrayAdapter<String> androidPlatformAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, AndroidPlatforms);
                 androidPlatformAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 androidPlatformSpinner.setAdapter(androidPlatformAdapter);
                 androidPlatformSpinner.setSelection(lastLocations[1]);
 
                 //Android Density spinner
                 final Spinner androidDensitySpinner = (Spinner) DialogView.findViewById(R.id.androidDensitySpinner);
-                ArrayAdapter<String> androidDensityAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, AndroidDensities);
+                ArrayAdapter<String> androidDensityAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, AndroidDensities);
                 androidDensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 androidDensitySpinner.setAdapter(androidDensityAdapter);
                 androidDensitySpinner.setSelection(lastLocations[2]);
 
                 //Layers Version Spinner
                 final Spinner layersVersionSpinner = (Spinner) DialogView.findViewById(R.id.LayersVersionSpinne);
-                ArrayAdapter<String> layersVersionAdapter = new ArrayAdapter<String>(LayerListActivity.this, android.R.layout.simple_spinner_item, LayersVersions);
+                ArrayAdapter<String> layersVersionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, LayersVersions);
                 layersVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 layersVersionSpinner.setAdapter(layersVersionAdapter);
                 layersVersionSpinner.setSelection(lastLocations[3]);
@@ -431,8 +413,9 @@ public class LayerListActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
-    public void onBackPressed() {
+    public boolean onBackButton() {
 
         System.out.println("onbackprreddses");
         if (searchopened) {
@@ -440,9 +423,9 @@ public class LayerListActivity extends AppCompatActivity {
             search.clearSearchable();
             toolbar.setTitle(mode + " Layers");
             searchopened = false;
+            return false;
         } else {
-            super.onBackPressed();
-            overridePendingTransition(R.anim.back2, R.anim.back1);
+            return true;
         }
 
     }

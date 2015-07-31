@@ -38,7 +38,7 @@
 
 
         <activity
-            android:name=".Activities.LayerListActivity"
+            android:name=".fragments.LayerListFragment"
             android:label="@string/free"
             android:theme="@style/Toolbar2" >
             <intent-filter>
