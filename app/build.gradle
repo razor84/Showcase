@@ -15,7 +15,7 @@ android {
         applicationId "com.lovejoy777.showcase"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 4
+        versionCode 5
         versionName "b1.2"
         archivesBaseName = "Showcase"
     }
