@@ -57,25 +57,6 @@ public class MainActivity1 extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
-        // mk dir showcase
-        File dir = new File(Environment.getExternalStorageDirectory() + "/showcase");
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-
-        // mk dir showcase/tagname
-        File dir1 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname");
-        if (!dir1.exists()) {
-            dir1.mkdir();
-        }
-
-        // mk dir showcase/showcasejson
-        File dir2 = new File(Environment.getExternalStorageDirectory() + "/showcase/showcasejson");
-        if (!dir2.exists()) {
-            dir2.mkdir();
-        }
-
-
         new UpgradeJson(this, false).execute();
 
         //Home fragment

@@ -32,6 +32,8 @@ public class UpgradeJson extends AsyncTask<Void, String, Void> {
     protected void onPreExecute() {
         progressShowcase = ProgressDialog.show(context, "Downloading",
                 "Updating database...", true);
+        progressShowcase.setCancelable(false);
+
     }
 
     @Override

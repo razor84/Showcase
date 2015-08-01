@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,13 +23,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import com.lovejoy777.showcase.activities.DetailActivity;
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.activities.DetailActivity;
 import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
+import com.lovejoy777.showcase.beans.Theme;
 import com.lovejoy777.showcase.enums.AndroidPlatform;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 import com.lovejoy777.showcase.enums.Density;
@@ -41,10 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -216,12 +212,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
         protected Boolean doInBackground(String... urls) {
             try {
 
-                File tagname = new File(Environment.getExternalStorageDirectory() + "/showcase/showcasejson/showcase.json");
-                FileInputStream stream = new FileInputStream(tagname);
-                String jString = null;
-                StringWriter writer = new StringWriter();
-
-                jString = Files.toString(getLayersJsonFile(LayerListFragment.this.getActivity()), Charsets.UTF_8);
+                String jString = Files.toString(getLayersJsonFile(LayerListFragment.this.getActivity()), Charsets.UTF_8);
 
                 JSONObject jsono = new JSONObject(jString);
                 JSONArray jarray = jsono.getJSONArray("Themes");
