@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         boolean switch1 = prefs.getBoolean("switch1", false);
 
         boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
-        if (installed && switch1 == true) {
+        if (installed && switch1) {
 
             PackageManager p = getPackageManager();
             ComponentName componentName = new ComponentName(this, com.lovejoy777.showcase.MainActivity.class); // activity which is first time open in manifiest file which is declare as <category android:name="android.intent.category.LAUNCHER" />

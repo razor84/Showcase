@@ -1,5 +1,6 @@
 package com.lovejoy777.showcase.fragments;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -70,12 +71,15 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
         mode = getArguments().getString("type");
 
-        if (mode.equals("Free")) {
-            ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().getItem(1).setChecked(true);
-        } else if (mode.equals("Paid")) {
-            ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().getItem(2).setChecked(true);
-        } else {
-            throw new IllegalArgumentException("Wrong mode");
+        switch (mode) {
+            case "Free":
+                ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().getItem(1).setChecked(true);
+                break;
+            case "Paid":
+                ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().getItem(2).setChecked(true);
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong mode");
         }
 
 
@@ -88,7 +92,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
         mSwipeRefresh = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
 
-        themesList = new ArrayList<Theme>();
+        themesList = new ArrayList<>();
 
         new JSONAsyncTask().execute();
 
@@ -270,12 +274,8 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
                 //------------------>>
 
-            } catch (ParseException e1) {
+            } catch (ParseException | JSONException | IOException e1) {
                 e1.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
             return false;
         }
@@ -321,28 +321,28 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
                 //Android Version spinner
                 final Spinner androidVersionSpinner = (Spinner) DialogView.findViewById(R.id.androidVersionSpinner);
-                ArrayAdapter<String> androidVersionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, AndroidVersions);
+                ArrayAdapter<String> androidVersionAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, AndroidVersions);
                 androidVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 androidVersionSpinner.setAdapter(androidVersionAdapter);
                 androidVersionSpinner.setSelection(lastLocations[0]);
 
                 //Android Platform spinner
                 final Spinner androidPlatformSpinner = (Spinner) DialogView.findViewById(R.id.androidPlatformSpinner);
-                ArrayAdapter<String> androidPlatformAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, AndroidPlatforms);
+                ArrayAdapter<String> androidPlatformAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, AndroidPlatforms);
                 androidPlatformAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 androidPlatformSpinner.setAdapter(androidPlatformAdapter);
                 androidPlatformSpinner.setSelection(lastLocations[1]);
 
                 //Android Density spinner
                 final Spinner androidDensitySpinner = (Spinner) DialogView.findViewById(R.id.androidDensitySpinner);
-                ArrayAdapter<String> androidDensityAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, AndroidDensities);
+                ArrayAdapter<String> androidDensityAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, AndroidDensities);
                 androidDensityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 androidDensitySpinner.setAdapter(androidDensityAdapter);
                 androidDensitySpinner.setSelection(lastLocations[2]);
 
                 //Layers Version Spinner
                 final Spinner layersVersionSpinner = (Spinner) DialogView.findViewById(R.id.LayersVersionSpinne);
-                ArrayAdapter<String> layersVersionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, LayersVersions);
+                ArrayAdapter<String> layersVersionAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, LayersVersions);
                 layersVersionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 layersVersionSpinner.setAdapter(layersVersionAdapter);
                 layersVersionSpinner.setSelection(lastLocations[3]);
@@ -437,12 +437,18 @@ public class LayerListFragment extends AbsBackButtonFragment {
     //SearchView stuff
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == getActivity().RESULT_OK) {
+        if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == Activity.RESULT_OK) {
             ArrayList<String> matches = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             search.populateEditText(matches);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroyView() {
+        forceCloseSearch();
+        super.onDestroyView();
     }
 
     //#BlameAndrew
@@ -454,11 +460,11 @@ public class LayerListFragment extends AbsBackButtonFragment {
             field.setAccessible(true);
             field.set(search, true);
             search.toggleSearch();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
+
+
 
 }

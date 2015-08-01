@@ -9,7 +9,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.lovejoy777.showcase.R;
 
 
@@ -30,7 +29,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         boolean switch1 = prefs.getBoolean("switch1", false);
 
         boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
-        if(installed) {
+        if (installed) {
 
             PackageManager p = getPackageManager();
             ComponentName componentName = new ComponentName(this, com.lovejoy777.showcase.MainActivity.class); // activity which is first time open in manifiest file which is declare as <category android:name="android.intent.category.LAUNCHER" />
@@ -61,8 +60,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         try {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             app_installed = true;
-        }
-        catch (PackageManager.NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
             app_installed = false;
         }
         return app_installed;
@@ -92,15 +90,14 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key)
-    {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         SharedPreferences myPrefs = this.getSharedPreferences("myPrefs", MODE_WORLD_READABLE);
         SharedPreferences.Editor editor = myPrefs.edit();
-        Boolean HideLauncherIcon = myPrefs.getBoolean("switch1",false);
+        Boolean HideLauncherIcon = myPrefs.getBoolean("switch1", false);
 
-        if(HideLauncherIcon){
+        if (HideLauncherIcon) {
             killLauncherIcon();
-        } else{
+        } else {
             ReviveLauncherIcon();
         }
     }

@@ -128,8 +128,6 @@ public class UpgradeJson extends AsyncTask<Void, String, Void> {
             // download showcase json file
             inputStream = connection.getInputStream();
 
-            StringWriter writer = new StringWriter();
-
             theString = CharStreams.toString(new InputStreamReader(inputStream, Charsets.UTF_8));
 
         } catch (Exception e) {

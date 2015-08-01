@@ -254,7 +254,7 @@ public class DetailActivity extends AppCompatActivity {
                 Bitmap bitmap = Picasso.with(DetailActivity.this).load(theme.getPromo()).get();
                 Palette p = Palette.from(bitmap).generate();
 
-                return new Pair<>(bitmap, p);
+                return new Pair<Bitmap, Palette>(bitmap, p);
 
             } catch (IOException e) {
                 e.printStackTrace();
