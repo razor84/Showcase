@@ -9,6 +9,10 @@ import android.content.SharedPreferences;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -59,15 +64,23 @@ public class LayerListFragment extends AbsBackButtonFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.screen1, null);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.screen1, container, false);
 
         searchopened = false;
 
         mode = getArguments().getString("type");
 
+        if (mode.equals("Free")) {
+            ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().getItem(1).setChecked(true);
+        } else if (mode.equals("Paid")) {
+            ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().getItem(2).setChecked(true);
+        } else {
+            throw new IllegalArgumentException("Wrong mode");
+        }
+
+
         search = (SearchBox) getActivity().findViewById(R.id.searchbox);
-        search.enableVoiceRecognition(this);
-        search.setLogoText("");
+        setUpSearch();
 
         toolbar = (android.support.v7.widget.Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(mode + " Layers");
@@ -127,17 +140,24 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
     }
 
-    public void openSearch() {
-        toolbar.setTitle("");
-        search.revealFromMenuItem(R.id.action_search, getActivity());
-
+    private void setUpSearch() {
+        search.enableVoiceRecognition(this);
+        search.setLogoText("");
+        search.setSearchString("");
+        search.clearFocus();
         search.setMenuListener(new SearchBox.MenuListener() {
 
             @Override
             public void onMenuClick() {
-                // Hamburger has been clicked
-                Toast.makeText(getActivity(), "Menu click",
-                        Toast.LENGTH_LONG).show();
+
+                DrawerLayout drawerLayout = ((DrawerLayout) getActivity().findViewById(R.id.drawer_layout));
+
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawers();
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+
             }
 
         });
@@ -179,10 +199,17 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
         });
 
+
+    }
+
+    private void openSearch() {
+        toolbar.setTitle("");
+        search.revealFromMenuItem(R.id.action_search, getActivity());
     }
 
     private void closeSearch() {
         search.hideCircularly(getActivity());
+
         if (search.getSearchText().isEmpty()) {
             toolbar.setTitle(mode + " Layers");
         } else {
@@ -395,16 +422,43 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
         System.out.println("onbackprreddses");
         if (searchopened) {
-            closeSearch();
+            search.toggleSearch();
             search.clearSearchable();
-            toolbar.setTitle(mode + " Layers");
             searchopened = false;
             return false;
         } else {
+            //Sometimes it go back with opened searchview
+            forceCloseSearch();
             return true;
         }
 
     }
 
+    //SearchView stuff
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == getActivity().RESULT_OK) {
+            ArrayList<String> matches = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            search.populateEditText(matches);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //#BlameAndrew
+    //To make sure it's for 100% closed
+    private void forceCloseSearch() {
+
+        try {
+            Field field = search.getClass().getDeclaredField("searchOpen");
+            field.setAccessible(true);
+            field.set(search, true);
+            search.toggleSearch();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

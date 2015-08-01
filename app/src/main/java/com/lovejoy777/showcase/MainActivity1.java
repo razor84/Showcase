@@ -1,15 +1,11 @@
 package com.lovejoy777.showcase;
 
 import android.app.ActivityOptions;
-import android.app.ProgressDialog;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -25,14 +22,6 @@ import com.lovejoy777.showcase.activities.SettingsActivity;
 import com.lovejoy777.showcase.fragments.AbsBackButtonFragment;
 import com.lovejoy777.showcase.fragments.LayerListFragment;
 import com.lovejoy777.showcase.fragments.MainFragment;
-import org.json.JSONObject;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
 
 public class MainActivity1 extends AppCompatActivity {
 
@@ -65,7 +54,6 @@ public class MainActivity1 extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
 
 
-
     } // ends onCreate
 
     //set NavigationDrawerContent
@@ -84,7 +72,7 @@ public class MainActivity1 extends AppCompatActivity {
                             case R.id.nav_home:
                                 lastFragment = new MainFragment();
                                 fragmentManager = getSupportFragmentManager();
-                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_about:
                                 Intent about = new Intent(MainActivity1.this, AboutActivity.class);
@@ -97,7 +85,7 @@ public class MainActivity1 extends AppCompatActivity {
                                 lastFragment = new LayerListFragment();
                                 lastFragment.setArguments(data);
                                 fragmentManager = getSupportFragmentManager();
-                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_paid:
                                 data = new Bundle();
@@ -106,7 +94,7 @@ public class MainActivity1 extends AppCompatActivity {
                                 lastFragment = new LayerListFragment();
                                 lastFragment.setArguments(data);
                                 fragmentManager = getSupportFragmentManager();
-                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_manager:
                                 boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
@@ -146,6 +134,10 @@ public class MainActivity1 extends AppCompatActivity {
         return app_installed;
     }
 
+    public void replaceFragment(AbsBackButtonFragment fragment) {
+        lastFragment = fragment;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
@@ -153,13 +145,16 @@ public class MainActivity1 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //  super.onBackPressed();
 
-        if (lastFragment != null && !lastFragment.onBackButton()) {
-            return;
+        if (lastFragment == null || lastFragment.onBackButton()) {
+
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawers();
+            } else {
+                super.onBackPressed();
+            }
         }
 
-        super.onBackPressed();
     }
 
     @Override
