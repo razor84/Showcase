@@ -22,9 +22,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lovejoy777.showcase.Activities.DetailActivity;
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+import com.lovejoy777.showcase.activities.DetailActivity;
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.Theme;
+import com.lovejoy777.showcase.beans.Theme;
 import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
@@ -42,11 +44,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Random;
+
+import static com.lovejoy777.showcase.Helpers.getLayersJsonFile;
 
 public class LayerListFragment extends AbsBackButtonFragment {
 
@@ -192,18 +194,6 @@ public class LayerListFragment extends AbsBackButtonFragment {
         }
     }
 
-    /*
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (requestCode == 1234 && resultCode == RESULT_OK) {
-                ArrayList<String> matches = data
-                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                //search.populateEditText(matches.get(0));
-            }
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    */
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.menu_search, menu);
@@ -229,14 +219,9 @@ public class LayerListFragment extends AbsBackButtonFragment {
                 File tagname = new File(Environment.getExternalStorageDirectory() + "/showcase/showcasejson/showcase.json");
                 FileInputStream stream = new FileInputStream(tagname);
                 String jString = null;
-                try {
-                    FileChannel fc = stream.getChannel();
-                    MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-                /* Instead of using default, pass in a decoder. */
-                    jString = Charset.defaultCharset().decode(bb).toString();
-                } finally {
-                    stream.close();
-                }
+                StringWriter writer = new StringWriter();
+
+                jString = Files.toString(getLayersJsonFile(LayerListFragment.this.getActivity()), Charsets.UTF_8);
 
                 JSONObject jsono = new JSONObject(jString);
                 JSONArray jarray = jsono.getJSONArray("Themes");

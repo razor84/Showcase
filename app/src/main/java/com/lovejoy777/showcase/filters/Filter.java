@@ -1,6 +1,6 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.Theme;
+import com.lovejoy777.showcase.beans.Theme;
 
 public abstract class Filter {
     public abstract boolean filterTheme(Theme theme);

@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase.Activities;
+package com.lovejoy777.showcase.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;

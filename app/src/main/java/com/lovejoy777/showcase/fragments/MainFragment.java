@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.lovejoy777.showcase.R;
+import com.lovejoy777.showcase.UpgradeJson;
 
 public class MainFragment extends AbsBackButtonFragment {
 
@@ -60,6 +62,18 @@ public class MainFragment extends AbsBackButtonFragment {
 
             }
         }); // end card2
+
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new UpgradeJson(MainFragment.this.getActivity(), true).execute();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         return root;
     }

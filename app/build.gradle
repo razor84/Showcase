@@ -15,8 +15,8 @@ android {
         applicationId "com.lovejoy777.showcase"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 7
-        versionName "b1.5"
+        versionCode 8
+        versionName "b1.6"
         archivesBaseName = "Showcase"
     }
 
@@ -62,4 +62,5 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT'
+    compile 'com.google.guava:guava:18.0'
 }

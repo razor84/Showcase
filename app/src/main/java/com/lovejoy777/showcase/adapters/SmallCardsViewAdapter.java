@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.Theme;
+import com.lovejoy777.showcase.beans.Theme;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

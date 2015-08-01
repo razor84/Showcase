@@ -4,10 +4,13 @@ import android.content.Context;
 import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 public class Helpers {
+
+    public static File getLayersJsonFile(Context context) {
+        return new File(context.getFilesDir().getAbsolutePath() + "/layers.json");
+    }
 
     public static Density getDensity(Context context) {
         float density = context.getResources().getDisplayMetrics().density;
@@ -38,15 +41,6 @@ public class Helpers {
         } else {
             return AndroidVersion.Other;
         }
-    }
-
-    public static List<Theme> createDebugThemes() {
-
-        ArrayList<Theme> themes = new ArrayList<Theme>();
-
-
-
-        return themes;
     }
 
 }

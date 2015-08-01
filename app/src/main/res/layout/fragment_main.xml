@@ -1,159 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <ScrollView
-        android:id="@+id/layout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/background_material_light"
-        android:fillViewport="true"
-        android:scrollbarStyle="insideInset"
-        android:scrollbars="vertical">
-
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/background_material_light"
-                      android:orientation="vertical">
-
-            <android.support.v7.widget.CardView
-                card_view:cardBackgroundColor="@color/card_background"
-
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/CardView_freethemes1"
-                android:elegantTextHeight="false"
-                android:elevation="5dp"
-                android:background="@color/card_background"
-                android:backgroundTint="@color/card_background"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp">
+                android:layout_height="match_parent">
 
 
-                <RelativeLayout
-                    android:orientation="vertical"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/layout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/background_material_light"
+            android:fillViewport="true"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical">
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:background="@color/background_material_light"
+                          android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    card_view:cardBackgroundColor="@color/card_background"
+
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5.59"
-                    >
+                    android:id="@+id/CardView_freethemes1"
+                    android:elegantTextHeight="false"
+                    android:elevation="5dp"
+                    android:background="@color/card_background"
+                    android:backgroundTint="@color/card_background"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp">
 
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="156dp"
-                        android:id="@+id/imageView"
-                        android:background="@drawable/heroimage" />
-
-                    <TextView
-                        android:textColor="@color/text_color_inverse"
-                        android:layout_width="fill_parent"
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/freecard1header"
-                        android:id="@+id/textView4"
-                        android:layout_gravity="start"
-                        android:textStyle="bold"
-                        android:elevation="5dp"
-                        android:layout_alignBottom="@+id/imageView"
-                        android:textSize="24sp"
-                        android:paddingBottom="8dp"
-                        android:background="#1a000000"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="8dp" />
+                        android:layout_weight="5.59"
+                        >
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Explore all Overlays which are free. \nSome of them also include an option to support the developer with a donation."
-                        android:id="@+id/textView5"
-                        android:layout_gravity="start|top"
-                        android:layout_marginStart="16dp"
-                        android:textColor="@color/textColorPrimary"
-                        android:elevation="5dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_below="@+id/imageView"
-                        android:layout_marginRight="16dp"
-                        android:textSize="16sp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="156dp"
+                            android:id="@+id/imageView"
+                            android:background="@drawable/heroimage"/>
 
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-
-            <android.support.v7.widget.CardView
-                card_view:cardBackgroundColor="@color/card_background"
-
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/CardView_paidthemes2"
-                android:elegantTextHeight="false"
-                android:elevation="5dp"
-                android:background="@color/card_background"
-                android:backgroundTint="@color/card_background"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp">
+                        <TextView
+                            android:textColor="@color/text_color_inverse"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/freecard1header"
+                            android:id="@+id/textView4"
+                            android:layout_gravity="start"
+                            android:textStyle="bold"
+                            android:elevation="5dp"
+                            android:layout_alignBottom="@+id/imageView"
+                            android:textSize="24sp"
+                            android:paddingBottom="8dp"
+                            android:background="#1a000000"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"/>
 
 
-                <RelativeLayout
-                    android:orientation="vertical"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Explore all Overlays which are free. \nSome of them also include an option to support the developer with a donation."
+                            android:id="@+id/textView5"
+                            android:layout_gravity="start|top"
+                            android:layout_marginStart="16dp"
+                            android:textColor="@color/textColorPrimary"
+                            android:elevation="5dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_below="@+id/imageView"
+                            android:layout_marginRight="16dp"
+                            android:textSize="16sp"/>
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    card_view:cardBackgroundColor="@color/card_background"
+
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5.59"
-                    >
+                    android:id="@+id/CardView_paidthemes2"
+                    android:elegantTextHeight="false"
+                    android:elevation="5dp"
+                    android:background="@color/card_background"
+                    android:backgroundTint="@color/card_background"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp">
 
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="156dp"
-                        android:id="@+id/imageView2"
-                        android:background="@drawable/loadingpromo" />
-
-                    <TextView
-                        android:textColor="@color/text_color_inverse"
-                        android:layout_width="fill_parent"
+                    <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/paidcard2header"
-                        android:id="@+id/textView42"
-                        android:layout_gravity="start"
-                        android:textStyle="bold"
-                        android:elevation="5dp"
-                        android:layout_alignBottom="@+id/imageView2"
-                        android:textSize="24sp"
-                        android:paddingBottom="8dp"
-                        android:background="#1a000000"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="8dp" />
+                        android:layout_weight="5.59"
+                        >
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Have a look at the paid Overlays."
-                        android:id="@+id/textView52"
-                        android:layout_gravity="start|top"
-                        android:layout_marginStart="16dp"
-                        android:textColor="@color/textColorPrimary"
-                        android:elevation="5dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_below="@+id/imageView2"
-                        android:layout_marginRight="16dp"
-                        android:textSize="16sp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="156dp"
+                            android:id="@+id/imageView2"
+                            android:background="@drawable/loadingpromo"/>
 
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
+                        <TextView
+                            android:textColor="@color/text_color_inverse"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/paidcard2header"
+                            android:id="@+id/textView42"
+                            android:layout_gravity="start"
+                            android:textStyle="bold"
+                            android:elevation="5dp"
+                            android:layout_alignBottom="@+id/imageView2"
+                            android:textSize="24sp"
+                            android:paddingBottom="8dp"
+                            android:background="#1a000000"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"/>
 
 
-        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Have a look at the paid Overlays."
+                            android:id="@+id/textView52"
+                            android:layout_gravity="start|top"
+                            android:layout_marginStart="16dp"
+                            android:textColor="@color/textColorPrimary"
+                            android:elevation="5dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_below="@+id/imageView2"
+                            android:layout_marginRight="16dp"
+                            android:textSize="16sp"/>
 
-    </ScrollView>
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

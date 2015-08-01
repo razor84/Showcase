@@ -49,7 +49,7 @@
         </activity>
 
         <activity
-            android:name=".Activities.DetailActivity"
+            android:name=".activities.DetailActivity"
             android:label="@string/details"
             android:theme="@style/Theme.Toolbar">
             <intent-filter>
@@ -60,7 +60,7 @@
         </activity>
 
         <activity
-            android:name=".Activities.AboutActivity"
+            android:name=".activities.AboutActivity"
             android:label=""
             android:theme="@style/Toolbar2">
             <intent-filter>
@@ -71,7 +71,7 @@
         </activity>
 
         <activity
-            android:name=".Activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="Settings"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -81,7 +81,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.FullscreenActivity2"/>
+        <activity android:name=".activities.FullscreenActivity2"/>
 
     </application>
 

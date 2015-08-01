@@ -3,7 +3,7 @@ package com.lovejoy777.showcase.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.lovejoy777.showcase.Theme;
+import com.lovejoy777.showcase.beans.Theme;
 import com.lovejoy777.showcase.filters.Filter;
 
 import java.util.ArrayList;

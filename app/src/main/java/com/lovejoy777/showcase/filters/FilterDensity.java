@@ -1,7 +1,6 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.Theme;
-import com.lovejoy777.showcase.enums.AndroidPlatform;
+import com.lovejoy777.showcase.beans.Theme;
 import com.lovejoy777.showcase.enums.Density;
 
 public class FilterDensity extends Filter {

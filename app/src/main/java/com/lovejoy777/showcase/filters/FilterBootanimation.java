@@ -1,7 +1,6 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.Theme;
-import com.lovejoy777.showcase.enums.Density;
+import com.lovejoy777.showcase.beans.Theme;
 
 public class FilterBootanimation extends Filter {
 

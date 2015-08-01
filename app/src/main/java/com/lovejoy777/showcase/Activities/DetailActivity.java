@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase.Activities;
+package com.lovejoy777.showcase.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.Theme;
+import com.lovejoy777.showcase.beans.Theme;
 import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 import com.squareup.picasso.Picasso;

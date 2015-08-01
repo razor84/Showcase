@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase.Activities;
+package com.lovejoy777.showcase.activities;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,14 +9,10 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.lovejoy777.showcase.R;
 
 
-/**
- * Created by lovejoy777 on 02/07/15.
- */
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
@@ -26,9 +22,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         PreferenceManager prefMgr = getPreferenceManager();
         prefMgr.setSharedPreferencesName("myPrefs");
         addPreferencesFromResource(R.xml.settings);
-
-
-
     }
 
     private void killLauncherIcon() {

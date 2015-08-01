@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase;
+package com.lovejoy777.showcase.beans;
 
 import com.lovejoy777.showcase.enums.AndroidPlatform;
 import com.lovejoy777.showcase.enums.Density;

@@ -20,8 +20,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.lovejoy777.showcase.Activities.AboutActivity;
-import com.lovejoy777.showcase.Activities.SettingsActivity;
+import com.lovejoy777.showcase.activities.AboutActivity;
+import com.lovejoy777.showcase.activities.SettingsActivity;
 import com.lovejoy777.showcase.fragments.AbsBackButtonFragment;
 import com.lovejoy777.showcase.fragments.LayerListFragment;
 import com.lovejoy777.showcase.fragments.MainFragment;
@@ -75,15 +75,15 @@ public class MainActivity1 extends AppCompatActivity {
             dir2.mkdir();
         }
 
-        // download tagname.json
-        final DownloadTagnameTask downloadTagnameTask = new DownloadTagnameTask(MainActivity1.this);
-        downloadTagnameTask.execute("https://api.github.com/repos/BitSyko/layers_showcase_json/releases/latest");
+
+        new UpgradeJson(this, false).execute();
 
         //Home fragment
-
         Fragment fragment = new MainFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+
+
 
     } // ends onCreate
 
@@ -163,269 +163,6 @@ public class MainActivity1 extends AppCompatActivity {
             app_installed = false;
         }
         return app_installed;
-    }
-
-
-    private class DownloadTagnameTask extends AsyncTask<String, Integer, String> {
-
-        private Context context;
-
-        public DownloadTagnameTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected String doInBackground(String... sUrl) {
-            InputStream input = null;
-            OutputStream output = null;
-            HttpURLConnection connection = null;
-            try {
-                URL url = new URL(sUrl[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                // expect HTTP 200 OK, so we don't mistakenly save error report
-                // instead of the file
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "Server returned HTTP " + connection.getResponseCode()
-                            + " " + connection.getResponseMessage();
-                }
-
-                // this will be useful to display download percentage
-                // might be -1: server did not report the length
-                int fileLength = connection.getContentLength();
-
-                // download the file
-                input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-
-                byte data[] = new byte[4096];
-                long total = 0;
-                int count;
-                while ((count = input.read(data)) != -1) {
-                    // allow canceling with back button
-                    if (isCancelled()) {
-                        input.close();
-                        return null;
-                    }
-                    total += count;
-                    // publishing the progress....
-                    if (fileLength > 0) // only if total length is known
-                        publishProgress((int) (total * 100 / fileLength));
-                    output.write(data, 0, count);
-                }
-            } catch (Exception e) {
-                return e.toString();
-            } finally {
-                try {
-                    if (output != null)
-                        output.close();
-                    if (input != null)
-                        input.close();
-                } catch (IOException ignored) {
-                }
-
-                if (connection != null)
-                    connection.disconnect();
-            }
-            return null;
-
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            //  mWakeLock.release();
-            if (result != null)
-                Toast.makeText(context, "Download database error: ", Toast.LENGTH_LONG).show();
-
-            else
-
-
-                movetagnamejson();
-
-            // compare new tagname json with existing tagname
-            try {
-
-                File tagname1 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-                FileInputStream stream1 = new FileInputStream(tagname1);
-                String jString1 = null;
-                try {
-                    FileChannel fc = stream1.getChannel();
-                    MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-                /* Instead of using default, pass in a decoder. */
-                    jString1 = Charset.defaultCharset().decode(bb).toString();
-                } finally {
-                    stream1.close();
-                }
-
-                JSONObject jObject1 = new JSONObject(jString1);
-
-                String tag_name1 = jObject1.getString("tag_name");
-
-                File tagname = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-                FileInputStream stream = new FileInputStream(tagname);
-                String jString = null;
-                try {
-                    FileChannel fc = stream.getChannel();
-                    MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-                /* Instead of using default, pass in a decoder. */
-                    jString = Charset.defaultCharset().decode(bb).toString();
-                } finally {
-                    stream.close();
-                }
-
-                JSONObject jObject = new JSONObject(jString);
-
-                String tag_name = jObject.getString("tag_name");
-
-                // check new against existing tagnames
-                if (!tag_name1.equals(tag_name)) {
-
-                    //Toast.makeText(getApplicationContext(), "update", Toast.LENGTH_LONG).show();
-                    // cp new tagname json to existing tagname json
-                    InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-                    OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-
-                    // Copy the bits from instream to outstream
-                    byte[] buf = new byte[1024];
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                    in.close();
-                    out.close();
-
-                    // if update is available download showcase.json
-                    final DownloadShowcaseTask downloadShowcaseTask = new DownloadShowcaseTask(MainActivity1.this);
-                    downloadShowcaseTask.execute("https://github.com/BitSyko/layers_showcase_json/releases/download/" + tag_name + "/showcase.json");
-
-                }
-
-
-                // if showcase.json doesnt exist download
-                File dir4 = new File(Environment.getExternalStorageDirectory() + "/showcase/showcasejson/showcase.json");
-                if (!dir4.exists()) {
-
-                    // download showcase.json
-                    final DownloadShowcaseTask downloadShowcaseTask = new DownloadShowcaseTask(MainActivity1.this);
-                    downloadShowcaseTask.execute("https://github.com/BitSyko/layers_showcase_json/releases/download/" + tag_name + "/showcase.json");
-
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    public Void movetagnamejson() {
-
-        // if /showcase/tagname/tagname.json doesnt exist then copy file.
-        File dir3 = new File(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-        if (!dir3.exists()) {
-            try {
-                InputStream in = new FileInputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname.json");
-                OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/tagname/tagname.json");
-
-                // Copy the bits from instream to outstream
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-
-    private class DownloadShowcaseTask extends AsyncTask<String, Integer, String> {
-
-        ProgressDialog progressShowcase;
-
-        protected void onPreExecute() {
-
-            progressShowcase = ProgressDialog.show(MainActivity1.this, "Downloading",
-                    "Updating database...", true);
-        }
-
-        private Context context;
-
-        public DownloadShowcaseTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected String doInBackground(String... sUrl) {
-            InputStream input = null;
-            OutputStream output = null;
-            HttpURLConnection connection = null;
-            try {
-                URL url = new URL(sUrl[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-                // expect HTTP 200 OK, so we don't mistakenly save error report
-                // instead of the file
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return "Server returned HTTP " + connection.getResponseCode()
-                            + " " + connection.getResponseMessage();
-                }
-
-                // this will be useful to display download percentage
-                // might be -1: server did not report the length
-                int fileLength = connection.getContentLength();
-
-                // download showcase json file
-                input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStorageDirectory() + "/showcase/showcasejson/showcase.json");
-
-                byte data[] = new byte[4096];
-                long total = 0;
-                int count;
-                while ((count = input.read(data)) != -1) {
-                    // allow canceling with back button
-                    if (isCancelled()) {
-                        input.close();
-                        return null;
-                    }
-                    total += count;
-                    // publishing the progress....
-                    if (fileLength > 0) // only if total length is known
-                        publishProgress((int) (total * 100 / fileLength));
-                    output.write(data, 0, count);
-                }
-            } catch (Exception e) {
-                return e.toString();
-            } finally {
-                try {
-                    if (output != null)
-                        output.close();
-                    if (input != null)
-                        input.close();
-                } catch (IOException ignored) {
-                }
-
-                if (connection != null)
-                    connection.disconnect();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            progressShowcase.dismiss();
-            if (result != null)
-                Toast.makeText(context, "Download database error: ", Toast.LENGTH_LONG).show();
-
-
-        }
     }
 
     @Override
