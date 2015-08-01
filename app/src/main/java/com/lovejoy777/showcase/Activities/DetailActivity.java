@@ -4,33 +4,37 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-
+import android.view.Window;
+import android.widget.*;
 import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;
 import com.lovejoy777.showcase.beans.Theme;
-import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.AndroidVersion;
+import com.lovejoy777.showcase.enums.Density;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 public class DetailActivity extends AppCompatActivity {
 
     private Activity activity;
     final ImageView ScreenshotimageView[] = new ImageView[3];
-    Bitmap bitmap[] = new Bitmap[3];
+    ImageView promoimg;
+    Theme theme;
+    CollapsingToolbarLayout collapsingToolbar;
+    android.support.v7.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class DetailActivity extends AppCompatActivity {
         activity = this;
 
         // Handle ToolBar
-        final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final Point screenSize = new Point();
@@ -49,16 +53,16 @@ public class DetailActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CollapsingToolbarLayout collapsingToolbar =
+        collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
         // Get String SZP
         final Intent extras = getIntent();
 
-        final Theme theme = (Theme) extras.getSerializableExtra("theme");
+        theme = (Theme) extras.getSerializableExtra("theme");
 
         // Asign Views
-        ImageView promoimg = (ImageView) findViewById(R.id.promo);
+        promoimg = (ImageView) findViewById(R.id.promo);
         ImageView icon = (ImageView) findViewById(R.id.icon);
         TextView txt2 = (TextView) findViewById(R.id.textView2);
         TextView developertv = (TextView) findViewById(R.id.textView);
@@ -66,17 +70,16 @@ public class DetailActivity extends AppCompatActivity {
         // Set text & image Views
         collapsingToolbar.setTitle(theme.getTitle());
 
-        Picasso.with(this).load(theme.getPromo()).placeholder(R.drawable.loadingpromo).into(promoimg);
         Picasso.with(this).load(theme.getIcon()).placeholder(R.drawable.ic_launcher).into(icon);
+
+        new DownloadPromo().execute();
+
 
         txt2.setText(theme.getDescription());
         developertv.setText("by " + theme.getAuthor());
 
         // Scroll view with screenshots
         LinearLayout screenshotLayout = (LinearLayout) findViewById(R.id.LinearLayoutScreenshots);
-
-        //   screenshotLayout.getLayoutParams().height = screenSize.y / 2;
-        //   screenshotLayout.requestLayout();
 
         final String[] screenshotsUrls = {
                 theme.getScreenshot_1(),
@@ -231,6 +234,64 @@ public class DetailActivity extends AppCompatActivity {
         row.addView(checkBox);
 
         return row;
+
+    }
+
+
+    private class DownloadPromo extends AsyncTask<Void, Void, Pair<Bitmap, Palette>> {
+
+        @Override
+        protected void onPreExecute() {
+            promoimg.setImageResource(R.drawable.loadingpromo);
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected Pair<Bitmap, Palette> doInBackground(Void... params) {
+
+            try {
+                Bitmap bitmap = Picasso.with(DetailActivity.this).load(theme.getPromo()).get();
+                Palette p = Palette.from(bitmap).generate();
+
+                return new Pair<>(bitmap, p);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+
+        @Override
+        protected void onPostExecute(Pair<Bitmap, Palette> bitmapIntegerPair) {
+
+            promoimg.setImageBitmap(bitmapIntegerPair.first);
+
+            Palette.Swatch swatch = bitmapIntegerPair.second.getVibrantSwatch();
+
+            //If doesn't exist choose the most dominant one (if you have better idea - do pull request)
+            if (swatch == null) {
+                swatch = Helpers.getDominantSwatch(bitmapIntegerPair.second);
+            }
+
+            if (swatch != null) {
+
+                collapsingToolbar.setCollapsedTitleTextColor(swatch.getTitleTextColor());
+                collapsingToolbar.setContentScrimColor(swatch.getRgb());
+
+                float[] hsv = new float[3];
+                Color.colorToHSV(swatch.getRgb(), hsv);
+                hsv[2] *= 0.8f;
+                Window window = DetailActivity.this.getWindow();
+                window.setStatusBarColor(Color.HSVToColor(hsv));
+
+            }
+
+
+            super.onPostExecute(bitmapIntegerPair);
+        }
+
 
     }
 

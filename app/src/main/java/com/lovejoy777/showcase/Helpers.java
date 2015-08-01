@@ -1,10 +1,13 @@
 package com.lovejoy777.showcase;
 
 import android.content.Context;
+import android.support.v7.graphics.Palette;
 import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Helpers {
 
@@ -42,5 +45,17 @@ public class Helpers {
             return AndroidVersion.Other;
         }
     }
+
+
+    public static Palette.Swatch getDominantSwatch(Palette palette) {
+        // find most-represented swatch based on population
+        return Collections.max(palette.getSwatches(), new Comparator<Palette.Swatch>() {
+            @Override
+            public int compare(Palette.Swatch sw1, Palette.Swatch sw2) {
+                return Integer.compare(sw1.getPopulation(), sw2.getPopulation());
+            }
+        });
+    }
+
 
 }
