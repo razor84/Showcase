@@ -15,3 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# We will only optimize libraries
+-keep class com.lovejoy777.showcase.** { *; }
+
+-dontobfuscate

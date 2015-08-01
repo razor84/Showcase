@@ -1,5 +1,6 @@
 package com.lovejoy777.showcase.activities;
 
+import android.app.ActionBar;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,6 +22,11 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         PreferenceManager prefMgr = getPreferenceManager();
         prefMgr.setSharedPreferencesName("myPrefs");
         addPreferencesFromResource(R.xml.settings);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void killLauncherIcon() {

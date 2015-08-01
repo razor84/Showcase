@@ -186,19 +186,19 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
             @Override
             public void onSearchTermChanged() {
-                mAdapter.addFilter(new FilterName(search.getSearchText()));
+                mAdapter.addFilter(new FilterNameAuthor(search.getSearchText()));
 
             }
 
             @Override
             public void onSearch(String searchTerm) {
-                mAdapter.addFilter(new FilterName(searchTerm));
+                mAdapter.addFilter(new FilterNameAuthor(searchTerm));
                 toolbar.setTitle(searchTerm);
             }
 
             @Override
             public void onSearchCleared() {
-                mAdapter.addFilter(new FilterName(""));
+                mAdapter.addFilter(new FilterNameAuthor(""));
             }
 
         });

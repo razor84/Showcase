@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // if sw1 is true && layers manager is installed then remove icon.
-        SharedPreferences prefs = this.getSharedPreferences("switch1", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("switch1", Context.MODE_PRIVATE);
         boolean switch1 = prefs.getBoolean("switch1", false);
 
         boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
