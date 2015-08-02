@@ -51,33 +51,17 @@ public class MainFragment extends AbsBackButtonFragment {
         );
         toolbar.setLayoutParams(layoutParams);
         setHasOptionsMenu(true);
-
-        String jString = null;
-        try {
-            jString = Files.toString(getLayersJsonFile(getActivity()), Charsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        TextView discoverText = (TextView) root.findViewById(R.id.discoverText);
 
         try {
+            String jString = Files.toString(getLayersJsonFile(getActivity()), Charsets.UTF_8);
             JSONObject jsono = new JSONObject(jString);
             JSONArray jarray = jsono.getJSONArray("Themes");
-            TextView discoverText = (TextView) root.findViewById(R.id.discovertxt);
             discoverText.setText("Find your favourite Layer out of " +jarray.length()+" submitted Layers.");
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
+            discoverText.setText("Find your favourite Layer out of collection of submitted Layers");
             e.printStackTrace();
         }
-
-        //final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
-
-        //swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-       //     @Override
-       //     public void onRefresh() {
-       //         new UpgradeJson(MainFragment.this.getActivity(), true).execute();
-       //         swipeRefreshLayout.setRefreshing(false);
-       //     }
-       // });
-
 
         return root;
     }

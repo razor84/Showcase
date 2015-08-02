@@ -4,45 +4,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="5.59"
-                    android:id="@+id/relative"
-                    >
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="5.59"
+        android:id="@+id/relative"
+        >
 
 
-                    <TextView
-                        android:textColor="@color/text_color_inverse"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Welcome to Layers Showcase"
-                        android:id="@+id/textView4"
-                        android:layout_gravity="start"
-                        android:textStyle="bold"
-                        android:elevation="5dp"
-                        android:textSize="20sp"
-                        android:paddingBottom="4dp"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="8dp" />
+        <TextView
+            android:textColor="@color/text_color_inverse"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to Layers Showcase"
+            android:id="@+id/headerHeader"
+            android:layout_gravity="start"
+            android:textStyle="bold"
+            android:elevation="5dp"
+            android:textSize="20sp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"/>
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Discover all the beautiful Layers."
-                        android:id="@+id/textView5"
-                        android:layout_gravity="start|top"
-                        android:layout_marginStart="16dp"
-                        android:textColor="@color/text_color_inverse"
-                        android:elevation="5dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginRight="16dp"
-                        android:textSize="16sp"
-                        android:layout_below="@+id/textView4" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discover all the beautiful Layers."
+            android:id="@+id/headerText"
+            android:layout_gravity="start|top"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/text_color_inverse"
+            android:elevation="5dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:textSize="16sp"
+            android:layout_below="@+id/headerHeader"/>
 
-                </RelativeLayout>
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -51,63 +51,61 @@
         android:layout_below="@+id/relative">
 
         <android.support.v7.widget.CardView
-                            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/CardView_freethemes1"
-                            android:elegantTextHeight="false"
-                            android:elevation="5dp"
-                            android:background="@color/card_background"
-                            android:backgroundTint="@color/card_background"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_below="@+id/relative">
-                            <RelativeLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5.59"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/CardView_freethemes1"
+            android:elegantTextHeight="false"
+            android:elevation="5dp"
+            android:background="@color/card_background"
+            android:backgroundTint="@color/card_background"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp">
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.59"
 
 
-                                >
+                >
 
 
-                                <TextView
+                <TextView
 
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Discover"
-                                    android:id="@+id/textView4"
-                                    android:layout_gravity="start"
-                                    android:textStyle="bold"
-                                    android:elevation="5dp"
-                                    android:textSize="16sp"
-                                    android:paddingBottom="4dp"
-                                    android:paddingLeft="16dp"
-                                    android:paddingTop="8dp"
-                                    android:textColor="@color/accent" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Discover"
+                    android:id="@+id/discoverHeader"
+                    android:layout_gravity="start"
+                    android:textStyle="bold"
+                    android:elevation="5dp"
+                    android:textSize="16sp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/accent"/>
 
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Discover all the beautiful Layers."
-                                    android:id="@+id/discovertxt"
-                                    android:layout_gravity="start|top"
-                                    android:layout_marginStart="16dp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Discover all the beautiful Layers."
+                    android:id="@+id/discoverText"
+                    android:layout_gravity="start|top"
+                    android:layout_marginStart="16dp"
 
-                                    android:elevation="5dp"
-                                    android:layout_marginBottom="16dp"
-                                    android:layout_marginRight="16dp"
-                                    android:textSize="16sp"
-                                    android:layout_below="@+id/textView4" />
+                    android:elevation="5dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="16sp"
+                    android:layout_below="@+id/discoverHeader"/>
 
-                            </RelativeLayout>
-                        </android.support.v7.widget.CardView>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/CardView_freethemes2"
@@ -119,6 +117,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:layout_below="@+id/CardView_freethemes1">
+
             <RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -134,7 +133,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Search &amp; Filter"
-                    android:id="@+id/textView4"
+                    android:id="@+id/filterHeader"
                     android:layout_gravity="start"
                     android:textStyle="bold"
                     android:elevation="5dp"
@@ -142,14 +141,14 @@
                     android:paddingBottom="4dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
-                    android:textColor="@color/accent" />
+                    android:textColor="@color/accent"/>
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Find Overlays matching your expections and your device´s hardware and software."
-                    android:id="@+id/discovertxt"
+                    android:id="@+id/filterText"
                     android:layout_gravity="start|top"
                     android:layout_marginStart="16dp"
 
@@ -157,13 +156,12 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginRight="16dp"
                     android:textSize="16sp"
-                    android:layout_below="@+id/textView4" />
+                    android:layout_below="@+id/filterHeader"/>
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/CardView_freethemes3"
@@ -175,6 +173,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:layout_below="@+id/CardView_freethemes2">
+
             <RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -190,7 +189,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Get Started"
-                    android:id="@+id/textView4"
+                    android:id="@+id/getStartedHeader"
                     android:layout_gravity="start"
                     android:textStyle="bold"
                     android:elevation="5dp"
@@ -198,14 +197,14 @@
                     android:paddingBottom="4dp"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
-                    android:textColor="@color/accent" />
+                    android:textColor="@color/accent"/>
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pull out the Naviagation Drawer to get started."
-                    android:id="@+id/discovertxt"
+                    android:text="Pull out the Navigation Drawer to get started."
+                    android:id="@+id/getStartedText"
                     android:layout_gravity="start|top"
                     android:layout_marginStart="16dp"
 
@@ -213,7 +212,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginRight="16dp"
                     android:textSize="16sp"
-                    android:layout_below="@+id/textView4" />
+                    android:layout_below="@+id/getStartedHeader"/>
 
             </RelativeLayout>
         </android.support.v7.widget.CardView>
