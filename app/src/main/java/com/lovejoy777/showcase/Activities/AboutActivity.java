@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase.activities;
+package com.lovejoy777.showcase.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,10 +35,10 @@ public class AboutActivity extends AppCompatActivity {
                 new DeveloperBean("Reinhard Strauch", getString(R.string.LayersLeadDeveloper), getDrawable(R.drawable.about_reinhard), getString(R.string.linkReinhard)),
                 new DeveloperBean("Brian Gill", getString(R.string.LayersDeveloper), getDrawable(R.drawable.about_brian), getString(R.string.linkBrian)),
                 new DeveloperBean("Aldrin Holmes", getString(R.string.LayersDeveloper), getDrawable(R.drawable.about_aldrin), getString(R.string.linkAldrin)),
+                new DeveloperBean("Branden Manibusan", getString(R.string.LayersDeveloper), getDrawable(R.drawable.about_branden), getString(R.string.linkBranden)),
                 new DeveloperBean("Steve Lovejoy", getString(R.string.AppDeveloper), getDrawable(R.drawable.about_steve), getString(R.string.linkSteve)),
                 new DeveloperBean("Niklas Schnettler", getString(R.string.AppDeveloper), getDrawable(R.drawable.about_niklas), getString(R.string.linkNiklas)),
                 new DeveloperBean("Andrzej Ressel", getString(R.string.AppDeveloper), getDrawable(R.drawable.about_andrzej), getString(R.string.linkAndrzej)),
-                new DeveloperBean("Branden Manibusan", getString(R.string.AditionalLayersDev), getDrawable(R.drawable.about_branden), getString(R.string.linkBranden)),
                 new DeveloperBean("Denis Suarez", getString(R.string.ShowcaseDeveloper), getDrawable(R.drawable.about_denis), getString(R.string.linkDenis)),
         };
 
@@ -51,7 +51,6 @@ public class AboutActivity extends AppCompatActivity {
                 new LicenceBean(getString(R.string.License1), getString(R.string.License1about), getDrawable(R.drawable.ic_opensource), getString(R.string.License1github), generateLicense(getString(R.string.License1about),"Apache","2015")),
                 new LicenceBean(getString(R.string.License2), getString(R.string.License2about), getDrawable(R.drawable.ic_opensource), getString(R.string.License2github), generateLicense(getString(R.string.License2about),"Apache","2015")),
                 new LicenceBean(getString(R.string.License3), getString(R.string.License3about), getDrawable(R.drawable.ic_opensource), getString(R.string.License3github), generateLicense(getString(R.string.License3about),"Apache","2013")),
-                new LicenceBean(getString(R.string.License4), getString(R.string.License4about), getDrawable(R.drawable.ic_opensource), getString(R.string.License4github), generateLicense(getString(R.string.License4about),"Apache","2015")),
                 new LicenceBean(getString(R.string.License5), getString(R.string.License5about), getDrawable(R.drawable.ic_opensource), getString(R.string.License5github), generateLicense(getString(R.string.License5about),"Apache","2015")),
 
         };

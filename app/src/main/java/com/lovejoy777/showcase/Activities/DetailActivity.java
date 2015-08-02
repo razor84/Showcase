@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase.activities;
+package com.lovejoy777.showcase.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -267,7 +267,8 @@ public class DetailActivity extends AppCompatActivity {
         protected void onPostExecute(Pair<Bitmap, Palette> bitmapIntegerPair) {
 
             promoimg.setImageBitmap(bitmapIntegerPair.first);
-
+            Button info = (Button) findViewById(R.id.button);
+            Button download = (Button) findViewById(R.id.button2);
             Palette.Swatch swatch = bitmapIntegerPair.second.getVibrantSwatch();
 
             //If doesn't exist choose the most dominant one (if you have better idea - do pull request)
@@ -277,8 +278,10 @@ public class DetailActivity extends AppCompatActivity {
 
             if (swatch != null) {
 
-                collapsingToolbar.setCollapsedTitleTextColor(swatch.getTitleTextColor());
+                //collapsingToolbar.setCollapsedTitleTextColor(swatch.getTitleTextColor());
                 collapsingToolbar.setContentScrimColor(swatch.getRgb());
+                info.setBackgroundColor(swatch.getRgb());
+                download.setBackgroundColor(swatch.getRgb());
 
                 float[] hsv = new float[3];
                 Color.colorToHSV(swatch.getRgb(), hsv);
