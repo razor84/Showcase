@@ -64,7 +64,6 @@ public class UpgradeJson extends AsyncTask<Void, String, Void> {
         String tag = actualObj.get("tag_name").asText();
 
         //Compare tag with one in preferences
-
         if (!force && context.getSharedPreferences("myPrefs", Context.MODE_PRIVATE).getString("tag", "0").equals(tag)) {
             return null;
         }

@@ -21,16 +21,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.*;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.lovejoy777.showcase.R;
+import com.lovejoy777.showcase.UpgradeJson;
 import com.lovejoy777.showcase.activities.DetailActivity;
 import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
@@ -51,6 +48,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import static com.lovejoy777.showcase.Helpers.getLayersJsonFile;
 
@@ -93,7 +91,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
         setHasOptionsMenu(true);
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 56, getResources().getDisplayMetrics());
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,height
+                ViewGroup.LayoutParams.MATCH_PARENT, height
         );
         toolbar.setLayoutParams(layoutParams);
 
@@ -101,7 +99,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
         themesList = new ArrayList<>();
 
-        new JSONAsyncTask().execute();
+        new JSONAsyncTask(getActivity(), false).execute();
 
         RecyclerView mRecyclerView = (RecyclerView) root.findViewById(R.id.cardList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -129,7 +127,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
                         Detailsactivity.putExtra("theme", mAdapter.getItem(position));
 
                         Bundle bndlanimation =
-                                ActivityOptions.makeCustomAnimation(getActivity().getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
+                                ActivityOptions.makeCustomAnimation(getActivity(), R.anim.anni1, R.anim.anni2).toBundle();
                         getActivity().startActivity(Detailsactivity, bndlanimation);
                     }
                 })
@@ -142,7 +140,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
             @Override
             public void onRefresh() {
                 themesList.clear();
-                new JSONAsyncTask().execute();
+                new JSONAsyncTask(getActivity(), true).execute();
             }
         });
 
@@ -235,6 +233,17 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
     class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
 
+        Context context;
+        boolean force;
+        UpgradeJson upgradeJson;
+
+
+        public JSONAsyncTask(Context context, boolean force) {
+            this.context = context;
+            this.force = force;
+            upgradeJson = new UpgradeJson(context, force);
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -244,11 +253,18 @@ public class LayerListFragment extends AbsBackButtonFragment {
                     mSwipeRefresh.setRefreshing(true);
                 }
             });
+            upgradeJson.execute();
         }
 
         @Override
         protected Boolean doInBackground(String... urls) {
+
+
             try {
+
+                while (upgradeJson.getStatus() != Status.FINISHED) {
+                    Thread.sleep(10);
+                }
 
                 String jString = Files.toString(getLayersJsonFile(LayerListFragment.this.getActivity()), Charsets.UTF_8);
 
@@ -281,8 +297,8 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
                 //------------------>>
 
-            } catch (ParseException | JSONException | IOException e1) {
-                e1.printStackTrace();
+            } catch (ParseException | JSONException | IOException | InterruptedException e) {
+                e.printStackTrace();
             }
             return false;
         }
@@ -471,7 +487,6 @@ public class LayerListFragment extends AbsBackButtonFragment {
             e.printStackTrace();
         }
     }
-
 
 
 }
