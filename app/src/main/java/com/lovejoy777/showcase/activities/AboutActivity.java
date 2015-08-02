@@ -112,6 +112,13 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
+        devlist.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return true;
+            }
+        });
+
     }
 
     private String generateLicense(String developer, String License, String year){
