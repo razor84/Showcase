@@ -33,7 +33,7 @@ import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 import com.lovejoy777.showcase.enums.AndroidPlatform;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 import com.lovejoy777.showcase.enums.Density;
@@ -47,14 +47,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static com.lovejoy777.showcase.Helpers.getLayersJsonFile;
 
 public class LayerListFragment extends AbsBackButtonFragment {
 
-    ArrayList<Theme> themesList;
+    ArrayList<Layer> layersList;
     private AbsFilteredCardViewAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefresh = null;
     private String mode;
@@ -97,7 +98,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
         mSwipeRefresh = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
 
-        themesList = new ArrayList<>();
+        layersList = new ArrayList<>();
 
         new JSONAsyncTask(getActivity(), false).execute();
 
@@ -109,9 +110,9 @@ public class LayerListFragment extends AbsBackButtonFragment {
         boolean bigCards = prefs.getBoolean("bigCards", true);
 
         if (bigCards) {
-            mAdapter = new BigCardsViewAdapter(themesList, getActivity());
+            mAdapter = new BigCardsViewAdapter(layersList, getActivity());
         } else {
-            mAdapter = new SmallCardsViewAdapter(themesList, getActivity());
+            mAdapter = new SmallCardsViewAdapter(layersList, getActivity());
         }
 
         mRecyclerView.setAdapter(mAdapter);
@@ -139,7 +140,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                themesList.clear();
+                layersList.clear();
                 new JSONAsyncTask(getActivity(), true).execute();
             }
         });
@@ -271,28 +272,22 @@ public class LayerListFragment extends AbsBackButtonFragment {
                 JSONObject jsono = new JSONObject(jString);
                 JSONArray jarray = jsono.getJSONArray("Themes");
 
-                Random rnd = new Random();
-                for (int i = jarray.length() - 1; i >= 0; i--) {
-                    int j = rnd.nextInt(i + 1);
 
-                    // Simple swap
-                    JSONObject object = jarray.getJSONObject(j);
-                    jarray.put(j, jarray.get(i));
-                    jarray.put(i, object);
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                List<Layer> layers = Arrays.asList(objectMapper.readValue(jarray.toString(), Layer[].class));
 
-                    Theme theme = objectMapper
-                            .readValue(object.toString(), Theme.class);
+                Collections.shuffle(layers);
 
-
-                    if ((theme.isFree() && mode.equals("Free"))
-                            || (theme.isPaid() && mode.equals("Paid"))
-                            || (theme.isDonate() && mode.equals("Donate"))) {
-                        themesList.add(theme);
+                for (Layer layer : layers) {
+                    if ((layer.isFree() && mode.equals("Free"))
+                            || (layer.isPaid() && mode.equals("Paid"))
+                            || (layer.isDonate() && mode.equals("Donate"))) {
+                        layersList.add(layer);
                     }
                 }
+
                 return true;
 
                 //------------------>>

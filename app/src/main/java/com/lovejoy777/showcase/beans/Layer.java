@@ -7,7 +7,7 @@ import com.lovejoy777.showcase.enums.LayersVersion;
 
 import java.io.Serializable;
 
-public class Theme implements Serializable {
+public class Layer implements Serializable {
     private String title;
     private String description;
     private String author;
@@ -46,7 +46,7 @@ public class Theme implements Serializable {
     private boolean donate;
     private boolean paid;
 
-    public Theme() {
+    public Layer() {
     }
 
     public String getTitle() {

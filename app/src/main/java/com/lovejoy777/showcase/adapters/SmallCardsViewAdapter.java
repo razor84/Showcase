@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SmallCardsViewAdapter extends AbsFilteredCardViewAdapter {
 
-    public SmallCardsViewAdapter(ArrayList<Theme> themes, Context context) {
-        super(themes, R.layout.adapter_card_layout, context);
+    public SmallCardsViewAdapter(ArrayList<Layer> layers, Context context) {
+        super(layers, R.layout.adapter_card_layout, context);
     }
 
     @Override
@@ -29,11 +29,11 @@ public class SmallCardsViewAdapter extends AbsFilteredCardViewAdapter {
 
         SmallCardsViewHolder viewHolder = (SmallCardsViewHolder) holder;
 
-        Theme theme = filteredThemes.get(i);
-        viewHolder.themeName.setText(theme.getTitle());
-        viewHolder.themeDeveloper.setText(theme.getAuthor());
+        Layer layer = filteredLayers.get(i);
+        viewHolder.themeName.setText(layer.getTitle());
+        viewHolder.themeDeveloper.setText(layer.getAuthor());
 
-        Picasso.with(mContext).load(theme.getIcon()).placeholder(R.drawable.ic_launcher).noFade().into(viewHolder.themeImage);
+        Picasso.with(mContext).load(layer.getIcon()).placeholder(R.drawable.ic_launcher).noFade().into(viewHolder.themeImage);
 
 
     }

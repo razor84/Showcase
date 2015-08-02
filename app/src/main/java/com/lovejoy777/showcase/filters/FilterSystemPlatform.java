@@ -1,6 +1,6 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 import com.lovejoy777.showcase.enums.AndroidPlatform;
 
 public class FilterSystemPlatform extends Filter {
@@ -11,8 +11,8 @@ public class FilterSystemPlatform extends Filter {
     }
 
     @Override
-    public boolean filterTheme(Theme theme) {
-        return theme.isSupportingAndroidPlatform(platform);
+    public boolean filterTheme(Layer layer) {
+        return layer.isSupportingAndroidPlatform(platform);
     }
 
 }

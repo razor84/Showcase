@@ -1,9 +1,9 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 
 public abstract class Filter {
-    public abstract boolean filterTheme(Theme theme);
+    public abstract boolean filterTheme(Layer layer);
 
     @Override
     public boolean equals(Object o) {

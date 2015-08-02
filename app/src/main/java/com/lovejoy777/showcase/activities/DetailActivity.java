@@ -20,7 +20,7 @@ import android.view.Window;
 import android.widget.*;
 import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 import com.lovejoy777.showcase.enums.Density;
 import com.squareup.picasso.Picasso;
@@ -32,7 +32,7 @@ public class DetailActivity extends AppCompatActivity {
     private Activity activity;
     final ImageView ScreenshotimageView[] = new ImageView[3];
     ImageView promoimg;
-    Theme theme;
+    Layer layer;
     CollapsingToolbarLayout collapsingToolbar;
     android.support.v7.widget.Toolbar toolbar;
 
@@ -59,7 +59,7 @@ public class DetailActivity extends AppCompatActivity {
         // Get String SZP
         final Intent extras = getIntent();
 
-        theme = (Theme) extras.getSerializableExtra("theme");
+        layer = (Layer) extras.getSerializableExtra("theme");
 
         // Asign Views
         promoimg = (ImageView) findViewById(R.id.promo);
@@ -68,23 +68,23 @@ public class DetailActivity extends AppCompatActivity {
         TextView developertv = (TextView) findViewById(R.id.textView);
 
         // Set text & image Views
-        collapsingToolbar.setTitle(theme.getTitle());
+        collapsingToolbar.setTitle(layer.getTitle());
 
-        Picasso.with(this).load(theme.getIcon()).placeholder(R.drawable.ic_launcher).into(icon);
+        Picasso.with(this).load(layer.getIcon()).placeholder(R.drawable.ic_launcher).into(icon);
 
         new DownloadPromo().execute();
 
 
-        txt2.setText(theme.getDescription());
-        developertv.setText("by " + theme.getAuthor());
+        txt2.setText(layer.getDescription());
+        developertv.setText("by " + layer.getAuthor());
 
         // Scroll view with screenshots
         LinearLayout screenshotLayout = (LinearLayout) findViewById(R.id.LinearLayoutScreenshots);
 
         final String[] screenshotsUrls = {
-                theme.getScreenshot_1(),
-                theme.getScreenshot_2(),
-                theme.getScreenshot_3()};
+                layer.getScreenshot_1(),
+                layer.getScreenshot_2(),
+                layer.getScreenshot_3()};
 
         float height = screenSize.y / 2;
 
@@ -118,7 +118,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String link = theme.getLink();
+                String link = layer.getLink();
 
                 Intent installtheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 
@@ -130,7 +130,7 @@ public class DetailActivity extends AppCompatActivity {
         // Donate button
         LinearLayout donatebutton;
         donatebutton = (LinearLayout) findViewById(R.id.donateLayout);
-        String link = theme.getDonate_link();
+        String link = layer.getDonate_link();
 
         if (link.equals("false")) {
 
@@ -141,7 +141,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String link = theme.getDonate_link();
+                String link = layer.getDonate_link();
 
 
                 Intent donatetheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
@@ -159,7 +159,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent googleplustheme = new Intent(Intent.ACTION_VIEW, Uri.parse(theme.getGoogleplus()));
+                Intent googleplustheme = new Intent(Intent.ACTION_VIEW, Uri.parse(layer.getGoogleplus()));
 
                 startActivity(googleplustheme);
 
@@ -179,10 +179,10 @@ public class DetailActivity extends AppCompatActivity {
 
         AndroidVersion androidVersion = Helpers.getSystemVersion();
 
-        if (androidVersion == AndroidVersion.Lollipop && theme.isFor_L()) {
+        if (androidVersion == AndroidVersion.Lollipop && layer.isFor_L()) {
             androidversion.setText(getString(R.string.supportsL));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
-        } else if (androidVersion == AndroidVersion.M && theme.isFor_M()) {
+        } else if (androidVersion == AndroidVersion.M && layer.isFor_M()) {
             androidversion.setText(getString(R.string.supportsM));
             androidversionImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
         } else {
@@ -192,7 +192,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Density deviceDensity = Helpers.getDensity(this);
 
-        if (theme.isSupportingDpi(deviceDensity)) {
+        if (layer.isSupportingDpi(deviceDensity)) {
             screendensityImage.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             screendensity.setText(getString(R.string.densitySupport) + " " + deviceDensity.toString().toLowerCase());
         } else {
@@ -251,7 +251,7 @@ public class DetailActivity extends AppCompatActivity {
         protected Pair<Bitmap, Palette> doInBackground(Void... params) {
 
             try {
-                Bitmap bitmap = Picasso.with(DetailActivity.this).load(theme.getPromo()).get();
+                Bitmap bitmap = Picasso.with(DetailActivity.this).load(layer.getPromo()).get();
                 Palette p = Palette.from(bitmap).generate();
 
                 return new Pair<Bitmap, Palette>(bitmap, p);

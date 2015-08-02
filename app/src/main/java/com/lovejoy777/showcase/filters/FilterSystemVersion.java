@@ -1,6 +1,6 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 
 public class FilterSystemVersion extends Filter {
@@ -11,8 +11,8 @@ public class FilterSystemVersion extends Filter {
     }
 
     @Override
-    public boolean filterTheme(Theme theme) {
-        return theme.isSupportingAndroidVersion(androidVersion);
+    public boolean filterTheme(Layer layer) {
+        return layer.isSupportingAndroidVersion(androidVersion);
     }
 
 }

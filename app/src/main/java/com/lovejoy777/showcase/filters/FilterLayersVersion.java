@@ -1,6 +1,6 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 import com.lovejoy777.showcase.enums.LayersVersion;
 
 public class FilterLayersVersion extends Filter {
@@ -11,8 +11,8 @@ public class FilterLayersVersion extends Filter {
     }
 
     @Override
-    public boolean filterTheme(Theme theme) {
-        return theme.isSupportingLayersVersion(layersVersion);
+    public boolean filterTheme(Layer layer) {
+        return layer.isSupportingLayersVersion(layersVersion);
     }
 
 }

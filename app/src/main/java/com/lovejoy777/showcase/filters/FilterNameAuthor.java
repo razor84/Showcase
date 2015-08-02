@@ -1,6 +1,6 @@
 package com.lovejoy777.showcase.filters;
 
-import com.lovejoy777.showcase.beans.Theme;
+import com.lovejoy777.showcase.beans.Layer;
 
 public class FilterNameAuthor extends Filter {
     private String themeNameAuthor;
@@ -10,10 +10,10 @@ public class FilterNameAuthor extends Filter {
     }
 
     @Override
-    public boolean filterTheme(Theme theme) {
+    public boolean filterTheme(Layer layer) {
         return themeNameAuthor.isEmpty()
-                || theme.getAuthor().toLowerCase().contains(themeNameAuthor.toLowerCase())
-                || theme.getTitle().toLowerCase().contains(themeNameAuthor.toLowerCase());
+                || layer.getAuthor().toLowerCase().contains(themeNameAuthor.toLowerCase())
+                || layer.getTitle().toLowerCase().contains(themeNameAuthor.toLowerCase());
     }
 
 }
