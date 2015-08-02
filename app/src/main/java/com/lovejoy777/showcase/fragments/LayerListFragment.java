@@ -19,9 +19,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -29,7 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.lovejoy777.showcase.R;
-import com.lovejoy777.showcase.activities.DetailActivity;
+import com.lovejoy777.showcase.Activities.DetailActivity;
 import com.lovejoy777.showcase.adapters.AbsFilteredCardViewAdapter;
 import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
@@ -89,6 +91,11 @@ public class LayerListFragment extends AbsBackButtonFragment {
         toolbar = (android.support.v7.widget.Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setTitle(mode + " Layers");
         setHasOptionsMenu(true);
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 56, getResources().getDisplayMetrics());
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,height
+        );
+        toolbar.setLayoutParams(layoutParams);
 
         mSwipeRefresh = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
 

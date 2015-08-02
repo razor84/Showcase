@@ -16,10 +16,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import com.lovejoy777.showcase.Activities.SettingsActivity;
 import com.lovejoy777.showcase.fragments.AbsBackButtonFragment;
 import com.lovejoy777.showcase.fragments.LayerListFragment;
 import com.lovejoy777.showcase.fragments.MainFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import static com.lovejoy777.showcase.Helpers.getLayersJsonFile;
 
 public class MainActivity1 extends AppCompatActivity {
 

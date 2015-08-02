@@ -28,7 +28,8 @@
 
         <activity android:name=".MainActivity1"
             android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"
-            android:label="@string/app_name">
+            android:label=""
+            >
 
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -37,19 +38,10 @@
         </activity>
 
 
-        <activity
-            android:name=".fragments.LayerListFragment"
-            android:label="@string/free"
-            android:theme="@style/Toolbar2" >
-            <intent-filter>
-                <action android:name="android.intent.action.SCREEN1FREE" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <activity
-            android:name=".activities.DetailActivity"
+            android:name=".Activities.DetailActivity"
             android:label="@string/details"
             android:theme="@style/Theme.Toolbar">
             <intent-filter>
@@ -60,7 +52,7 @@
         </activity>
 
         <activity
-            android:name=".activities.AboutActivity"
+            android:name=".Activities.AboutActivity"
             android:label=""
             android:theme="@style/Toolbar2">
             <intent-filter>
@@ -71,7 +63,7 @@
         </activity>
 
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".Activities.SettingsActivity"
             android:label="Settings"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -81,7 +73,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.FullscreenActivity2"/>
+        <activity android:name=".Activities.FullscreenActivity2"/>
 
     </application>
 

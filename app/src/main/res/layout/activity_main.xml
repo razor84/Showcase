@@ -20,6 +20,8 @@
             android:gravity="center"
             tools:context="com.lovejoy777.showcase.MainActivity"
             android:elevation="4dp"
+            app:theme="@style/Toolbar.AppCompat.Responsive"
+            app:popupTheme="@style/Toolbar.Popup.AppCompat"
             android:theme="@style/Base.Theme.Test">
 
         </android.support.v7.widget.Toolbar>
@@ -38,7 +40,8 @@
 
         <FrameLayout
             android:id="@+id/main"
-            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="56dp"
+            android:elevation="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
