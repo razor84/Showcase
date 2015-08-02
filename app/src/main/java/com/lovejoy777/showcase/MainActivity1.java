@@ -13,12 +13,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.lovejoy777.showcase.activities.AboutActivity;
-import com.lovejoy777.showcase.activities.SettingsActivity;
+import com.lovejoy777.showcase.Activities.SettingsActivity;
 import com.lovejoy777.showcase.fragments.AbsBackButtonFragment;
 import com.lovejoy777.showcase.fragments.LayerListFragment;
 import com.lovejoy777.showcase.fragments.MainFragment;
@@ -75,7 +73,7 @@ public class MainActivity1 extends AppCompatActivity {
                                 fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_about:
-                                Intent about = new Intent(MainActivity1.this, AboutActivity.class);
+                                Intent about = new Intent(MainActivity1.this, com.lovejoy777.showcase.Activities.AboutActivity.class);
                                 startActivity(about, bndlanimation);
                                 break;
                             case R.id.nav_free:
