@@ -69,10 +69,6 @@ This may cause blurry looking drawables or drawables which are not themed.</stri
     <string name="License3about" translatable="false">Square, Inc.</string>
     <string name="License3github" translatable="false">https://github.com/square/picasso</string>
 
-    <string name="License4" translatable="false">Persistent Search</string>
-    <string name="License4about" translatable="false">Kieron Quinn</string>
-    <string name="License4github" translatable="false">https://github.com/Quinny898/PersistentSearch</string>
-
     <string name="License5" translatable="false">Guava</string>
     <string name="License5about" translatable="false">Google, Inc.</string>
     <string name="License5github" translatable="false">https://github.com/google/guava</string>
