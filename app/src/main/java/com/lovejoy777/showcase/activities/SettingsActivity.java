@@ -1,4 +1,4 @@
-package com.lovejoy777.showcase.Activities;
+package com.lovejoy777.showcase.activities;
 
 import android.app.ActionBar;
 import android.content.ComponentName;

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import com.lovejoy777.showcase.Activities.SettingsActivity;
+import com.lovejoy777.showcase.activities.SettingsActivity;
 import com.lovejoy777.showcase.fragments.AbsBackButtonFragment;
 import com.lovejoy777.showcase.fragments.LayerListFragment;
 import com.lovejoy777.showcase.fragments.MainFragment;
@@ -84,7 +84,7 @@ public class MainActivity1 extends AppCompatActivity {
                                 fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_about:
-                                Intent about = new Intent(MainActivity1.this, com.lovejoy777.showcase.Activities.AboutActivity.class);
+                                Intent about = new Intent(MainActivity1.this, com.lovejoy777.showcase.activities.AboutActivity.class);
                                 startActivity(about, bndlanimation);
                                 break;
                             case R.id.nav_free:
