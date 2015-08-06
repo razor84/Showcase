@@ -1,8 +1,8 @@
 package com.lovejoy777.showcase.beans;
 
 import com.lovejoy777.showcase.enums.AndroidPlatform;
-import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.AndroidVersion;
+import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.LayersVersion;
 
 import java.io.Serializable;
@@ -45,8 +45,25 @@ public class Layer implements Serializable {
     private boolean free;
     private boolean donate;
     private boolean paid;
+    private String toolbar_background_color;
+    private String toolbar_text_color;
 
     public Layer() {
+
+        //Default values
+        title = "Sample Title";
+        description = "Sample description";
+        author = "Nobody";
+        version = "1.0";
+        plugin_version = "1.0";
+
+        for_L = for_M = basic_m = basic = type2 = type3 = type3_m = touchwiz = lg =
+                sense = xperia = zenui = hdpi = mdpi = xhdpi = xxhdpi = xxxhdpi =
+                        donate = paid = false;
+
+        free = true;
+
+
     }
 
     public String getTitle() {
@@ -343,6 +360,14 @@ public class Layer implements Serializable {
 
     public void setXxxhdpi(boolean xxxhdpi) {
         this.xxxhdpi = xxxhdpi;
+    }
+
+    public String getToolbar_background_color() {
+        return toolbar_background_color;
+    }
+
+    public String getToolbar_text_color() {
+        return toolbar_text_color;
     }
 
     public boolean isSupportingDpi(Density dpi) {

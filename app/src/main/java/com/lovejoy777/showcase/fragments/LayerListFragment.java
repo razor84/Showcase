@@ -285,7 +285,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
                 boolean debug = prefs.getBoolean("debug_themes", false);
 
                 if (debug) {
-                    layersList.add(DebugLayers.createDebugLayers());
+                    layersList.addAll(DebugLayers.createDebugLayers());
                 }
 
                 for (Layer layer : layers) {

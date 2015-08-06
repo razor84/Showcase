@@ -35,6 +35,9 @@ public class DetailActivity extends AppCompatActivity {
     Layer layer;
     CollapsingToolbarLayout collapsingToolbar;
     android.support.v7.widget.Toolbar toolbar;
+    private boolean customColors = false;
+    Button info;
+    Button download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,18 @@ public class DetailActivity extends AppCompatActivity {
         ImageView icon = (ImageView) findViewById(R.id.icon);
         TextView txt2 = (TextView) findViewById(R.id.textView2);
         TextView developertv = (TextView) findViewById(R.id.textView);
+
+        info = (Button) findViewById(R.id.moreinfo);
+        download = (Button) findViewById(R.id.download);
+
+        //Toolbar color (if available)
+        if (layer.getToolbar_background_color() != null) {
+            customColors = true;
+
+            //No transparency
+            int myColor = 0xFF000000 | Integer.parseInt(layer.getToolbar_background_color(), 16);
+            setColor(myColor);
+        }
 
         // Set text & image Views
         collapsingToolbar.setTitle(layer.getTitle());
@@ -111,10 +126,8 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         // Get Theme button
-        Button installbutton;
-        installbutton = (Button) findViewById(R.id.button);
 
-        installbutton.setOnClickListener(new View.OnClickListener() {
+        info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -133,7 +146,6 @@ public class DetailActivity extends AppCompatActivity {
         String link = layer.getDonate_link();
 
         if (link == null || link.equals("false")) {
-
             donatebutton.setVisibility(View.GONE);
         }
 
@@ -152,10 +164,8 @@ public class DetailActivity extends AppCompatActivity {
         }); // End Donate button */
 
         // Info button
-        Button infobutton;
-        infobutton = (Button) findViewById(R.id.button2);
 
-        infobutton.setOnClickListener(new View.OnClickListener() {
+        download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -237,6 +247,19 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    private void setColor(int color) {
+
+        collapsingToolbar.setContentScrimColor(color);
+        info.setBackgroundColor(color);
+        download.setBackgroundColor(color);
+
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        Window window = DetailActivity.this.getWindow();
+        window.setStatusBarColor(Color.HSVToColor(hsv));
+
+    }
 
     private class DownloadPromo extends AsyncTask<Void, Void, Pair<Bitmap, Palette>> {
 
@@ -270,14 +293,12 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Pair<Bitmap, Palette> bitmapIntegerPair) {
 
-            if (bitmapIntegerPair == null) {
+            if (bitmapIntegerPair == null || customColors) {
                 //Nothing to do here
                 return;
             }
 
             promoimg.setImageBitmap(bitmapIntegerPair.first);
-            Button info = (Button) findViewById(R.id.button);
-            Button download = (Button) findViewById(R.id.button2);
             Palette.Swatch swatch = bitmapIntegerPair.second.getVibrantSwatch();
 
             //If doesn't exist choose the most dominant one (if you have better idea - do pull request)
@@ -286,18 +307,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             if (swatch != null) {
-
-                //collapsingToolbar.setCollapsedTitleTextColor(swatch.getTitleTextColor());
-                collapsingToolbar.setContentScrimColor(swatch.getRgb());
-                info.setBackgroundColor(swatch.getRgb());
-                download.setBackgroundColor(swatch.getRgb());
-
-                float[] hsv = new float[3];
-                Color.colorToHSV(swatch.getRgb(), hsv);
-                hsv[2] *= 0.8f;
-                Window window = DetailActivity.this.getWindow();
-                window.setStatusBarColor(Color.HSVToColor(hsv));
-
+                setColor(swatch.getRgb());
             }
 
 
