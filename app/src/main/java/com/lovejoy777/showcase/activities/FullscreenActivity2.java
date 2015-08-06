@@ -28,6 +28,10 @@ public class FullscreenActivity2 extends Activity {
         final ImageView image = (ImageView) findViewById(R.id.image);
         image.setBackgroundColor(bgColor);
 
+        getWindow().setNavigationBarColor(bgColor);
+        getWindow().setStatusBarColor(bgColor);
+
+
         Picasso.with(this)
                 .load(getIntent().getStringExtra("url"))
                 .fit()
