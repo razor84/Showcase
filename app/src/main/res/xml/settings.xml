@@ -11,7 +11,7 @@
             android:title="Remove Launcher Icon"
             android:defaultValue="false"
             android:summary="Be sure your ROM includes the Layers Manager in the Settings app."
-        />
+            />
 
         <SwitchPreference
             android:key="bigCards"
@@ -21,9 +21,22 @@
             />
 
 
-
     </PreferenceCategory>
 
+
+    <PreferenceCategory
+        android:title="@string/developer_settings"
+        android:key="second_category">
+
+        <SwitchPreference
+            android:key="debug_themes"
+            android:title="Additional debug themes"
+            android:defaultValue="false"
+            android:summary="DON'T TOUCH ME"
+            />
+
+
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

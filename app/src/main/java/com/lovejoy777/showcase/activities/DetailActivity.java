@@ -132,7 +132,7 @@ public class DetailActivity extends AppCompatActivity {
         donatebutton = (LinearLayout) findViewById(R.id.donateLayout);
         String link = layer.getDonate_link();
 
-        if (link.equals("false")) {
+        if (link == null || link.equals("false")) {
 
             donatebutton.setVisibility(View.GONE);
         }
@@ -254,10 +254,14 @@ public class DetailActivity extends AppCompatActivity {
                 Bitmap bitmap = Picasso.with(DetailActivity.this).load(layer.getPromo()).get();
                 Palette p = Palette.from(bitmap).generate();
 
-                return new Pair<Bitmap, Palette>(bitmap, p);
+                return new Pair<>(bitmap, p);
 
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
+            } catch (IllegalArgumentException e) {
+                //No promo image
+                Log.w("Promo image", "Not found or corrupted");
                 return null;
             }
         }
@@ -265,6 +269,11 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Pair<Bitmap, Palette> bitmapIntegerPair) {
+
+            if (bitmapIntegerPair == null) {
+                //Nothing to do here
+                return;
+            }
 
             promoimg.setImageBitmap(bitmapIntegerPair.first);
             Button info = (Button) findViewById(R.id.button);

@@ -34,6 +34,7 @@ import com.lovejoy777.showcase.adapters.BigCardsViewAdapter;
 import com.lovejoy777.showcase.adapters.RecyclerItemClickListener;
 import com.lovejoy777.showcase.adapters.SmallCardsViewAdapter;
 import com.lovejoy777.showcase.beans.Layer;
+import com.lovejoy777.showcase.debug.DebugLayers;
 import com.lovejoy777.showcase.enums.AndroidPlatform;
 import com.lovejoy777.showcase.enums.AndroidVersion;
 import com.lovejoy777.showcase.enums.Density;
@@ -280,6 +281,13 @@ public class LayerListFragment extends AbsBackButtonFragment {
 
                 Collections.shuffle(layers);
 
+                SharedPreferences prefs = getActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+                boolean debug = prefs.getBoolean("debug_themes", false);
+
+                if (debug) {
+                    layersList.add(DebugLayers.createDebugLayers());
+                }
+
                 for (Layer layer : layers) {
                     if ((layer.isFree() && mode.equals("Free"))
                             || (layer.isPaid() && mode.equals("Paid"))
@@ -287,6 +295,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
                         layersList.add(layer);
                     }
                 }
+
 
                 return true;
 
