@@ -293,12 +293,17 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Pair<Bitmap, Palette> bitmapIntegerPair) {
 
-            if (bitmapIntegerPair == null || customColors) {
+            if (bitmapIntegerPair == null) {
                 //Nothing to do here
                 return;
             }
 
             promoimg.setImageBitmap(bitmapIntegerPair.first);
+
+            if (customColors) {
+                return;
+            }
+
             Palette.Swatch swatch = bitmapIntegerPair.second.getVibrantSwatch();
 
             //If doesn't exist choose the most dominant one (if you have better idea - do pull request)
