@@ -41,7 +41,7 @@ public class FullscreenActivity2 extends Activity {
 
     }
 
-    public static void launch(Activity activity, ImageView transitionView, String url, String id) {
+    public static void launch(Activity activity, ImageView transitionView, String id) {
 
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -50,7 +50,7 @@ public class FullscreenActivity2 extends Activity {
         drawable = transitionView.getDrawable();
         transitionView.setTransitionName(id);
         Intent intent = new Intent(activity, FullscreenActivity2.class);
-        intent.putExtra("url", url);
+        intent.putExtra("url", (String) transitionView.getTag());
 
         ActivityCompat.startActivity(activity, intent, options.toBundle());
 

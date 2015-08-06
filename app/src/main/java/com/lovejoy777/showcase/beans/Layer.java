@@ -63,6 +63,7 @@ public class Layer implements Serializable {
 
         free = true;
 
+        screenshot_1 = screenshot_2 = screenshot_3 = "";
 
     }
 

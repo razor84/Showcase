@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
@@ -105,24 +106,28 @@ public class DetailActivity extends AppCompatActivity {
 
         Log.d("Height: ", String.valueOf(height));
 
-        for (int i = 0; i < 3; i++) {
-            ScreenshotimageView[i] = new ImageView(this);
+        for (String url : screenshotsUrls) {
+            ImageView screenshotImageView = new ImageView(this);
 
-            screenshotLayout.addView(ScreenshotimageView[i]);
+            screenshotLayout.addView(screenshotImageView);
 
-            final int finalI = i;
-            ScreenshotimageView[i].setOnClickListener(new View.OnClickListener() {
+            screenshotImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FullscreenActivity2.launch(activity, (ImageView) view, screenshotsUrls[finalI], "img");
+                    FullscreenActivity2.launch(activity, (ImageView) view, "img");
                 }
             });
 
+
+            new DownloadScreenshot(screenshotImageView, (int) height).execute(url.split(","));
+
+            /*
             Picasso.with(this)
                     .load(screenshotsUrls[finalI])
                     .centerInside()
                     .resize((int) (height * 0.66), (int) height)
                     .into(ScreenshotimageView[finalI]);
+                    */
         }
 
         // Get Theme button
@@ -154,7 +159,6 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String link = layer.getDonate_link();
-
 
                 Intent donatetheme = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
 
@@ -260,6 +264,69 @@ public class DetailActivity extends AppCompatActivity {
         window.setStatusBarColor(Color.HSVToColor(hsv));
 
     }
+
+    private class DownloadScreenshot extends AsyncTask<String, Void, Pair<Bitmap, String>> {
+
+        ImageView screenShotView;
+        int height;
+
+        public DownloadScreenshot(ImageView screenShotView, int height) {
+            this.screenShotView = screenShotView;
+            this.height = height;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            /*
+            Bitmap bitmap = BitmapFactory.decodeResource(DetailActivity.this.getResources(),
+                    R.drawable.loading);
+
+            screenShotView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, (int) (height * 0.66),
+                    height, true));
+*/
+
+        }
+
+        @Override
+        protected Pair<Bitmap, String> doInBackground(String... params) {
+
+            for (String url : params) {
+
+                String parsedUrl = url.replaceAll(" ", "");
+
+                try {
+                    return new Pair<>(Picasso.with(DetailActivity.this)
+                            .load(parsedUrl)
+                            .centerInside()
+                            .resize((int) (height * 0.66), height)
+                            .get(), parsedUrl);
+                } catch (IOException | IllegalStateException | IllegalArgumentException ignored) {
+                }
+
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Pair<Bitmap, String> bitmap) {
+
+            if (bitmap != null) {
+                screenShotView.setImageBitmap(bitmap.first);
+                screenShotView.setTag(bitmap.second);
+            } else {
+                Bitmap errorBitmap = BitmapFactory.decodeResource(DetailActivity.this.getResources(),
+                        R.drawable.error);
+
+                screenShotView.setImageBitmap(Bitmap.createScaledBitmap(errorBitmap, (int) (height * 0.66),
+                        height, true));
+            }
+
+        }
+    }
+
 
     private class DownloadPromo extends AsyncTask<Void, Void, Pair<Bitmap, Palette>> {
 
