@@ -31,7 +31,6 @@ import java.io.IOException;
 public class DetailActivity extends AppCompatActivity {
 
     private Activity activity;
-    final ImageView ScreenshotimageView[] = new ImageView[3];
     ImageView promoimg;
     Layer layer;
     CollapsingToolbarLayout collapsingToolbar;
@@ -257,12 +256,11 @@ public class DetailActivity extends AppCompatActivity {
         info.setBackgroundColor(color);
         download.setBackgroundColor(color);
 
+
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
         hsv[2] *= 0.8f;
-        Window window = DetailActivity.this.getWindow();
-        window.setStatusBarColor(Color.HSVToColor(hsv));
-
+        collapsingToolbar.setStatusBarScrimColor(Color.HSVToColor(hsv));
     }
 
     private class DownloadScreenshot extends AsyncTask<String, Void, Pair<Bitmap, String>> {
@@ -361,7 +359,8 @@ public class DetailActivity extends AppCompatActivity {
         protected void onPostExecute(Pair<Bitmap, Palette> bitmapIntegerPair) {
 
             if (bitmapIntegerPair == null) {
-                //Nothing to do here
+                //Setting error drawable
+                promoimg.setImageResource(R.drawable.no_heroimage);
                 return;
             }
 
