@@ -1,6 +1,7 @@
 package com.lovejoy777.showcase.activities;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -17,7 +18,6 @@ import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.*;
 import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;
@@ -38,6 +38,7 @@ public class DetailActivity extends AppCompatActivity {
     private boolean customColors = false;
     Button info;
     Button download;
+    Button install;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,7 @@ public class DetailActivity extends AppCompatActivity {
 
         info = (Button) findViewById(R.id.moreinfo);
         download = (Button) findViewById(R.id.download);
+        install = (Button) findViewById(R.id.installLayer);
 
         //Toolbar color (if available)
         if (layer.getToolbar_background_color() != null) {
@@ -120,18 +122,9 @@ public class DetailActivity extends AppCompatActivity {
 
             new DownloadScreenshot(screenshotImageView, (int) height).execute(url.split(","));
 
-            /*
-            Picasso.with(this)
-                    .load(screenshotsUrls[finalI])
-                    .centerInside()
-                    .resize((int) (height * 0.66), (int) height)
-                    .into(ScreenshotimageView[finalI]);
-                    */
         }
 
-        // Get Theme button
-
-        info.setOnClickListener(new View.OnClickListener() {
+        download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -166,9 +159,8 @@ public class DetailActivity extends AppCompatActivity {
             }
         }); // End Donate button */
 
-        // Info button
 
-        download.setOnClickListener(new View.OnClickListener() {
+        info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -215,6 +207,41 @@ public class DetailActivity extends AppCompatActivity {
 
     } // End onCreate
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final String id = layer.getPlayStoreID();
+
+        boolean appInstalled = Helpers.appInstalledOrNot(this, id);
+        boolean managerInstalled = Helpers.appInstalledOrNot(this, "com.lovejoy777.rroandlayersmanager");
+
+        if (appInstalled && managerInstalled) {
+
+            install.setVisibility(View.VISIBLE);
+
+            install.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName("com.lovejoy777.rroandlayersmanager",
+                            "com.lovejoy777.rroandlayersmanager.activities.OverlayDetailActivity"));
+                    intent.putExtra("PackageName", id);
+                    startActivity(intent);
+                }
+            });
+
+        } else {
+            install.setVisibility(View.GONE);
+
+            //Clear onClickListener
+            install.setOnClickListener(null);
+
+        }
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -234,27 +261,12 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    public View createRow(String text, boolean isChecked) {
-
-        CheckBox checkBox = new CheckBox(this);
-        checkBox.setText(text);
-        checkBox.setChecked(isChecked);
-        checkBox.setClickable(false);
-
-        TableRow row = new TableRow(this);
-        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-        row.addView(checkBox);
-
-        return row;
-
-    }
-
     private void setColor(int color) {
 
         collapsingToolbar.setContentScrimColor(color);
         info.setBackgroundColor(color);
         download.setBackgroundColor(color);
+        install.setBackgroundColor(color);
 
 
         float[] hsv = new float[3];

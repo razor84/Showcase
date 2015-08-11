@@ -1,6 +1,7 @@
 package com.lovejoy777.showcase;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.support.v7.graphics.Palette;
 import com.lovejoy777.showcase.enums.Density;
 import com.lovejoy777.showcase.enums.AndroidVersion;
@@ -56,5 +57,18 @@ public class Helpers {
             }
         });
     }
-    
+
+    // check for installed app method
+    public static boolean appInstalledOrNot(Context context, String uri) {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
+    }
+
 }

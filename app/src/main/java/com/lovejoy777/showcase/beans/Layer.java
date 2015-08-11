@@ -444,4 +444,9 @@ public class Layer implements Serializable {
 
     }
 
+    public String getPlayStoreID() {
+        return link.replace("https://play.google.com/store/apps/details?id=", "");
+    }
+
+
 }
