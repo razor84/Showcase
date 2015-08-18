@@ -1,6 +1,7 @@
 package com.lovejoy777.showcase.activities;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+
 import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;
 import com.lovejoy777.showcase.beans.Layer;
@@ -228,7 +230,11 @@ public class DetailActivity extends AppCompatActivity {
                     intent.setComponent(new ComponentName("com.lovejoy777.rroandlayersmanager",
                             "com.lovejoy777.rroandlayersmanager.activities.OverlayDetailActivity"));
                     intent.putExtra("PackageName", id);
-                    startActivity(intent);
+                    try {
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(DetailActivity.this, "You need Layers Manager beta to use this", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
