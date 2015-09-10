@@ -102,7 +102,9 @@ public class UpgradeJson extends AsyncTask<Void, String, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        progressShowcase.dismiss();
+        if ((progressShowcase != null) && progressShowcase.isShowing()) {
+            progressShowcase.dismiss();
+        }
     }
 
 
