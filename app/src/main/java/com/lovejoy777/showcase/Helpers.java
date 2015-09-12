@@ -40,7 +40,7 @@ public class Helpers {
     public static AndroidVersion getSystemVersion() {
         if ((android.os.Build.VERSION.RELEASE.startsWith("5.0") || android.os.Build.VERSION.RELEASE.startsWith("5.1"))) {
             return AndroidVersion.Lollipop;
-        } else if ((android.os.Build.VERSION.RELEASE.startsWith("5.2") || android.os.Build.VERSION.RELEASE.startsWith("M"))) {
+        } else if ((android.os.Build.VERSION.RELEASE.startsWith("6.0") || android.os.Build.VERSION.RELEASE.startsWith("M"))) {
             return AndroidVersion.M;
         } else {
             return AndroidVersion.Other;

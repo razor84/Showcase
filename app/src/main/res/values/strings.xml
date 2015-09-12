@@ -34,7 +34,7 @@
 
     <!-- DETAILS MESSAGES -->
     <string name="supportsL">This Layer supports your Android version (Android Lollipop)</string>
-    <string name="supportsM">This Layer supports your Android version (Android M)</string>
+    <string name="supportsM">This Layer supports your Android version (Android Marshmallow)</string>
     <string name="nosupport">This Layer does not support the Android Version you are currently running.
         Installing this layer can cause Bootloops or Force Closes.</string>
 
