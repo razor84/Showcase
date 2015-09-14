@@ -16,10 +16,12 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.*;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import android.widget.Toolbar;
 
 import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;
@@ -50,17 +52,22 @@ public class DetailActivity extends AppCompatActivity {
         activity = this;
 
         // Handle ToolBar
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        // Handle Toolbar
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_action_back);
         setSupportActionBar(toolbar);
+        //toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.collapsing_toolbar);
 
+        setSupportActionBar(toolbar);
+        collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         final Point screenSize = new Point();
         getWindowManager().getDefaultDisplay().getRealSize(screenSize);
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
 
         // Get String SZP
         final Intent extras = getIntent();
@@ -270,9 +277,9 @@ public class DetailActivity extends AppCompatActivity {
     private void setColor(int color) {
 
         collapsingToolbar.setContentScrimColor(color);
-        info.setBackgroundColor(color);
-        download.setBackgroundColor(color);
-        install.setBackgroundColor(color);
+        info.setBackgroundTintList(ColorStateList.valueOf(color));
+        download.setBackgroundTintList(ColorStateList.valueOf(color));
+        install.setBackgroundTintList(ColorStateList.valueOf(color));
 
 
         float[] hsv = new float[3];
