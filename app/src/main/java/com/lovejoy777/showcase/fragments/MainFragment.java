@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.florent37.materialleanback.MaterialLeanBack;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import com.lovejoy777.showcase.Callback;
 import com.lovejoy777.showcase.LeanBackViewHolder;
 import com.lovejoy777.showcase.MainActivity1;
 import com.lovejoy777.showcase.R;
@@ -71,7 +72,13 @@ public class MainFragment extends AbsBackButtonFragment {
         toolbar.setLayoutParams(layoutParams);
         setHasOptionsMenu(true);
 
-        loadLeanback();
+        new UpgradeJson(getActivity(), false, new Callback() {
+            @Override
+            public void callback() {
+                loadLeanback();
+            }
+        }).execute();
+
 
 
         return root;

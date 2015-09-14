@@ -20,12 +20,18 @@ public class UpgradeJson extends AsyncTask<Void, String, Void> {
 
     private Context context;
     private boolean force;
+    private Callback callback;
     private ProgressDialog progressShowcase;
     private final String jsonData = "https://api.github.com/repos/BitSyko/layers_showcase_json/releases/latest";
 
-    public UpgradeJson(Context context, boolean force) {
+    public UpgradeJson(Context context, boolean force, Callback callback) {
         this.context = context;
         this.force = force;
+        this.callback = callback;
+    }
+
+    public UpgradeJson(Context context, boolean force) {
+        this(context, force, null);
     }
 
     @Override
@@ -105,6 +111,11 @@ public class UpgradeJson extends AsyncTask<Void, String, Void> {
         if ((progressShowcase != null) && progressShowcase.isShowing()) {
             progressShowcase.dismiss();
         }
+
+        if (callback != null) {
+            callback.callback();
+        }
+
     }
 
 
