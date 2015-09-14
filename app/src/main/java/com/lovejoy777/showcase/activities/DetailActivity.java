@@ -16,12 +16,14 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.*;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
-import android.widget.Toolbar;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lovejoy777.showcase.Helpers;
 import com.lovejoy777.showcase.R;

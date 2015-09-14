@@ -3,8 +3,9 @@ package com.lovejoy777.showcase;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v7.graphics.Palette;
-import com.lovejoy777.showcase.enums.Density;
+
 import com.lovejoy777.showcase.enums.AndroidVersion;
+import com.lovejoy777.showcase.enums.Density;
 
 import java.io.File;
 import java.util.Collections;

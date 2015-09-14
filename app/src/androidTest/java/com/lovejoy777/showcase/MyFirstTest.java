@@ -3,6 +3,7 @@ package com.lovejoy777.showcase;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.test.ActivityInstrumentationTestCase2;
+
 import com.robotium.solo.Solo;
 
 public class MyFirstTest extends ActivityInstrumentationTestCase2<MainActivity1> {

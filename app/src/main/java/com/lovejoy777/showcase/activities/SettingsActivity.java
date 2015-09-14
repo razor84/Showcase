@@ -10,6 +10,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import com.lovejoy777.showcase.R;
 
 
