@@ -33,7 +33,7 @@ public class BigCardsViewAdapter extends AbsFilteredCardViewAdapter {
         viewHolder.themeName.setText(layer.getTitle());
         viewHolder.themeDeveloper.setText(layer.getAuthor());
 
-        Picasso.with(mContext).load(layer.getPromo()).placeholder(R.drawable.loadingpromo).fit().centerCrop().into(viewHolder.themeImage);
+        Picasso.with(mContext).load(layer.getPromo()).placeholder(R.drawable.load).fit().centerCrop().error(R.drawable.loading_error).into(viewHolder.themeImage);
 
 
     }

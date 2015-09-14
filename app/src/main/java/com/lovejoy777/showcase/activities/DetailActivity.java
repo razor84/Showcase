@@ -355,7 +355,7 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            promoimg.setImageResource(R.drawable.loadingpromo);
+            promoimg.setImageResource(R.drawable.load);
             super.onPreExecute();
         }
 
@@ -385,7 +385,7 @@ public class DetailActivity extends AppCompatActivity {
 
             if (bitmapIntegerPair == null) {
                 //Setting error drawable
-                promoimg.setImageResource(R.drawable.no_heroimage);
+                promoimg.setImageResource(R.drawable.loading_error);
                 return;
             }
 
