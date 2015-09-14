@@ -15,8 +15,8 @@ android {
         applicationId "com.lovejoy777.showcase"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 18
-        versionName "1.1"
+        versionCode 19
+        versionName "1.2b1"
         archivesBaseName = "Showcase"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -67,6 +67,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT'
     compile 'com.google.guava:guava:18.0'
+    compile project(":libs:leanback")
+
 
     androidTestCompile 'com.android.support.test:runner:0.3'
     androidTestCompile 'com.android.support.test:rules:0.3'
