@@ -55,7 +55,7 @@ public class MaterialLeanBack extends FrameLayout {
             imageBackground.setBackgroundDrawable(getContext().getResources().getDrawable(settings.backgroundId));
 
         if (settings.backgroundOverlay != null)
-            ViewHelper.setAlpha(imageBackgroundOverlay,settings.backgroundOverlay);
+            ViewHelper.setAlpha(imageBackgroundOverlay, settings.backgroundOverlay);
         if (settings.backgroundOverlayColor != null)
             imageBackgroundOverlay.setBackgroundColor(settings.backgroundOverlayColor);
 
@@ -87,12 +87,16 @@ public class MaterialLeanBack extends FrameLayout {
             return false;
         }
 
+        public void onButtonClick(int row) {
+        }
+
         //if you want to set a custom view into the MaterialLeanBack, eg: a header
         public RecyclerView.ViewHolder getCustomViewForRow(ViewGroup viewGroup, int row) {
             return null;
         }
 
-        public void onBindCustomView(RecyclerView.ViewHolder viewHolder, int row) {}
+        public void onBindCustomView(RecyclerView.ViewHolder viewHolder, int row) {
+        }
     }
 
     public Adapter getAdapter() {
@@ -101,7 +105,7 @@ public class MaterialLeanBack extends FrameLayout {
 
     public void setAdapter(Adapter adapter, Context ctx) {
         this.adapter = adapter;
-        recyclerView.setAdapter(new LineAdapter(ctx,settings,adapter,customizer));
+        recyclerView.setAdapter(new LineAdapter(ctx, settings, adapter, customizer));
 
     }
 

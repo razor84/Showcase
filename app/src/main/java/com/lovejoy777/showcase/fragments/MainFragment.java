@@ -2,6 +2,7 @@ package com.lovejoy777.showcase.fragments;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,9 +54,10 @@ public class MainFragment extends AbsBackButtonFragment {
     ArrayList<Layer> layersListPaid = new ArrayList<>();
     private String mode;
     ViewGroup root;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         root = (ViewGroup) inflater.inflate(R.layout.fragment_main, container, false);
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_main, container, false);
 
         ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu().getItem(0).setChecked(true);
 
@@ -63,7 +66,7 @@ public class MainFragment extends AbsBackButtonFragment {
 
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,height
+                ViewGroup.LayoutParams.MATCH_PARENT, height
         );
         toolbar.setLayoutParams(layoutParams);
         setHasOptionsMenu(true);
@@ -74,7 +77,6 @@ public class MainFragment extends AbsBackButtonFragment {
                 loadLeanback();
             }
         }).execute();
-
 
 
         return root;
@@ -98,11 +100,10 @@ public class MainFragment extends AbsBackButtonFragment {
 
 
             for (Layer layer : layers) {
-                if (layer.isFree() || layer.isDonate()){
+                if (layer.isFree() || layer.isDonate()) {
                     layersListFree.add(layer);
-                }
-                else {
-                    if (layer.isPaid()){
+                } else {
+                    if (layer.isPaid()) {
                         layersListPaid.add(layer);
                     }
 
@@ -119,7 +120,6 @@ public class MainFragment extends AbsBackButtonFragment {
                 return 4;
             }
 
-
             @Override
             public int getCellsCount(int line) {
                 return 7;
@@ -127,10 +127,34 @@ public class MainFragment extends AbsBackButtonFragment {
 
             @Override
             public LeanBackViewHolder onCreateViewHolder(ViewGroup viewGroup, int line) {
-
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.leanbackcell, viewGroup, false);
                 return new LeanBackViewHolder(view);
             }
+
+            @Override
+            public void onButtonClick(int row) {
+
+                Bundle data = new Bundle();
+
+                switch (row) {
+                    case 1:
+                        data.putString("type", "Free");
+                        break;
+                    case 2:
+                        data.putString("type", "Paid");
+                        break;
+                    default:
+                        //It should NEVER happer
+                        throw new RuntimeException();
+                }
+
+                AbsBackButtonFragment fragment;
+
+                fragment = new LayerListFragment();
+                fragment.setArguments(data);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main, fragment).addToBackStack(null).commit();
+            }
+
 
             @Override
             public void onBindViewHolder(final LeanBackViewHolder viewHolder, final int i) {
@@ -138,10 +162,10 @@ public class MainFragment extends AbsBackButtonFragment {
                     @Override
                     public void onClick(View v) {
                         Intent Detailsactivity = new Intent(getActivity(), DetailActivity.class);
-                        if (viewHolder.row ==1){
+                        if (viewHolder.row == 1) {
                             Detailsactivity.putExtra("theme", layersListFree.get(i));
                         } else {
-                            if ( viewHolder.row ==2){
+                            if (viewHolder.row == 2) {
                                 Detailsactivity.putExtra("theme", layersListPaid.get(i));
                             }
                         }
@@ -150,8 +174,8 @@ public class MainFragment extends AbsBackButtonFragment {
                         getActivity().startActivity(Detailsactivity, bndlanimation);
                     }
                 });
-                System.out.println("row: "+viewHolder.row);
-                if (viewHolder.row==1){
+                System.out.println("row: " + viewHolder.row);
+                if (viewHolder.row == 1) {
                     viewHolder.leantextView.setText(layersListFree.get(i).getTitle());
                     Picasso.with(viewHolder.leanimageView.getContext()).load(layersListFree.get(i).getPromo()).fit().centerCrop().into(viewHolder.leanimageView);
                 } else {
@@ -163,17 +187,17 @@ public class MainFragment extends AbsBackButtonFragment {
 
             @Override
             public String getTitleForRow(int row) {
-                if (row ==1){
+                if (row == 1) {
                     return "Free Layers";
-                } else{
-                    if (row ==2 ){
+                } else {
+                    if (row == 2) {
                         return "Paid Layers";
                     }
                 }
                 return null;
             }
 
-        },getActivity());
+        }, getActivity());
     }
 
 

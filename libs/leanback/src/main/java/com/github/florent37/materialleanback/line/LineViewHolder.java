@@ -38,7 +38,6 @@ public class LineViewHolder extends RecyclerView.ViewHolder {
     Context ctx;
 
 
-
     public LineViewHolder(View itemView, @NonNull MaterialLeanBack.Adapter adapter, @NonNull MaterialLeanBackSettings settings, final MaterialLeanBack.Customizer customizer, Context ctx) {
         super(itemView);
         this.adapter = adapter;
@@ -49,7 +48,6 @@ public class LineViewHolder extends RecyclerView.ViewHolder {
         layout = (ViewGroup) itemView.findViewById(R.id.row_layout);
         title = (TextView) itemView.findViewById(R.id.row_title);
         button = (Button) itemView.findViewById(R.id.row_button);
-
 
 
         recyclerView = (RecyclerView) itemView.findViewById(R.id.row_recyclerView);
@@ -64,52 +62,42 @@ public class LineViewHolder extends RecyclerView.ViewHolder {
     public void onBind(final int row) {
         this.row = row;
 
-        {
-
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(ctx, "Sorry, not available yet...", Toast.LENGTH_SHORT).show();
-                    /*
-                    switch (row){
-                        case 1:
-
-                            break;
-                        case 2:
-                            break;
-                    } */
-                }
-            });
-
-            String titleString = adapter.getTitleForRow(this.row);
-            if (titleString == null || titleString.trim().isEmpty())
-                title.setVisibility(View.GONE);
-            else
-                title.setText(titleString);
-
-            if (settings.titleColor != null)
-                title.setTextColor(settings.titleColor);
-            if (settings.titleSize != -1)
-                title.setTextSize(settings.titleSize);
-
-            if (this.customizer != null)
-                customizer.customizeTitle(title);
-        }
-        {
-            if (settings.lineSpacing != null) {
-                layout.setPadding(
-                        layout.getPaddingLeft(),
-                        layout.getPaddingTop(),
-                        layout.getPaddingRight(),
-                        settings.lineSpacing
-                );
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.onButtonClick(row);
             }
+        });
+
+        String titleString = adapter.getTitleForRow(this.row);
+        if (titleString == null || titleString.trim().isEmpty())
+            title.setVisibility(View.GONE);
+        else
+            title.setText(titleString);
+
+        if (settings.titleColor != null)
+            title.setTextColor(settings.titleColor);
+        if (settings.titleSize != -1)
+            title.setTextSize(settings.titleSize);
+
+        if (this.customizer != null)
+            customizer.customizeTitle(title);
+
+
+        if (settings.lineSpacing != null) {
+            layout.setPadding(
+                    layout.getPaddingLeft(),
+                    layout.getPaddingTop(),
+                    layout.getPaddingRight(),
+                    settings.lineSpacing
+            );
         }
+
 
         recyclerView.setAdapter(new CellAdapter(row, adapter, settings, new CellAdapter.HeightCalculatedCallback() {
             @Override
             public void onHeightCalculated(int height) {
-                if(!wrapped) {
+                if (!wrapped) {
                     recyclerView.getLayoutParams().height = height;
                     recyclerView.requestLayout();
                     wrapped = true;

@@ -25,7 +25,6 @@ import com.lovejoy777.showcase.fragments.MainFragment;
 public class MainActivity1 extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
-    private AbsBackButtonFragment lastFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +60,7 @@ public class MainActivity1 extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Fragment fragment;
                         mDrawerLayout.closeDrawers();
                         menuItem.setChecked(true);
                         Bundle bndlanimation =
@@ -69,9 +69,8 @@ public class MainActivity1 extends AppCompatActivity {
                         FragmentManager fragmentManager;
                         switch (id) {
                             case R.id.nav_home:
-                                lastFragment = new MainFragment();
                                 fragmentManager = getSupportFragmentManager();
-                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main, new MainFragment()).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_about:
                                 Intent about = new Intent(MainActivity1.this, com.lovejoy777.showcase.activities.AboutActivity.class);
@@ -81,19 +80,19 @@ public class MainActivity1 extends AppCompatActivity {
                                 Bundle data = new Bundle();
                                 data.putString("type", "Free");
 
-                                lastFragment = new LayerListFragment();
-                                lastFragment.setArguments(data);
+                                fragment = new LayerListFragment();
+                                fragment.setArguments(data);
                                 fragmentManager = getSupportFragmentManager();
-                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main, fragment).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_paid:
                                 data = new Bundle();
                                 data.putString("type", "Paid");
 
-                                lastFragment = new LayerListFragment();
-                                lastFragment.setArguments(data);
+                                fragment = new LayerListFragment();
+                                fragment.setArguments(data);
                                 fragmentManager = getSupportFragmentManager();
-                                fragmentManager.beginTransaction().replace(R.id.main, lastFragment).addToBackStack(null).commit();
+                                fragmentManager.beginTransaction().replace(R.id.main, fragment).addToBackStack(null).commit();
                                 break;
                             case R.id.nav_manager:
                                 boolean installed = appInstalledOrNot("com.lovejoy777.rroandlayersmanager");
@@ -133,10 +132,6 @@ public class MainActivity1 extends AppCompatActivity {
         return app_installed;
     }
 
-    public void replaceFragment(AbsBackButtonFragment fragment) {
-        lastFragment = fragment;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
@@ -145,8 +140,9 @@ public class MainActivity1 extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-//TODO: Use getFragmentManager().findFragmentById()
-        if (lastFragment == null || lastFragment.onBackButton()) {
+        Fragment lastFragment = getSupportFragmentManager().findFragmentById(R.id.main);
+
+        if (lastFragment == null || (lastFragment instanceof AbsBackButtonFragment && ((AbsBackButtonFragment) lastFragment).onBackButton())) {
 
             if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                 mDrawerLayout.closeDrawers();
