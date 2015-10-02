@@ -7,10 +7,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.lovejoy777.showcase.BuildConfig;
 import com.lovejoy777.showcase.R;
 
 
@@ -27,7 +30,11 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        PreferenceScreen prefScreen = (PreferenceScreen) findPreference("prefScreen");
+        PreferenceCategory prefCategory = (PreferenceCategory) findPreference("second_category");
+        if (!BuildConfig.DEBUG) {
+            prefScreen.removePreference(prefCategory);
+        }
     }
 
     private void killLauncherIcon() {

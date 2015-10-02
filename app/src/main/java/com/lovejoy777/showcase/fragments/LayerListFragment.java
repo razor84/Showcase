@@ -36,6 +36,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import com.lovejoy777.showcase.BuildConfig;
 import com.lovejoy777.showcase.R;
 import com.lovejoy777.showcase.UpgradeJson;
 import com.lovejoy777.showcase.activities.DetailActivity;
@@ -301,7 +302,7 @@ public class LayerListFragment extends AbsBackButtonFragment {
                 SharedPreferences prefs = getActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
                 boolean debug = prefs.getBoolean("debug_themes", false);
 
-                if (debug) {
+                if (BuildConfig.DEBUG && debug) {
                     layersList.addAll(DebugLayers.createDebugLayers());
                 }
 
