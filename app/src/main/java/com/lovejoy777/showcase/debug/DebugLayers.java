@@ -50,6 +50,17 @@ public class DebugLayers {
                 "    \"screenshot_3\": \"vasdvas\"\n" +
                 "}";
 
+
+        String themeWithExistingDonatePackage = "{\n" +
+                "    \"title\": \"Theme with existing donate package\",\n" +
+                "    \"icon\": \"NO LINK HERE\",\n" +
+                "    \"screenshot_1\": \"https://plus.google.com/u/0/communities\",\n" +
+                "    \"screenshot_2\": \"https://inbox.google.com/u/1/?pli=1\",\n" +
+                "    \"screenshot_3\": \"vasdvas\",\n" +
+                "    \"link\": \"https://play.google.com/store/apps/details?id=this.will.never.exist\",\n" +
+                "    \"donate_link\": \"https://play.google.com/store/apps/details?id=com.android.settings\"\n" +
+                "}";
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -58,6 +69,7 @@ public class DebugLayers {
             layers.add(objectMapper.readValue(themeWithBlackToolbar, Layer.class));
             layers.add(objectMapper.readValue(themeWithWhiteToolbar, Layer.class));
             layers.add(objectMapper.readValue(themeWithBackupScreenshot, Layer.class));
+            layers.add(objectMapper.readValue(themeWithExistingDonatePackage, Layer.class));
             return layers;
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,5 +79,28 @@ public class DebugLayers {
         return null;
     }
 
+
+    public static Layer debugLayerWithBlackToolbar() {
+
+        String themeWithBlackToolbar = "{\n" +
+                "    \"title\": \"Theme with black toolbar\",\n" +
+                "    \"icon\": \"NO LINK HERE\",\n" +
+                "    \"link\": \"NO LINK HERE\",\n" +
+                "    \"toolbar_background_color\": \"0\",\n" +
+                "    \"screenshot_2\": \"https://inbox.google.com/u/1/?pli=1\",\n" +
+                "    \"screenshot_3\": \"vasdvas\"\n" +
+                "}";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        try {
+            return objectMapper.readValue(themeWithBlackToolbar, Layer.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
 }

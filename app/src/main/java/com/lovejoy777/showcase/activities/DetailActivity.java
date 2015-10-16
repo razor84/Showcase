@@ -53,7 +53,6 @@ public class DetailActivity extends AppCompatActivity {
 
         activity = this;
 
-        // Handle ToolBar
         // Handle Toolbar
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
@@ -68,7 +67,6 @@ public class DetailActivity extends AppCompatActivity {
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         // Get String SZP
@@ -223,12 +221,15 @@ public class DetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        final String id = layer.getPlayStoreID();
+        final String freeId = layer.getPlayStoreID();
+        final String donateId = layer.getDonatePlayStoreID();
 
-        boolean appInstalled = Helpers.appInstalledOrNot(this, id);
+        boolean freeAppInstalled = Helpers.appInstalledOrNot(this, freeId);
+        boolean donateAppInstalled = Helpers.appInstalledOrNot(this, donateId);
+
         boolean managerInstalled = Helpers.appInstalledOrNot(this, "com.lovejoy777.rroandlayersmanager");
 
-        if (appInstalled && managerInstalled) {
+        if (donateAppInstalled && managerInstalled) {
 
             install.setVisibility(View.VISIBLE);
 
@@ -238,7 +239,28 @@ public class DetailActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName("com.lovejoy777.rroandlayersmanager",
                             "com.lovejoy777.rroandlayersmanager.activities.OverlayDetailActivity"));
-                    intent.putExtra("PackageName", id);
+                    intent.putExtra("PackageName", donateId);
+                    try {
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(DetailActivity.this, "You need Layers Manager beta to use this", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+            });
+
+        } else if (freeAppInstalled && managerInstalled) {
+
+            install.setVisibility(View.VISIBLE);
+
+            install.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName("com.lovejoy777.rroandlayersmanager",
+                            "com.lovejoy777.rroandlayersmanager.activities.OverlayDetailActivity"));
+                    intent.putExtra("PackageName", freeId);
                     try {
                         startActivity(intent);
                     } catch (ActivityNotFoundException e) {

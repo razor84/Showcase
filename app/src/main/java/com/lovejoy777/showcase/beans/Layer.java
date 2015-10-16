@@ -448,5 +448,9 @@ public class Layer implements Serializable {
         return link.replace("https://play.google.com/store/apps/details?id=", "");
     }
 
+    public String getDonatePlayStoreID() {
+        return donate_link.replace("https://play.google.com/store/apps/details?id=", "");
+    }
+
 
 }

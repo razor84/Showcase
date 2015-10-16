@@ -3,19 +3,18 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:checked="true"
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@drawable/ic_drawer_home"
-            android:title="@string/home" />
+            android:title="@string/home"/>
         <item
-
             android:id="@+id/nav_free"
             android:icon="@drawable/gift"
-            android:title="@string/freecard1header" />
+            android:title="@string/freecard1header"/>
         <item
             android:id="@+id/nav_paid"
             android:icon="@drawable/ic_drawer_paid"
-            android:title="@string/paidcard2header" />
+            android:title="@string/paidcard2header"/>
     </group>
 
     <item android:title="@string/discover">
@@ -23,11 +22,11 @@
             <item
                 android:id="@+id/nav_manager"
                 android:icon="@drawable/ic_drawer_manager"
-                android:title="@string/Manager" />
+                android:title="@string/Manager"/>
             <item
                 android:id="@+id/nav_playStore"
                 android:icon="@drawable/ic_drawer_playstore"
-                android:title="@string/PlayStore" />
+                android:title="@string/PlayStore"/>
         </menu>
     </item>
 
@@ -36,12 +35,12 @@
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_drawer_about"
-                android:title="@string/About" />
+                android:title="@string/About"/>
 
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_drawer_settings"
-                android:title="@string/Settings" />
+                android:title="@string/Settings"/>
 
         </menu>
     </item>
