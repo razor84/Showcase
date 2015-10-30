@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    >
-      <item
-          android:id="@+id/action_submit"
-          android:title="Submit a Layer"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item
+        android:id="@+id/action_submit"
+        android:title="Submit a Layer" />-->
     <item
         android:id="@+id/action_refresh"
-        android:title="Refresh Showcase Layers"/>
+        android:title="Refresh Showcase Layers" />
 </menu>

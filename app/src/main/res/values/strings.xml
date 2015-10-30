@@ -108,4 +108,50 @@ This may cause blurry looking drawables or drawables which are not themed.</stri
     <string name="PlayStore">PlayStore</string>
     <string name="Settings">Settings</string>
     <string name="Manager">Layers Manager</string>
+    <string name="Submit">Submit a Layer</string>
+
+    <!-- Json Form EditText -->
+    <string name="title">Title</string>
+    <string name="downloadlink">Download Link</string>
+    <string name="backupdownloadlink">Backup Download Link</string>
+    <string name="icon">Icon H=256 x W=256</string>
+    <string name="promo">Promo Image W=1598 x H=10526</string>
+    <string name="screenshot_1">Screenshot 1 H=1920 include a backup link after a comma</string>
+    <string name="screenshot_2">Screenshot 2 H=1920 include a backup link after a comma</string>
+    <string name="screenshot_3">Screenshot 3 H=1920 include a backup link after a comma</string>
+    <string name="googleplus">Google+ Post</string>
+    <string name="version2">Version Number</string>
+    <string name="donatedownload">Donate Version Download Link</string>
+    <string name="pluginversion">Plugin Version</string>
+    <string name="donateversion">Version Number For Donate Theme If You Have</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="color">Showcase Toolbar Color Hex ie: 212121</string>
+    <!-- Json Form CheckBox -->
+    <string name="lollipopsupport">Lollipop Support</string>
+    <string name="msupport">M Support</string>
+    <string name="basicrrolollipop">Basic RRO Lollipop</string>
+    <string name="basicrrom">Basic RRO M</string>
+    <string name="layerstype2lollipop">Layers Type 2 Lollipop</string>
+    <string name="layerstype3">Layers Type 3</string>
+    <string name="layerstype3m">Layers Type 3 M</string>
+    <string name="touchwiz">Touchwiz</string>
+    <string name="lg">LG</string>
+    <string name="sense">Sense</string>
+    <string name="xperia">Xperia</string>
+    <string name="asuszenui">Asus ZenUI</string>
+    <string name="hdpi">hdpi</string>
+    <string name="mdpi">mdpi</string>
+    <string name="xhdpi">xhdpi</string>
+    <string name="xxhdpi">xxhdpi</string>
+    <string name="xxxhdpi">xxxhdpi</string>
+    <string name="doesitneedupdating">Does It Need Updating</string>
+    <string name="willyoubeupdating">Will You Be Updating</string>
+    <string name="bootanimation">Boot Animation</string>
+    <string name="font">Font</string>
+    <string name="iconpack">Icon Pack</string>
+    <!-- Json Form Button -->
+    <string name="send">Generate Json</string>
+
+    <string name="noPermission">No Permission</string>
+    <string name="noPermissionDescription">No permission to view your phone´s internal storage granted.\nYou won´t be able to use this feature until you grant this permission.</string>
 </resources>

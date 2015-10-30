@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.lovejoy777.showcase.activities.SettingsActivity;
+import com.lovejoy777.showcase.activities.SubmitActivity;
 import com.lovejoy777.showcase.fragments.AbsBackButtonFragment;
 import com.lovejoy777.showcase.fragments.LayerListFragment;
 import com.lovejoy777.showcase.fragments.MainFragment;
@@ -113,6 +114,10 @@ public class MainActivity1 extends AppCompatActivity {
                                 break;
                             case R.id.nav_playStore:
                                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=Layers+Theme&c=apps&docType=1&sp=CAFiDgoMTGF5ZXJzIFRoZW1legIYAIoBAggB:S:ANO1ljK_ZAY")));
+                                break;
+                            case R.id.nav_submit:
+                                Intent submit = new Intent(MainActivity1.this, SubmitActivity.class);
+                                startActivity(submit, bndlanimation);
                                 break;
                         }
                         return false;

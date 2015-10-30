@@ -1,13 +1,8 @@
 package com.lovejoy777.showcase.fragments;
 
 import android.app.ActivityOptions;
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -217,7 +211,7 @@ public class MainFragment extends AbsBackButtonFragment {
             case R.id.action_refresh:
                 new UpgradeJson(MainFragment.this.getActivity(), true).execute();
                 return true;
-            case R.id.action_submit:
+            /*case R.id.action_submit:
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Submit a Layers")
                         .setMessage("How do you want to submit your Layer?")
@@ -241,7 +235,7 @@ public class MainFragment extends AbsBackButtonFragment {
                                 }
                             }
                         })
-                        .show();
+                        .show();*/
         }
 
         return super.onOptionsItemSelected(item);
