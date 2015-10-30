@@ -365,10 +365,6 @@ public class Layer implements Serializable {
 
     public String getToolbar_background_color() {
         return toolbar_background_color;
-        if()
-        {
-            
-        }
     }
 
     public String getToolbar_text_color() {
