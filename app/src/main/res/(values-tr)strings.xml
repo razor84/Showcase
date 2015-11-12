@@ -1,0 +1,157 @@
+<resources>
+    <string name="app_name">Layers Vitrini</string>
+
+    <string name="action_settings">Ayarlar</string>
+
+    <string name="free">Ücretsiz Katmanlar</string>
+    <string name="paid">Ücretli Katmanlar</string>
+    <string name="donate">Bağışlı Katmanlar</string>
+    <string name="details">Detaylar</string>
+    <string name="showcasetitle">Vitrin</string>
+    <string name="General">Genel</string>
+    <string name="developer_settings">Geliştirici ayarları</string>
+    <string name="screensize">Uyumlu ekran boyutları</string>
+
+    <string name="description">Açıklama</string>
+    <string name="error">Hata</string>
+    <string name="developer">Yazar</string>
+    <string name="testdeveloper">Test Geliştirici</string>
+    <string name="info">Daha fazla bilgi</string>
+    <string name="gettheme">Katmanlar alın</string>
+    <string name="installtheme">Katmanlar Yükleyin</string>
+    <string name="donatev">Bağış</string>
+    <string name="version">Sürüm</string>
+    <string name="author">Yazar</string>
+    <string name="layerstheme">Layers</string>
+    <string name="action_search">Ara</string>
+
+    <!-- MAIN SCREEN CARD TEXT -->
+    <string name="layersthemestitle">Katmanlar</string>
+    <string name="freecard1header">Ücretsiz Katmanlar</string>
+    <string name="freecard1">Tüm ücretsiz katmanları listelemek için tıklayın</string>
+    <string name="paidcard2header">Ücretli Katmanlar</string>
+    <string name="donatecard2">Tüm ücretli katmanları listelemek için tıklayın</string>
+
+    <!-- DETAILS MESSAGES -->
+    <string name="supportsL">Bu Katman Android\'in (Android Lollipop) sürümünü destekler</string>
+    <string name="supportsM">Bu Katman Android\'in (Android Marshmallow) sürümünü destekler</string>
+    <string name="nosupport">Bu katman şu anda çalışmakta olan Android Sürüm desteklemiyor.
+        Bu katmanı yüklemek Açılış ekranında kalma veya Zorla Kapatmaya neden olabilir</string>
+
+    <string name="densitySupport">Bu Katman cihazınızın ekranı yoğunluğunu olan\u0027s  destekliyor</string>
+    <string name="nodensitysupport">Bu Katman cihazınızın ekranı yoğunluğunu olan\u0027s desteklemiyor.
+This may cause blurry looking drawables or drawables which are not themed.</string>
+
+    <string name="density">Ekran yoğunluğu</string>
+    <string name="densityAlert">Bu katman Cihazınızın ekran yoğunluğunu destekliyorsa
+        \nGreen = destekliyor\nRed = desteklemiyor</string>
+        
+    <!-- About -->
+    <string name="developedby">Layers geliştiricileri</string>
+    <string name="usefullinks">Faydalı linkler</string>
+    <string name="AditionalLayersDev">Ek Katmanlar Sunar</string>
+    <string name="findOutWhatsNew">Yenilikleri öğrenin</string>
+    <string name="joinTheChat">Sohbete katılın</string>
+    <string name="AppDeveloper">Uygulama Geliştirici</string>
+    <string name="LayersDeveloper">Layers Geliştirici</string>
+    <string name="LayersLeadDeveloper">Layers Lider Geliştirici</string>
+    <string name="ShowcaseDeveloper">Vitrin Geliştirici</string>
+
+    <!-- Licenses -->
+    <string name="OpenSourceLicenses">Açık Kaynak Lisansları:</string>
+    <string name="License1" translatable="false">Persistent Search</string>
+    <string name="License1about" translatable="false">Kieron Quinn</string>
+    <string name="License1github" translatable="false">https://github.com/Quinny898/PersistentSearch</string>
+
+    <string name="License2" translatable="false">FasterXML</string>
+    <string name="License2about" translatable="false">FasterXML Developers</string>
+    <string name="License2github" translatable="false">https://github.com/FasterXML/jackson-core</string>
+
+    <string name="License3" translatable="false">Picasso</string>
+    <string name="License3about" translatable="false">Square, Inc.</string>
+    <string name="License3github" translatable="false">https://github.com/square/picasso</string>
+
+    <string name="License4" translatable="false">Guava</string>
+    <string name="License4about" translatable="false">Google, Inc.</string>
+    <string name="License4github" translatable="false">https://github.com/google/guava</string>
+
+    <string name="License5" translatable="false">Material LeanBack</string>
+    <string name="License5about" translatable="false">Florent CHAMPIGNY</string>
+    <string name="License5github" translatable="false">https://github.com/florent37/MaterialLeanBack</string>
+
+
+    <string name="Apache1">Copyright ©</string>
+    <string name="Apache2">\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+
+    <!-- Links -->
+    <string name="linkXda" translatable="false">http://forum.xda-developers.com/android/apps-games/official-layers-bitsyko-apps-rro-t3012172</string>
+    <string name="linkCommunity" translatable="false">https://plus.google.com/u/0/communities/102261717366580091389</string>
+    <string name="linkNiklas" translatable="false">https://plus.google.com/u/0/+NiklasSchnettler/posts</string>
+    <string name="linkSteve" translatable="false">https://plus.google.com/u/0/+SteveLovejoy/posts</string>
+    <string name="linkAldrin" translatable="false">https://plus.google.com/u/0/+AldrinHolmes20/posts</string>
+    <string name="linkBrian" translatable="false">https://plus.google.com/u/0/+BrianGill55/posts</string>
+    <string name="linkReinhard" translatable="false">https://plus.google.com/101549242713977412381/posts</string>
+    <string name="linkSyko" translatable="false">https://plus.google.com/u/0/+SykoPompos/posts</string>
+    <string name="linkBranden" translatable="false">https://plus.google.com/u/0/101729058057775926785/posts</string>
+    <string name="linkDenis" translatable="false">https://plus.google.com/u/0/+DenisSuarez98/posts</string>
+    <string name="linkAndrzej" translatable="false">https://plus.google.com/u/0/117376207394302665227/posts</string>
+    <string name="VisitGithub" translatable="false">Github</string>
+    <string name="home">Home</string>
+
+
+    <!-- NavDrawer -->
+    <string name="More">Daha Fazla</string>
+    <string name="Tutorial">Öğretici</string>
+    <string name="About">Hakkında</string>
+    <string name="Showcase">Layers Vitrini</string>
+    <string name="discover">Keşfedin</string>
+    <string name="PlayStore">PlayStore</string>
+    <string name="Settings">Ayarlar</string>
+    <string name="Manager">Layers Manager</string>
+    <string name="Submit">Bir Katman Gönder</string>
+
+    <!-- Json Form EditText -->
+    <string name="title">Title</string>
+    <string name="downloadlink">Download Link</string>
+    <string name="backupdownloadlink">Backup Download Link</string>
+    <string name="icon">Icon H=256 x W=256</string>
+    <string name="promo">Promo Image W=1598 x H=10526</string>
+    <string name="screenshot_1">Screenshot 1 H=1920 include a backup link after a comma</string>
+    <string name="screenshot_2">Screenshot 2 H=1920 include a backup link after a comma</string>
+    <string name="screenshot_3">Screenshot 3 H=1920 include a backup link after a comma</string>
+    <string name="googleplus">Google+ Post</string>
+    <string name="version2">Version Number</string>
+    <string name="donatedownload">Donate Version Download Link</string>
+    <string name="pluginversion">Plugin Version</string>
+    <string name="donateversion">Version Number For Donate Theme If You Have</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="color">Showcase Toolbar Color Hex ie: 212121</string>
+    <!-- Json Form CheckBox -->
+    <string name="lollipopsupport">Lollipop Support</string>
+    <string name="msupport">M Support</string>
+    <string name="basicrrolollipop">Basic RRO Lollipop</string>
+    <string name="basicrrom">Basic RRO M</string>
+    <string name="layerstype2lollipop">Layers Type 2 Lollipop</string>
+    <string name="layerstype3">Layers Type 3</string>
+    <string name="layerstype3m">Layers Type 3 M</string>
+    <string name="touchwiz">Touchwiz</string>
+    <string name="lg">LG</string>
+    <string name="sense">Sense</string>
+    <string name="xperia">Xperia</string>
+    <string name="asuszenui">Asus ZenUI</string>
+    <string name="hdpi">hdpi</string>
+    <string name="mdpi">mdpi</string>
+    <string name="xhdpi">xhdpi</string>
+    <string name="xxhdpi">xxhdpi</string>
+    <string name="xxxhdpi">xxxhdpi</string>
+    <string name="doesitneedupdating">Does It Need Updating</string>
+    <string name="willyoubeupdating">Will You Be Updating</string>
+    <string name="bootanimation">Boot Animation</string>
+    <string name="font">Font</string>
+    <string name="iconpack">Icon Pack</string>
+    <!-- Json Form Button -->
+    <string name="send">Generate Json</string>
+
+    <string name="noPermission">No Permission</string>
+    <string name="noPermissionDescription">No permission to view your phone´s internal storage granted.\nYou won´t be able to use this feature until you grant this permission.</string>
+</resources>
